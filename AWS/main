@@ -1,0 +1,81 @@
+Questions:
+  What is an MPLS network
+
+(S) = Service provided by Amazon
+
+AWS Platform
+
+In 2010 Amazon.com was moved to AWS
+
+11 regions
+     Each region consists of multiple availability zones (2 or more). Each of these zones is its own datacenter
+
+52 Edge Locations (CDN End Points)
+     These are utilized by cloudfront to cache data close to user
+
+Go through all services on aws.com and know them (look at the main bio of the service)
+
+Elastic Block Storage (S) Allows you to have  block level storage, so you can specifically format EBS for a windows file system, etc.  You can then connect this to an EC2 instance.  If you turn off an EC2 instance, EBS is persistent.
+  You can do both magenetic or SSD storage
+
+AWS Markplace has Amazon Machine Images (AMI)
+  Can include preconfigured AMI's for compliance with different regulatory bodies
+
+Elastic Load Balancer (ELB) (S)
+  Spreads incoming traffic evenly amongst your servers (EC2 instances)
+  You can point your Route 53 Domain at the ELB.
+  Has health check mechanisms to see if EC2 instance is alive
+
+S3 (S)
+  Uses:
+    File shares
+    Backup
+    Origin for CloudFront CDN's
+    Hosting Static Files/Websites
+  Can have metadata (key/val pairs) on each storage
+  Can Trigger events
+    I.e. If someone puts something in our bucket we can send to:
+      SNS topic
+      SQS queue
+      Lambda function
+  Upload/download your data via SSL
+  Can automatically encrypt your data at rest
+  Can manage your keys through:
+    AWS Key Management Service (AWS KMS)
+    Native Amazon S3
+    Providing your own keys
+  Private by default
+  Allows Access Control Lists
+    I.e.: An individual user can only have access to 1 bucket and only have read access
+  Integrates with AIM via roles.
+  Static Websites can be hosted on S3
+    If you're expecting a large amount of traffic, you can just put a static version of the website on s3.  S3 will deal with the load balancing, auto scaling, etc.
+  Integrates with Cloud Front CDN
+  Multipart uploads, allows you to upload parts of a file concurrently
+    Suggested for files over 100mb (requried for files over 5 gigs)
+  Lifecycle management
+    Can be used in conjunction with versioning
+    Can be applied to current or previous versions 
+    Following actions are allowed in conjunction with or without versioning:
+      Archive Only
+      Permanently Delete Only
+      Archive and then permanently delete
+  Versioning
+    Stores all versions (including all writes and deletes)
+    Once enabled can't be completely disabled (only suspended)
+  Encyption
+  Automatic redundancy across availibity zones
+    Eventually.  Might not occur right away
+  99.99% for S3 Platform (standard and reduced redundancy storage)
+  99.999999999% (nine 9's) durability for S3 information (standard storage)
+  99.99% for the reduced durability S3 Storage (only for non-important files)
+  Automatic
+  Object storage
+  Maximum is 5 tb
+  Unlimited storage
+  Files are stored in Buckets
+    Each bucket has a unique namespace(URL) for each region
+
+Glacier (S)
+  Achival storage, takes about 3-5 hours to retrieve information
+  Think how a glacier stands the test of time

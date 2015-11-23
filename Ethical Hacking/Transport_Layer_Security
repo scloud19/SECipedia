@@ -1,0 +1,33 @@
+Transport Layer Security
+
+When implementing websites, if a user tries to make any request over HTTP, always redirect to the HTTPS version of the site
+  
+Man in the Middle Attack
+  An attacker can observe or adulterate traffic between the client and server.
+
+Basic authentication via cookies
+  User submits credentials
+  If correct, auth cookie is returned and set in browser
+  This cookie is valid for whatever domains it's programmatically set for
+  Subsequent requests have that cookie attached (this can even be for images on the domain, etc.  Any request in the domain of the cookiej )
+    The server correlates the cookie with the user and persists login state
+
+  Cookies vs Tokens
+    For both of these mechanisms, TLS is Vital.  If they fall into the wrong hands, there's going to be problems.
+    Cookies: 
+        Are implicit, they're sent with every request to the domain (for a given cookie)
+        Pose a CSRF risk.  If an attacker tricks the browser into making a request to a malicious domain, the cookie could be sent to that domain
+        (This depends on the domain of the cookie).
+        As cookies don't work on domains that they aren't valid for, what's if you need to authenticate one user over several domains?
+        The persist when the DOM is unloaded
+        Make sure that cookies have the secure flag set to true.  This only allows a cookie to be sent over HTTPS
+
+    Tokens:
+        They have to be explicitly added to the request header
+        No CSRF risk because of this
+        They can be sent to any domain
+        They need to be coded to persist on DOM-unload
+            In Angular, there are services to store the token in a cookie so it's persisted.  However, it might be more secure to store this information in the session storage of the browser (if targeting newer browsers)
+                For example, Angular needs access to this cookie so the HTTP only flag of the cookie isn't set.  If angular has access to this cookie, then that opens us up to XSS attacks.  If we utilize HTML 5 storage, this could be a more robust implementation.
+
+        An example can be a bearer token (part of the OAuth standard), which the default type of access tokens.  Typically, once you authenticate to the server, it passes you back the token in the response.  This token then gets programmatically set (by you) in the request headers that you make to the server.
