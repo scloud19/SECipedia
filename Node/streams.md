@@ -6,6 +6,11 @@ TODO:
 	Blend this with stream info in basics.md
 
 Streams
+	popular npm modules for stream creation
+		through
+		concat-stream
+
+
 	.pipe() is the primary composition operator.
 		this method also has a backpressure mechanism which allows us to throttle writes for slow consumers.
 
@@ -72,6 +77,21 @@ Streams
 		Readable Streams
 			Produce streams that can be fed into a writable, transform, or duplex stream
 
+			ex:
+				process.stdin.on('readable', function () {
+				    var buf = process.stdin.read();
+				    console.dir(buf);
+				});
+
+				$ (echo abc; sleep 1; echo def; sleep 1; echo ghi) | node consume0.js 
+				<Buffer 61 62 63 0a>
+				<Buffer 64 65 66 0a>
+				<Buffer 67 68 69 0a>
+				null
+
+				When data is available
+
+
 			Ex:
 				var Readable = require('stream').Readable;
 
@@ -109,6 +129,16 @@ Streams
 						// 123456789
 
 						Here, we only push the number when the consumer is ready to read.
+
+						$ node FILE.js | head -c5
+							in this case it would be the 'head stream' that would be requesting 5 bytes from as rs._read process.  For every byte sent, if we added in a delay to the code so that the operating system would send signals to close the pipe, then rs._read would be invoked 5 times (1 time for every byte requested).
+								For this to FULLY work, we'd have to add some error handlers,etc. for dealing with external operating system pipes, but you get the main idea.
+									If we interface with node streams the whole time, we dont have to deal with these nuances.
+	
+
+
+
+
 
 
 
