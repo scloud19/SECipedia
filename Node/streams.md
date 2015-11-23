@@ -80,6 +80,7 @@ Streams
 			ex:
 				process.stdin.on('readable', function () {
 				    var buf = process.stdin.read();
+
 				    console.dir(buf);
 				});
 
@@ -89,7 +90,16 @@ Streams
 				<Buffer 67 68 69 0a>
 				null
 
-				When data is available
+				// Notice the 0a which is the newline from echo
+
+				When data is available on a stream, the 'readable' event fires and you can call .read() to pull in data from the buffer
+
+				When the stream is finished, .read() returns null because there are no more bytes to fetch
+
+				.read(n)
+					You can fetch n bytes of data if you wish.
+						This doesnt work for object streams
+
 
 
 			Ex:
