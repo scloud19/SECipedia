@@ -89,7 +89,30 @@ Streams
 				We pushed content to rs BEFORE piping to process.stdout (out writable stream) and yet, our complete message was still written.
 					This is because when you .push() to a readable stream, the chunks you push are buffered until a consumer is ready to read them.
 
-					Although, it would be even better in many circumstances to avoid this type of buffering and only generate the data when someone asks for it.  This can be utilized 
+					Although, it would be even better in many circumstances to avoid this type of buffering and only generate the data when someone asks for it.  We can push chunks on-demand if we define a ._read function on the stream
+						Ex:
+
+						var Readable = require('stream').Readable;
+						var rs = Readable();
+
+						var c = 1;
+						rs._read = function (size) {
+						    rs.push(c++);
+						    if (c < 10)) rs.push(null);
+						};
+
+						rs.pipe(process.stdout);
+
+						// size - how many bytes the consumer wants to read.  We can ignore this if we want.
+
+						$ node FILE.js
+						// 123456789
+
+						Here, we only push the number when the consumer is ready to read.
+
+
+
+
 
 
 

@@ -319,6 +319,15 @@ Node Basics
 				In general: use module.exports
 
 	Event Emitter 
+		process
+			a global object which is an instance of EventEmitter.
+
+			Each node application is an instance of the process object.
+				Thus you can get information about the application and its environment
+
+				this object also has ties to node's event loop
+
+				
 		You can have many listeners (all over your app) tied to one event
 			Each of these will be invoked one at a time (not simultaneously)
 
