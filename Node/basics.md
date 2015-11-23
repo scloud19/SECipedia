@@ -44,6 +44,7 @@ Basic Definitions
 			Writable - You can only write from the stream
 			Duplex - You can do both
 			Transform - Allows you to change the data as it moves through the stream (you can to reads and writes)
+			"Classic" - 
 
 
 

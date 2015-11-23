@@ -2,6 +2,9 @@
 These are the notes that I took while reading/taking:
 Node Streaming Handbook
 
+TODO:
+	Blend this with stream info in basics.md
+
 Streams
 	.pipe() is the primary composition operator.
 		this method also has a backpressure mechanism which allows us to throttle writes for slow consumers.
@@ -9,6 +12,17 @@ Streams
 		Think of piping different streams together to make coding more elegant and modular
 
 		All streams utilize .pipe() to "pipe" inputs to outputs
+
+		src.pipe(dst)
+			src - readable source stream
+			dst - writable stream
+
+			all pipe does is take the readable stream (src) and "pipes" the output to a destination writable stream (dst)
+
+			.pipe(dst)
+				returns dst for chaining
+					the returned dst will become the read stream for the next pipe
+						Thus, a.pipe(b).pipe(c).pipe(d)
 
 
 	Example where streams would be effective
@@ -54,6 +68,30 @@ Streams
 				    var stream = fs.createReadStream(__dirname + '/zach.txt');
 				    stream.pipe(oppressor(req)).pipe(res);
 				});
+
+		Readable Streams
+			Produce streams that can be fed into a writable, transform, or duplex stream
+
+			Ex:
+				var Readable = require('stream').Readable;
+
+				var rs = new Readable;
+				rs.push('beep ');
+				rs.push('boop\n');
+				rs.push(null);
+					// Tells consumer of stream that rs is done outputting
+
+				rs.pipe(process.stdout);
+
+				$ node read0.js
+					//beep boop
+
+				We pushed content to rs BEFORE piping to process.stdout (out writable stream) and yet, our complete message was still written.
+					This is because when you .push() to a readable stream, the chunks you push are buffered until a consumer is ready to read them.
+
+					Although, it would be even better in many circumstances to avoid this type of buffering and only generate the data when someone asks for it.  This can be utilized 
+
+
 
 
 
