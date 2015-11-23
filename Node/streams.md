@@ -73,6 +73,43 @@ Streams
 				    var stream = fs.createReadStream(__dirname + '/zach.txt');
 				    stream.pipe(oppressor(req)).pipe(res);
 				});
+		Writable Streams
+			Creating a writeable sream
+				EX:
+
+				var Writable = require('stream').Writable;
+				var ws = Writable();
+				ws._write = function (chunk, enc, next) {
+				    console.dir(chunk);
+				    next();
+				};
+
+				process.stdin.pipe(ws);
+
+				$ (echo beep; sleep 1; echo boop) | node write0.js 
+				<Buffer 62 65 65 70 0a>
+				<Buffer 62 6f 6f 70 0a>
+
+				If the readable stream you're piping from writes strings, they will be converted into Buffers unless you create your writable stream with Writable({ decodeStrings: false }).
+
+				If the readable stream you're piping from writes objects, create your writable stream with Writable({ objectMode: true }).
+
+				
+
+				_write params
+					chunk
+						the data that is written by the producer
+					enc
+						Is a string which denotes the encoding
+
+						This is only passed when a string has been written AND opts.decodeString is false
+
+					next(err)
+						Callback that tells the consumer that they can write more data
+
+						err
+							an optional error object, which emits an 'error' event on the stream instance.
+
 
 		Readable Streams
 			Produce streams that can be fed into a writable, transform, or duplex stream
@@ -99,6 +136,11 @@ Streams
 				.read(n)
 					You can fetch n bytes of data if you wish.
 						This doesnt work for object streams
+
+						If we read less bytes than there is in the buffer, those "leftovers" will be shown on the next buffer pull
+
+						if n === 0
+							it will output all of the data in the rest of the buffer
 
 
 
