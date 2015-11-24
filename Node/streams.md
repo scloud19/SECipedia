@@ -1,3 +1,5 @@
+Currently at: "writing to a writable stream" stream handbook
+
 ? - Double Check
 These are the notes that I took while reading/taking:
 Node Streaming Handbook
@@ -94,7 +96,7 @@ Streams
 
 				If the readable stream you're piping from writes objects, create your writable stream with Writable({ objectMode: true }).
 
-				
+
 
 				_write params
 					chunk

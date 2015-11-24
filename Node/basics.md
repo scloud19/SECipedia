@@ -323,11 +323,19 @@ Node Basics
 			a global object which is an instance of EventEmitter.
 
 			Each node application is an instance of the process object.
-				Thus you can get information about the application and its environment
+				Thus you can get information about the application,its environment (and perform logic on the app as a whole)
+					Ex:
+						process.exit(1)
+							The shell that executed node should see the exit code as 1.
+
+						process.stdout.on('error', process.exit)
+							when there's an error in stdout, make sure that node quits.
+
+						process.on('exit', FUNC)
 
 				this object also has ties to node's event loop
 
-				
+
 		You can have many listeners (all over your app) tied to one event
 			Each of these will be invoked one at a time (not simultaneously)
 
