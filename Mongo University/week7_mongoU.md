@@ -3,6 +3,9 @@ Keys
 	RF - Replication Factor
 	A - Arbiter
 
+Tips
+	db.getSisterDB("config").shards.count();
+
 Important Takeaways:
 	In a sharded cluster, at a minimum, use 2 RF on each shard.
 		To get consensus, you would be adding 1 A (if you didn't go with a 3 RF)
