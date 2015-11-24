@@ -301,9 +301,47 @@ Streams
 						Will send data to stderr
 
 			Child process
+				Has its own distinct events
+
+				Child processes and a parent process can communicate
+
+					child.send(message[, sendHandle][, callback])
+
+					var cp = require('child_process');
+
+					var n = cp.fork(__dirname + '/sub.js');
+
+					n.on('message', function(m) {
+					  console.log('PARENT got message:', m);
+					});
+
+					n.send({ hello: 'world' });
+
+
+					//sub.js script (below)
+
+					process.on('message', function(m) {
+					  console.log('CHILD got message:', m);
+					});
+
+					process.send({ foo: 'bar' });
+
+					Ex: Sending a server object to a child.  For example, a child can handle certain ports (instead of a parent)
+
+
+				Is an EventEmitter
+
+				Is possible
+
 				Possible to stream data through a child's stdin, stdout, and stderr in a fully non-blocking way
 					Some programs use line-buffered I/O internally.
 						If this is the case, the data you send to the child process may bot be immediately consumed
+
+					Child streams can be shared with stdio streams of the parent process
+
+					Can be seperate stream objects that can be piped to and from
+
+
 
 				Creating a child processes
 					Async
@@ -311,7 +349,18 @@ Streams
 
 						require('child_process').fork()
 					Sync
-						
+
+					Ex:
+						var spawn = require('child_process').spawn,
+						    grep  = spawn('grep', ['ssh']);
+
+						grep.on('close', function (code, signal) {
+						  console.log('child process terminated due to receipt of signal ' + signal);
+						});
+
+						// send SIGHUP to process
+						grep.kill('SIGHUP');
+
 
 
 	
