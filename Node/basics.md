@@ -1,6 +1,15 @@
 Tips. 
 	We think of Node as a web server, but it can be a file server, email server, etc.
 Basic Definitions
+	asynchronous (from Node's perspective)
+		Will not block the event loop
+
+	synchronous (from Node's perspective)
+		will block the event loop
+			Ex: You can use synchronous child process creation in Node
+				As this will block the event loop, this will pause the execution of your code until the spawned process exits
+					This version of child processes are used for scripting tasks, etc.
+
 	Protocol
 		A set of rules two sides agree on to use when communicating
 		TCP (Transmission Control Protocol)

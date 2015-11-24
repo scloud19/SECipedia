@@ -147,8 +147,11 @@ Streams
 			The old interface for streams
 
 			Whenever a stream has a "data" listener registered, it switches into "classic" mode and behaves according to the old API
+				When you do this, you lose the benefits of the streams2 api
 
 				Classic readable streams
+					Utilize the readable-stream module to make your streams2 code compliant with node .8 and below
+
 					Just event emitters that emit "data" events when they have data for their consumers
 
 					emit an "end" event when they are done producing for their consumers
@@ -156,7 +159,7 @@ Streams
 					.pipe() will check whether a classic stream is readable by checking if the following is true
 						stream.readable
 
-					Ex:
+					Ex of a readable stream
 						var Stream = require('stream');
 						var stream = new Stream;
 						stream.readable = true;
@@ -165,6 +168,29 @@ Streams
 						stream.emit('end', "That's all folks");
 
 						stream.pipe(process.stdout):
+
+				To read from a classic readable stream, simply register "data" and "end" listeners
+					Ex:
+						process.stdin.on('data', function(buf) {
+							console.log(buf):
+						});
+
+						process.stdin.on('end', function() {
+							console.log("I'm done mang!")
+						})
+
+						$ (echo beep; sleep 1; echo boop) | node classic1.js 
+						<Buffer 62 65 65 70 0a>
+						<Buffer 62 6f 6f 70 0a>
+						I'm done mang!
+
+				Class writable streams
+					.write(buf)
+					.end()
+					.destroy()
+
+
+
 
 
 
@@ -250,6 +276,44 @@ Streams
 							in this case it would be the 'head stream' that would be requesting 5 bytes from as rs._read process.  For every byte sent, if we added in a delay to the code so that the operating system would send signals to close the pipe, then rs._read would be invoked 5 times (1 time for every byte requested).
 								For this to FULLY work, we'd have to add some error handlers,etc. for dealing with external operating system pipes, but you get the main idea.
 									If we interface with node streams the whole time, we dont have to deal with these nuances.
+		Built-in streams
+			process
+				process.stdin
+					Readable stream that contains the standard system input stream for your program
+
+					It is paused by default but the first time you refer to it .resume() will be called inplicitly on the next "tick" of the event loop (the current event has finished).
+
+					If it is a tty (check with tty.isatty()) then input events will be line-buffered
+						This functionality can be turned off by
+							process.stdin.setRawMode(true);
+
+				process.stdout
+					Writable stream that contains the standard system output for your program
+
+					.write()
+						Will send data to stdout
+
+				process.stderr
+					Writable stream
+					Contains the standard system error stream for your program
+
+					.write()
+						Will send data to stderr
+
+			Child process
+				Possible to stream data through a child's stdin, stdout, and stderr in a fully non-blocking way
+					Some programs use line-buffered I/O internally.
+						If this is the case, the data you send to the child process may bot be immediately consumed
+
+				Creating a child processes
+					Async
+						require('child_process').spawn()
+
+						require('child_process').fork()
+					Sync
+						
+
+
 	
 
 
