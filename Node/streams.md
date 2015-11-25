@@ -1,8 +1,12 @@
-
+Currently at - child.stdio <-- GO BACK
 
 ? - Double Check
 These are the notes that I took while reading/taking:
 Node Streaming Handbook
+
+Overall Definitions
+	File Descriptor
+		A number which represents a kernel resource, such as an open file or a socket.  This can be mapped to utilizing various methods in node.
 
 TODO:
 	Blend this with stream info in basics.md
@@ -306,6 +310,8 @@ Streams
 				Child processes and a parent process can communicate
 
 					child.send(message[, sendHandle][, callback])
+						sendHandle
+							TCP server or socket object to another process. The child will receive the object as its second argument to the message event.
 
 					var cp = require('child_process');
 
@@ -326,7 +332,69 @@ Streams
 
 					process.send({ foo: 'bar' });
 
-					Ex: Sending a server object to a child.  For example, a child can handle certain ports (instead of a parent)
+					Ex: Sending a server object to a child.  For example, a child can handle certain ports (instead of a parent).  In this example, the server is shared between the parent and the child
+
+
+
+						var child = require('child_process').fork('child.js');
+
+						// Open up the server object and send the handle.
+						var server = require('net').createServer();
+
+						server.on('connection', function (socket) {
+						  socket.end('handled by parent');
+						});
+
+						server.listen(1337, function() {
+						  child.send('server', server);
+						});
+
+
+
+						//child.js (BELOW)
+							process.on('message', function(m, server) {
+							  if (m === 'server') {
+							    server.on('connection', function (socket) {
+							      socket.end('handled by child');
+							    });
+							  }
+							});
+
+					Ex: Sending a socket between a parent and 2 children.
+					In this example, there are two children.  If the remote IP is 74.125.127.100 it will send it to one child process, if it isn't, it will go to another child process.
+
+						var normal = require('child_process').fork('child.js', ['normal']);
+
+						var special = require('child_process').fork('child.js', ['special']);
+
+						// Open up the server and send sockets to child
+						var server = require('net').createServer();
+						server.on('connection', function (socket) {
+
+						  // if this is a VIP
+						  if (socket.remoteAddress === '74.125.127.100') {
+						    special.send('socket', socket);
+						    return;
+						  }
+						  // just the usual...
+						  normal.send('socket', socket);
+						});
+						server.listen(1337);
+
+						//child.js (below)
+
+							process.on('message', function(m, socket) {
+							  if (m === 'socket') {
+							    socket.end('You were handled as a ' + process.argv[2] + ' person');
+							  }
+							});
+
+						NOTE: Once a socket has been sent to a child then parent can no longer keep track of when it's destroyed
+							Thus, use server.getConnections(callback)
+								Asynchronously get the number of concurrent connections on the server. Works when sockets were sent to forks.
+
+								callback utilizes "err" and "count" as arguments
+
 
 
 				Is an EventEmitter
@@ -334,6 +402,14 @@ Streams
 				Is possible
 
 				Possible to stream data through a child's stdin, stdout, and stderr in a fully non-blocking way
+
+					child.stdin
+						If the child is waiting to read all its input, it will not continue until this stream has been closed via end().
+
+						A Writable Stream
+
+						If the child was not spawned with stdio[0] set to 'pipe', this will not be set
+
 					Some programs use line-buffered I/O internally.
 						If this is the case, the data you send to the child process may bot be immediately consumed
 
@@ -341,10 +417,44 @@ Streams
 
 					Can be seperate stream objects that can be piped to and from
 
+				child.stdio
+					(GO BACK)
+					An array of pipe to the child processes
+
+					A sparse array of pipes to the child process, corresponding with positions in the stdio option to spawn that have been set to 'pipe'. Note that streams 0-2 are also available as ChildProcess.stdin, ChildProcess.stdout, and ChildProcess.stderr, respectively.
+
+
+
 
 
 				Creating a child processes
 					Async
+						.exec()
+							Utilized for invoking a child process and then terminating once the process is done.
+
+							child_process.exec(command[, options], callback)
+
+							Ex:
+								var exec = require('child_process').exec,
+								    child;
+
+								child = exec('cat *.js bad_file | wc -l',
+								  function (error, stdout, stderr) {
+								    console.log('stdout: ' + stdout);
+								    console.log('stderr: ' + stderr);
+								    if (error !== null) {
+								      console.log('exec error: ' + error);
+								    }
+								});
+
+
+
+
+
+
+
+
+
 						require('child_process').spawn()
 
 						require('child_process').fork()
