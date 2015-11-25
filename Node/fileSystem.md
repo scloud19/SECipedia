@@ -67,16 +67,49 @@ Notes taken while reading:
 
 				If the original content is moved, the hard link still works
 
-			fs.symlink
+			fs.unlink(path, callback)
+
+			fs.readlink(path, callback)
+				callback
+					args
+						err
+						linkString
+
+
+			fs.realpath(path[, cache], callback)
+				callback
+					args
+						err
+						resolvedPath
+				cache
+					object literal of mapped paths that can be used to force a specific path resolution or avoid additional fs.stat calls for known real paths
+
+					Ex:
+					var cache = {'/etc':'/private/etc'};
+					fs.realpath('/etc/passwd', cache, function (err, resolvedPath) {
+					  if (err) throw err;
+					  console.log(resolvedPath);
+					});
+
+			fs.rename(oldPath, newPath, callback)
+
+			fs.rmdir(path, callback)
+
+			fs.symlink(destination, path[, type], callback)
 				Equivalent of creating soft links (sym links) in linux
 					ln -s originalName linkName
 						use symlinks when dealing with files on remote systems
 
 				If the original content is moved, the link will NOT work
 
+				type
+					dir
+					file
+					junction
+
 			fs.mkdir(path[, mode], callback)
 
-
+			fs.truncate(path, len, callback)
 
 
 			fs.open(path, flags[, mode], callback)
@@ -120,7 +153,14 @@ Notes taken while reading:
 								array of the names of the files in the directory
 
 			fs.readFile(file[, options], callback)
-				
+				Ex: Asynchronously reads the entire contents of a file
+
+				fs.readFile('/etc/passwd', function (err, data) {
+				  if (err) throw err;
+				  console.log(data);
+				});
+
+				In the options, if no encoding is specified, then the raw buffer id returned
 
 			fs.watch()
 				You can watch for changes on a given file
@@ -134,6 +174,7 @@ Notes taken while reading:
 
 				watcher.close()
 					Stop watching for changes
+			
 
 			Stream Methods
 				fs.createReadStream(path[, options])
