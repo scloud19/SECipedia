@@ -13,7 +13,8 @@ Notes taken while reading:
 			These will be relative to process.cwd()
 
 		For most methods that utilize a PATH, there's a alternative method that starts with "f" that utilizes an fd instead of a path.
-
+			If a fd is utilized in a method, most methods will not close the fd after execution has finished
+			
 		Error Handling
 			Important when reading files to see if they were read successfully, etc.
 
@@ -142,7 +143,40 @@ Notes taken while reading:
 						buffer
 
 			fs.write(fd, data[, position[, encoding]], callback)
-				Similar to above except
+				Similar with a few exceptions
+
+				data
+					If data isn't a Buffer instance, then the value will be forced to a string
+
+				encoding
+					The expected string encoding
+
+				callback
+					args
+						err
+						written
+							how many bytes the passed string required to be written
+								Bytes written != number of string characters
+						string
+					Unlike when writing buffer, the entire string must be written.
+						This is because the byte offset of the resulting data may not be the same as the string offset.
+
+			fs.writeFile(file, data[, options], callback)
+				file
+					String/Int file name
+					File Descriptor
+						If used, has to supporting writing
+				data
+					String/Buffer
+
+				options.mode
+					default - 0o666
+
+				Ex:
+				fs.writeFile('message.txt', 'Hello Node.js', function (err) {
+				  if (err) throw err;
+				  console.log('It\'s saved!');
+				});
 
 
 
