@@ -5,10 +5,11 @@ These are the notes that I took while reading/taking:
 Node Streaming Handbook
 Node API Documentation
 Stack Overflow Questions
+Wikipedia
 
 Overall Definitions
 	File Descriptor
-		A number which represents a kernel resource, such as an open file or a socket.  This can be mapped to utilizing various methods in node.
+		In Unix and related computer operating systems, a file descriptor (FD, less frequently fildes) is an abstract indicator used to access a file or other input/output resource, such as a pipe or network connection. 
 
 TODO:
 	Blend this with stream info in basics.md
@@ -495,6 +496,66 @@ Streams
 									 child.unref();
 									 	// The process will not stay running in the background after the parent exits unless it is provided with a stdio config that is not connectioned to the parent.  If the parent's stdio is inherited, the child will remain attached to the controlling terminal.
 
+									options.stdio
+										Utilized to specify the communications between a parent and child process
+
+										A 3 member array where each index corresponds to an file descriptor in the child.
+											[stdin, stdout, stderr]
+												In each of the above indexes, you can attach the following strings/objects from below.
+
+											'Pipe'
+												Create a pipe between the child process and the parent process.
+
+												This is the default value
+
+												 The parent end of the pipe is exposed to the parent as a property on the child_process object as ChildProcess.stdio[fd]. Pipes created for fds 0 - 2 are also available as ChildProcess.stdin, ChildProcess.stdout and ChildProcess.stderr, respectively.
+
+											'ipc'
+												Inter process communication
+
+												Create an IPC channel for passing messages/file descriptors between parent and child. A ChildProcess may have at most one IPC stdio file descriptor. Setting this option enables the ChildProcess.send() method. If the child writes JSON messages to this file descriptor, then this will trigger ChildProcess.on('message'). If the child is an Node.js program, then the presence of an IPC channel will enable process.send() and process.on('message').
+
+											'ignore'
+												Do not set this file descriptor in the child. 
+
+												Node will always open fd 0 - 2 for the processes it spawns. When any of these is ignored Node.js will open /dev/null and attach it to the child's fd.
+
+											Stream obj
+												Share a readable or writable stream that refers to a tty, file, socket, or a pipe with the child process
+
+											Positive INT
+												The integer value is interpreted as a file descriptor that is is currently open in the parent process. It is shared with the child process, similar to how Stream objects can be shared.
+
+											null, undefined
+												Use the default value (aka 'pipe')
+
+											EX:
+												var spawn = require('child_process').spawn;
+
+												// Child will use parent's stdios
+												spawn('prg', [], { stdio: 'inherit' });
+
+												// Spawn child sharing only stderr
+												spawn('prg', [], { stdio: ['pipe', 'pipe', process.stderr] });
+
+												// Open an extra fd=4, to interact with programs present a
+												// startd-style interface.
+												spawn('prg', [], { stdio: ['pipe', null, null, null, 'pipe'] });
+
+						Ex:
+							var spawn = require('child_process').spawn,
+							    grep  = spawn('grep', ['ssh']);
+
+							grep.on('close', function (code, signal) {
+							  console.log('child process terminated due to receipt of signal ' + signal);
+							});
+
+							// send SIGHUP to process
+							grep.kill('SIGHUP');
+
+
+
+
 
 
 							Example: A very elaborate way to run 'ps ax | grep ssh'
@@ -542,18 +603,28 @@ Streams
 
 									modulePath
 										The module to run in the child
-					Sync
+					
+					Synchronous Process Creation
+						As these methods are synchronous, they WILL block your event loop.  This will pause execution of your code until the spawned process exits.
 
-					Ex:
-						var spawn = require('child_process').spawn,
-						    grep  = spawn('grep', ['ssh']);
+						Good for scripting tasks, loading/processing of an app config at startup
 
-						grep.on('close', function (code, signal) {
-						  console.log('child process terminated due to receipt of signal ' + signal);
-						});
+						Note the "Sync" (Synchronous) part of the method
 
-						// send SIGHUP to process
-						grep.kill('SIGHUP');
+						.execFileSync
+							child_process.execFileSync(file[, args][, options])
+
+						.spawnSync
+							child_process.spawnSync(command[, args][, options])
+
+				
+
+
+
+
+
+
+
 
 
 
