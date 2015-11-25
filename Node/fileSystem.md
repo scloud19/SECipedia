@@ -61,6 +61,67 @@ Notes taken while reading:
 					fs.unlinkSync('/tmp/hello');
 					console.log('successfully deleted /tmp/hello');
 
+			fs.link(srcpath, dstpath, callback)
+				Equivalent of creating a hard link in linux
+					ln originalName linkname
+
+				If the original content is moved, the hard link still works
+
+			fs.symlink
+				Equivalent of creating soft links (sym links) in linux
+					ln -s originalName linkName
+						use symlinks when dealing with files on remote systems
+
+				If the original content is moved, the link will NOT work
+
+			fs.mkdir(path[, mode], callback)
+
+
+
+
+			fs.open(path, flags[, mode], callback)
+				flags
+					"w", etc.
+				callback
+					args
+						err
+						fd
+							file descriptor
+
+			fs.read(fd, buffer, offset, length, position, callback)
+				read fata from a file that's referenced by its fd
+
+				buffer
+					the buffer that the data will be written to
+
+				offset
+					offset in the buffer to start writing at
+
+				length
+					the number of bytes to read
+
+				position
+					where to begin reading from the file
+
+					if null, the data will be read from the current file position
+
+				callback
+					args
+						err
+						bytesRead
+						buffer
+
+			fs.readdir(path, callback)
+				Reads the contents of a directory
+					callback
+						args
+							err
+							files
+								array of the names of the files in the directory
+
+			fs.readFile(file[, options], callback)
+				
+
 			fs.watch()
 				You can watch for changes on a given file
 				Events:
