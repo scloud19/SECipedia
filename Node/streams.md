@@ -469,8 +469,33 @@ Streams
 						.spawn()
 							child_process.spawn(command[, args][, options])	
 								options.detached
-									Deals with 
-									On linux, if set to true, the child process will be made the leader of a 
+									Allows child_processes to outlive their parent (aka start a long running process)
+
+									On linux, if set to true, the child process will be made the leader of a new process group and session
+
+
+
+									By default, the parent will wait for the detached child to exit.  To prevent this, utilize child.unref()
+										The parent's event loop will now NOT include the child in its reference count
+
+									When utilizing this option to start
+
+									Example of detaching a long-running process and redirecting its output to a file:
+
+									 var fs = require('fs'),
+									     spawn = require('child_process').spawn,
+									     out = fs.openSync('./out.log', 'a'),
+									     err = fs.openSync('./out.log', 'a');
+
+									 var child = spawn('prg', [], {
+									   detached: true,
+									   stdio: [ 'ignore', out, err ]
+									 });
+
+									 child.unref();
+									 	// The process will not stay running in the background after the parent exits unless it is provided with a stdio config that is not connectioned to the parent.  If the parent's stdio is inherited, the child will remain attached to the controlling terminal.
+
+
 
 							Example: A very elaborate way to run 'ps ax | grep ssh'
 
