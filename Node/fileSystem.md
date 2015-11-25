@@ -120,9 +120,34 @@ Notes taken while reading:
 						err
 						fd
 							file descriptor
+			fs.write(fd, buffer, offset, length[, position], callback)
+				Do not use this function multiple times on the same file without waiting for the callback.  In you need to make continuous writes, use fs.createWriteStream
+
+				buffer
+					write buffer to the file specified by fd
+
+				offset and length
+					determine the part of the buffer to be written
+
+				position
+					offset from the beginning of the file where this data should be written
+
+					will default to current position
+
+				callback
+					args
+						err
+						written
+							how many bytes were written from buffer
+						buffer
+
+			fs.write(fd, data[, position[, encoding]], callback)
+				Similar to above except
+
+
 
 			fs.read(fd, buffer, offset, length, position, callback)
-				read fata from a file that's referenced by its fd
+				read data from a file that's referenced by its fd
 
 				buffer
 					the buffer that the data will be written to
@@ -162,19 +187,40 @@ Notes taken while reading:
 
 				In the options, if no encoding is specified, then the raw buffer id returned
 
-			fs.watch()
-				You can watch for changes on a given file
+			fs.watch(filename[, options][, listener])
+				Look for ceveats in the docs for a specific system
+
+				Doesn't work reliably on network file systems (NFS)
+
+
+				You can watch for changes on a given filename
+					filename can be a file or directory
+
+				options
+					The default is { persistent: true, recursive: false }
+						persistent
+							If true, the process should continue to run as long as files are being watched
+
+						recursive
+							Only available in OS X and Windows
+
+							If true, all subdirectories should be watched
+								this is only utilized when a directory is respresented in FILENAME
+
 				Events:
 					change
 						Args:
 							event
-								Type of change
+								rename
+								change
 							filename
+								only passed on linux and windows
+									even in these situations, it is not always guaranteed
 					error
 
 				watcher.close()
 					Stop watching for changes
-			
+
 
 			Stream Methods
 				fs.createReadStream(path[, options])
