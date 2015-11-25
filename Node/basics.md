@@ -344,6 +344,9 @@ Node Basics
 
 				this object also has ties to node's event loop
 
+			process.env
+				Will allow you to get the ENV variables of the current process
+
 
 		You can have many listeners (all over your app) tied to one event
 			Each of these will be invoked one at a time (not simultaneously)

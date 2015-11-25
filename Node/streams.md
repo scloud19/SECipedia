@@ -3,6 +3,8 @@ Currently at - child.stdio <-- GO BACK
 ? - Double Check
 These are the notes that I took while reading/taking:
 Node Streaming Handbook
+Node API Documentation
+Stack Overflow Questions
 
 Overall Definitions
 	File Descriptor
@@ -281,7 +283,7 @@ Streams
 								For this to FULLY work, we'd have to add some error handlers,etc. for dealing with external operating system pipes, but you get the main idea.
 									If we interface with node streams the whole time, we dont have to deal with these nuances.
 		Built-in streams
-			process
+			processs
 				process.stdin
 					Readable stream that contains the standard system input stream for your program
 
@@ -428,6 +430,9 @@ Streams
 
 
 				Creating a child processes
+					These child processes are still whole new instances of V8. 
+						Assume at least 30ms startup and 10mb memory for each new process.
+
 					Async
 						.exec()
 							Utilized for invoking a child process and then terminating once the process is done.
@@ -447,6 +452,13 @@ Streams
 								    }
 								});
 
+						.execFile()
+							child_process.execFile(file[, args][, options][, callback])
+
+							This is similar to child_process.exec() except it does not execute a subshell but rather the specified file directly. This makes it slightly leaner than child_process.exec(). It has the same options.
+
+
+							
 
 
 
@@ -454,10 +466,57 @@ Streams
 
 
 
+						.spawn()
+							child_process.spawn(command[, args][, options])	
+								options.detached
+									Deals with 
+									On linux, if set to true, the child process will be made the leader of a 
 
-						require('child_process').spawn()
+							Example: A very elaborate way to run 'ps ax | grep ssh'
 
-						require('child_process').fork()
+							var spawn = require('child_process').spawn,
+							    ps    = spawn('ps', ['ax']),
+							    grep  = spawn('grep', ['ssh']);
+
+							ps.stdout.on('data', function (data) {
+							  grep.stdin.write(data);
+							});
+
+							ps.stderr.on('data', function (data) {
+							  console.log('ps stderr: ' + data);
+							});
+
+							ps.on('close', function (code) {
+							  if (code !== 0) {
+							    console.log('ps process exited with code ' + code);
+							  }
+							  grep.stdin.end();
+							});
+
+							grep.stdout.on('data', function (data) {
+							  console.log('' + data);
+							});
+
+							grep.stderr.on('data', function (data) {
+							  console.log('grep stderr: ' + data);
+							});
+
+							grep.on('close', function (code) {
+							  if (code !== 0) {
+							    console.log('grep process exited with code ' + code);
+							  }
+							});
+
+						.fork()
+							Does not clone the current process
+
+							require('child_process').fork()
+								This is a special case of the child_process.spawn() functionality. In addition to having all the methods in a normal ChildProcess instance, the returned object has a communication channel built-in. See [child.send(message, [sendHandle])][] for details.
+
+								child_process.fork(modulePath[, args][, options])
+
+									modulePath
+										The module to run in the child
 					Sync
 
 					Ex:
