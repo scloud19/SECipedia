@@ -278,7 +278,7 @@ net module
 
 							path: Path the client should connect to (Required for Local Domain Sockets)
 								If utilizing this, you don't need to specify the port and host values/keys
-
+					
 					socket.destroy()
 						No more I/o activity will occur on this socket
 
@@ -348,6 +348,45 @@ net module
 					socket.setNoDelay([noDelay])
 						By default, TCP connections buffer data before sending it off.
 							Setting noDelay to true will immediately fire off data each time socket.write() is called
+
+					socket.write(data[, encoding][, callback])
+						Sends data on the socket
+
+						If the data is a string, the encoding can be set.
+						(defaults to UTF8)
+
+						returns true is the entire data was flushed to the kernel buffer.
+							The kernel buffer is a place where reads/writes are directed to.
+								This mitigates having to repeatedly hit the physical disk.
+
+						returns false if some/all was queued in user memory.  'drain' will be emitted when the buffer is free again
+
+						callback
+							executed when the data is finally written out
+								This may not be immediate
+
+						HELPFUL STACK OVERFLOW QUESTION
+							The documentation for write() says:
+
+							Returns false to indicate that the kernel buffer is full, and the data will be sent out in the future.
+
+							and the documentation for the drain event says:
+
+							After a write() method returned false, this event is emitted to indicate that it is safe to write again.
+
+							What does that mean? Do I have to wait for the drain event before I can write again? What happened to the data which I tried to write? Is that lost? What happens when I call write without waiting for the drain event?
+
+
+							Answer:
+							You can call write() without caring about the return value safely. Node will buffer any write calls while the kernel buffer is full, and push them in order as you would expect. You do not need to wait for the 'drain' event before writing again.
+
+							Optionally, you can check the return value of write() and then notify the thing that is writing to the Stream that the buffer is full. This is exactly what Stream#pipe() does.
+
+							So usually, just use Stream#pipe() and all the goodies are taken care of for you :)
+
+							What happens if you call process.exit() while the res.write is still buffered in user memory (i.e. not flushed to the kernel buffer)? Does the response get lost? – Emmett Apr 23 '14 at 21:32
+							  	 	
+							@Emmett yes, if you call process.exit() while there's buffered write calls remaining to be flushed then that data will be lost. – TooTallNate May 25 '14 at 15:55
 
 
 
