@@ -3,6 +3,9 @@ net module
 		Check the bufferSize associated with the socket.  If the buffer is too large, throttle with pause() and resume()
 			See socket.bufferSize for more information
 
+		Sockets don't initially have a timeout on the connection.
+			Make sure to implement a .setKeepAlive and .setTimeout to gracefully handle disconnected sockets that weren't handled gracefully
+
 	Provides an asynchronous network wrapper.
 
 	Contains functions for creating servers and clients (called streams)
@@ -299,7 +302,57 @@ net module
 
 					socket.localPort
 
-					socket.
+					socket.pause()
+						Pauses the reading of data.
+							'data' events will not be emitted.
+						Useful to throttle an upload
+
+					socket.resume()
+						Resumes reading after a call to pause()
+
+					socket.ref()
+					socket.unref()
+						Similar idea to server.ref()/.unref() but replace server for socket in the definitions
+
+					socket.remoteAddress
+						String representation of the remote IP
+							EX: 
+							74.125.127.100
+							2001:4860:a005::68
+
+					socket.remoteFamily
+						Ex: 'IPv4'
+
+					socket.remotePort
+
+					socket.setEncoding([encoding])
+						Set the encoding of the socket as a Readable Stream
+
+					socket.setKeepAlive([enable][, initialDelay])
+						Enable/disable keep-alive functionality
+
+						This setting has to do with making sure that a longstanding connection is still open
+
+						initialDelay (in ms)
+							The delay between the last data packet recieved and the first keepalive probe
+
+						This function is utilized in conjunction with socket.setTimeout
+
+					socket.setTimeout(timeout[, callback])
+						net.Socket doesn't have a timeout by default.
+
+						When the timeout is triggered the socket will receive a 'timeout' event but the connection will still be "live"
+							We must manually implement an end()/destroy()
+								We can do this in the callback
+					
+					socket.setNoDelay([noDelay])
+						By default, TCP connections buffer data before sending it off.
+							Setting noDelay to true will immediately fire off data each time socket.write() is called
+
+
+
+
+
 
 
 
