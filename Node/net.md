@@ -248,7 +248,58 @@ net module
 						socket.bytesWritten
 							The amount of bytes sent
 
-					socket.connect(option)
+					socket.connect(options[, connectListener])
+						Opens the connection for a given socket
+
+						Normally this method isn't needed as net.createConnection opens the socket.
+
+						This method is primarily for implementing a custom Socket
+
+						The 'connect' event is emitted when the socket is established, this event will invoke connectListener
+
+						If a connection can't be established, 'error' will be emitted with the exception
+
+						For TCP sockets, the options object needs
+
+							port: Port the client should connect to (Required).
+
+							host: Host the client should connect to. Defaults to 'localhost'.
+
+							localAddress: Local interface to bind to for network connections.
+
+							localPort: Local port to bind to for network connections.
+
+							family : Version of IP stack. Defaults to 4.
+
+							lookup : Custom lookup function. Defaults to dns.lookup.
+
+							path: Path the client should connect to (Required for Local Domain Sockets)
+								If utilizing this, you don't need to specify the port and host values/keys
+
+					socket.destroy()
+						No more I/o activity will occur on this socket
+
+						Only utilize this method when error handling
+
+					socket.end([data][, encoding])
+						Half-closes the socket
+							Thus, a FIN packet is sent.
+
+							Remember, the server can still send data.
+
+						data
+							Equiv
+								socket.write(data, encoding)
+								socket.end()
+
+					socket.localAddress
+						The local IP that the remote client is connecting on.
+							Ex:
+							192.168.1.1
+
+					socket.localPort
+
+
 
 
 
