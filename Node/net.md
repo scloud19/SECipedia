@@ -1,4 +1,8 @@
 net module
+	Key Takeaways
+		Check the bufferSize associated with the socket.  If the buffer is too large, throttle with pause() and resume()
+			See socket.bufferSize for more information
+
 	Provides an asynchronous network wrapper.
 
 	Contains functions for creating servers and clients (called streams)
@@ -74,6 +78,8 @@ net module
 
 				callback
 					will be added as a listener for the 'listening' event
+
+
 
 		server.listen(options[, callback])
 			options
@@ -193,4 +199,59 @@ net module
 									If there are no listeners for a sockets data event, DATA WILL BE LOST
 
 						drain
+							Emitted when the write buffer becomes empty
+
+							Can utilize to throttle uploads
+
+							Also look at the returned value of socket.write()
+
+						end
+							Emitted when the other end of the socket sends a FIN packet
+
+							
+							allowHalfOpen
+								option when creating the server
+
+								false (default)
+									The socket will destroy its fd once it has written out its pending write queue.
+								true
+									The socket will not automatically end() its side, which allows the user to write arbitrary amounts of data
+										If utilized, the user must now .end() their side of the socket manually once finished
+						error
+							args
+								Error object
+
+						timeout
+							This is only to notify that the socket has been idle.
+								The user must manually close the connection
+
+							socket.setTimeout() value is utilized
+
+						socket.address()
+							Ex: 
+							{ port: 12346, family: 'IPv4', address: '127.0.0.1' }
+
+						socket.bufferSize
+							The computer can't always keep up with the amount of data that's written to a socket (maybe there's too much latency, etc.)
+								In this case, Node will automatically queue up the data written to a socket and send it over the wire when it's possible
+									Node implements this by polling the socket's fd for being in a 'writable' state
+
+									The problem with this internal buffering is that memory consumption can grow out wildly.
+										socket.bufferSize shows the number of characters currently buffered (and pending writes)
+											The number of characters is roughly equal to the number of bytes to be written
+
+											If this number gets too large, we should throttle the data flows with .pause() and .resume()
+						
+						socket.bytesRead
+							The amount of received bytes
+
+						socket.bytesWritten
+							The amount of bytes sent
+
+					socket.connect(option)
+
+
+
+
+
 
