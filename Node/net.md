@@ -158,7 +158,8 @@ net module
 				a TCP/local socket abstraction
 
 				Implements a duplex stream interface
-
+					Once the stream is created, you should be able to write right away, and the writes will be buffered until the 'connect' event fires (double check)
+					
 				Sockets can be created by the user and used as a client (with connect() ) OR they can be created by Node and passed to the user through the 'connection' event of a server.
 
 				new net.Socket([options])
@@ -220,6 +221,10 @@ net module
 								true
 									The socket will not automatically end() its side, which allows the user to write arbitrary amounts of data
 										If utilized, the user must now .end() their side of the socket manually once finished
+
+									In this case, the socket won't automatically send a FIN packet when the other end of the socket sends a FIN packet.
+
+									The socket becomes non-readable, but still writable.
 						error
 							args
 								Error object
@@ -278,7 +283,45 @@ net module
 
 							path: Path the client should connect to (Required for Local Domain Sockets)
 								If utilizing this, you don't need to specify the port and host values/keys
+
 					
+					net.createServer([options][, connectionListener])
+						options
+							allowHalfOpen
+								search in doc for other notes
+							pauseOnConnect
+								if true
+									The socket assoicated with each incoming connection will be paused, and no data will be read from the handle
+
+									Useful when sockets are passed between processes.
+										Call .resume() to start reading data.
+						EX: Of an echo server which listens for connections on port 8124
+						var net = require('net');
+						var server = net.createServer(function(c) { //'connection' listener
+						  console.log('client connected');
+						  c.on('end', function() {
+						    console.log('client disconnected');
+						  });
+						  c.write('hello\r\n');
+						  c.pipe(c);
+						});
+						server.listen(8124, function() { //'listening' listener
+						  console.log('server bound');
+						});
+						Test this by using telnet:
+
+						telnet localhost 8124
+						To listen on the socket /tmp/echo.sock the third line from the last would just be changed to
+
+						server.listen('/tmp/echo.sock', function() { //'listening' listener
+						Use nc to connect to a UNIX domain socket server:
+
+						nc -U /tmp/echo.sock
+
+					net.isIP(STRING)
+					net.isIPv4(STRING)
+					net.isIPv6(STRING)
+
 					socket.destroy()
 						No more I/o activity will occur on this socket
 
