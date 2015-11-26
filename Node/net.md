@@ -104,3 +104,93 @@ net module
 
 			path
 				On UNIX, the local domain is usually known as the UNIX domain. The path is a filesystem path name. It is subject to the same naming conventions and permissions checks as would be done on file creation, will be visible in the filesystem, and will persist until unlinked.
+
+			server.listen(port[, hostname][, backlog][, callback])
+				backlog
+					Maximum length of the queue of pending connections
+						The actual length is determined by your OS through sysctl settings such as tcp_max_syn_backlog and somaxconn on linux
+
+				When the server has been bound, the 'listening' event will be emitted.
+
+				callback
+					will be added as a listener for the 'listening' event
+
+				EADDRINUSE
+					Error if the port is in use
+
+					Ex of retry code
+					server.on('error', function (e) {
+					  if (e.code == 'EADDRINUSE') {
+					    console.log('Address in use, retrying...');
+					    setTimeout(function () {
+					      server.close();
+					      server.listen(PORT, HOST);
+					    }, 1000);
+					  }
+					});
+
+			server.MaxConnections
+				Set the max connections
+
+				Do not use this once a socket has been sent to a child with child_process.fork()
+
+			server.unref()
+				Will allow the program to exit if this is the only active server in the event system.
+
+				returns 'server' for chaining
+
+			server.ref()
+				Opposite of unref()
+
+				Calling 'ref' on a server that was previously 'unref'd will keep the program running
+					This assumes that the server is the only server left
+
+			net.Socket
+				a TCP/local socket abstraction
+
+				Implements a duplex stream interface
+
+				Sockets can be created by the user and used as a client (with connect() ) OR they can be created by Node and passed to the user through the 'connection' event of a server.
+
+				new net.Socket([options])
+					Constructor for a new socket object
+
+					object defaults
+						{ fd: null,
+						  allowHalfOpen: false,
+						  readable: false,
+						  writable: false
+						}
+
+						fd
+							allows you to specify the existing file descriptor of the socket
+
+						readable/writable
+							If true, allows you to allow reads and/or writes on this socket
+								This only works when fd is passed
+
+						allowHalfOpen
+							refer to createServer() and 'end' event
+
+				net.Socket is an instance of EventEmitter
+					events
+						close
+							Emitted once the socket if fully closed
+
+							args
+								had_error
+									boolean - Transmission error
+						connect
+							Socket connection was successfully established
+
+						data
+							args
+								data
+									buffer object OR String
+
+									Encoding of data is set by socket.setEncoding()
+
+									If there are no listeners for a sockets data event, DATA WILL BE LOST
+
+						drain
+
