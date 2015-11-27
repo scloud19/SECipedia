@@ -1,5 +1,6 @@
-General Definitions
-	pool
+General Notes
+	Node doesn't check whether Content-Length === the length of the body
+
 
 HTTP server/client
 	require('http')
@@ -81,13 +82,41 @@ HTTP server/client
 
 	http.ClientRequest
 		The object that's returned from http.request()
+
+		Is a Writable Stream and is an EventEmitter
+
 			This represents an in-progress request whose header has already been queued.
 				At this point, the header is still mutable using the header API in Node
 
 				The actual header will be sent along with the first data chunk or when closing the connection.
 
 			To get the response, add a listener for 'response' to the request object.
-				'response' 
+		
+		events
+			The request is an EventEmitter
+
+			response
+				args
+					instance of http.IncomingMessage
+
+				add a listener for this event to the request object.
+
+				emitted when the response headers have been received
+
+				If you add a response event handler, you MUST consume the data from the response object.  
+					You can do this by:
+						response.read()
+							Whenever there's a readable event
+						adding a 'data' handler
+						calling .resume()
+					
+					Until the data is consumed, the 'end' event will not fire.  Additionally, until the data is read it will consume memory that can lead to errors.
+
+			abort
+				The request has been aborted by the client.
+
+				Only emitted on the first call to abort()
+
 
 
 
