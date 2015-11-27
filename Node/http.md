@@ -121,10 +121,20 @@ HTTP server/client
 				
 				Emitted each time a client requests a http CONNECT method.
 					CONNECT is an HTTP verb that is used for tunneling purposes.
+						Ex: If we open a telnet session and DO
+							CONNECT zachroof.com:443
+
+							// The proxy will answer with 
+							HTTP/1.0 200 Connection established
+
+							This means that the proxy set up the tunnel to the host.  Now you can communicate with the host through the tunnel.
+
 
 				function (response, socket, head) { }
 
 				EX:
+					//if confused on the ordering of events, look at http://stackoverflow.com/questions/25941175/calling-nodejs-request-end-method-before-setting-up-the-listeners
+
 				var http = require('http');
 				var net = require('net');
 				var url = require('url');
@@ -178,6 +188,13 @@ HTTP server/client
 				  });
 				});
 
+		continue
+			emitted when the server sends a '100 Continue' HTTP response.
+
+			This is an instruction that the client should send the request body.
+
+		response
+			Emitted when a re
 
 
 
