@@ -117,6 +117,11 @@ HTTP server/client
 
 				Only emitted on the first call to abort()
 
+			connect
+				function (response, socket, head) { }
+
+				Emitted each time a server responds to a request with a CONNECT method.
+
 
 
 
