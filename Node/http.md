@@ -358,6 +358,8 @@ HTTP server/client
 
 				Emitted each time the client requests a http CONNECT method
 
+				Caveat: After this event is emitted, the request's socket will not have a data event listener, meaning you will need to bind to it in order to handle data sent to the server on that socket.
+
 				args
 					request
 						args for the HTTP request
@@ -367,4 +369,78 @@ HTTP server/client
 
 					head
 						an instance of Buffer, the first packet of the tunneling stream (which might be empty)
+
+
+			request
+				function (request, response) { }
+
+				Emitted each time there's a request
+
+				In the case of keep-alive connections, there may be multiple requests per connection.
+
+				args
+					request
+						instance of http.IncomingMessage
+					response
+						instance of http.ServerResponse
+			upgrade
+				function (request, socket, head) { }
+
+				Emitted each time a client requests an http upgrade
+
+				Args and caveats
+					Same as 'connect' event above
+
+		server.close([callback])
+			Stops the server from accepting new connections
+				Similar full implementation of net.Server.close()
+
+		server.listen(handle[, callback])
+			There's a similar implementation of this method with a UNIX socket server flavor (instead of 'handle', there's 'path')
+				Unix domain sockets are a method by which processes on the same host can communicate.
+
+				Instead of a IP address and port, there's a "path"
+
+
+			handle OBJ
+				can be set to either a server OR
+				socket(anything with an underlying _handle member) OR
+				{fd: <n>}
+
+			This will cause the server to accept connections on a specified handle
+				It is presumed that the fd/handle has already been bound to a port/domain socket
+
+		server.listen(port[, hostname][, backlog][, callback])
+			To listen to a unix socket, supply a filename instead of port and hostname.
+
+			args
+				backlog
+					maximum length of the queue of pending connections
+						The actual length is determined by your OS
+							Ex: Linux
+								tcp_max_syn_backlog AND
+								somaxconn
+
+		server.setTimeout(msecs, callback)
+			Sets the timeout value for sockets and emits a 'timeout' event on the Server OBJ, passing the given socket as an argument.
+
+			args
+				msecs INT
+				callback FUNCT
+
+			By default, if a socket is inactive for 2 mins, it will be destroyed automatically.  
+				If you assign a callback to the timeout event, you are then responsible for handling socket timeouts.
+
+			returns the server instance
+
+		server.timeout INT(ms)
+			Timed inactivity before a socket is presumed to have timed out.
+
+			Changing this value only changes NEW socket connections
+			
+
+
+
+
+
 
