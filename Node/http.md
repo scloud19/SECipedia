@@ -1,6 +1,7 @@
 General Notes
 	Node doesn't check whether Content-Length === the length of the body
 
+	If utilizing sockets, check the 'clientError' event for error handling/logging (look below)
 
 HTTP server/client
 	require('http')
@@ -264,7 +265,32 @@ HTTP server/client
 		If the request is chunked, this will send a string of terminating characters (aka blank line or '0\r\n\r\n')
 
 	request.setNoDelay([noDelay])
-		No buffering before sending data
+		Once a socket is assigned to this request and is connected socket.setNoDelay() will be called.
+
+	request.setSocketKeepAlive([enable][, initialDelay])#
+		Once a socket is assigned to this request and is connected socket.setKeepAlive() will be called.
+
+	request.setTimeout(timeout[, callback])#
+		Once a socket is assigned to this request and is connected socket.setTimeout() will be called.
+
+	request.write(chunk[, encoding][, callback])
+		Sends a chunk of the message BODY
+
+		By calling this many teams, a user can stream to the server.
+			Suggested to use ['Transfer-Encoding', 'chunked'] header line when creating the request
+
+		args
+			chunk
+				Can be a Buffer or string
+
+			encoding
+				Only use when the chunk is a string
+
+			callback
+				called once the chunk of data has been flushed to the underlying resource (aka filesystem)
+
+
+
 
 
 
@@ -312,3 +338,33 @@ HTTP server/client
 		pool = new http.Agent(); //Your pool/agent
 		http.request({hostname:'localhost', port:80, path:'/', agent:pool});
 		request({url:"http://www.google.com", pool:pool });
+
+	http.Server
+		EventEmitter with the following events
+
+		Event
+			'clientError'
+				function (exception, socket) { }
+
+				If a client connection emits an 'error' event, it will be forwarded here.
+
+				socket is the net.Socket object that the error originated from
+
+			close
+				Emitted when the server closes
+
+			connect
+				function (request, socket, head) { }
+
+				Emitted each time the client requests a http CONNECT method
+
+				args
+					request
+						args for the HTTP request
+
+					socket
+						network socket between the client and server
+
+					head
+						an instance of Buffer, the first packet of the tunneling stream (which might be empty)
+
