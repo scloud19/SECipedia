@@ -437,7 +437,54 @@ HTTP server/client
 			Timed inactivity before a socket is presumed to have timed out.
 
 			Changing this value only changes NEW socket connections
-			
+		
+	http.ServerResponse
+		This object is created by Node at sent as the second parameter to the 'request' event
+
+		Implements a Writable Stream interface.
+
+		An EventEmitter with the following events
+
+			close
+				The underlying connection was terminated before response.end() was invoked OR able to flush to disk.
+
+			finish
+				Emitted when the response is sent
+
+				The event is emitted when the last segment of the response headers and body have been handed off to the operating system.  
+					This doesn't imply a successful transmission to the client
+
+				After this event, no more events will be emitted on the response object.
+
+			response.addTrailers(headers)
+				For chunked transmissions
+					Adds a header to the end of the message
+
+				If you are utilizing a trailer, HTTP requires that you specify this in the initial header in the stream.
+					You must also specify what the header key will be.
+
+					Ex:
+					response.writeHead(200, { 'Content-Type': 'text/plain',
+					                          'Trailer': 'Content-MD5' });
+					response.write(fileData);
+					response.addTrailers({'Content-MD5': "7895bf4b8828b55ceaf47747b4bca667"});
+					response.end();
+
+			response.end([data][, encoding][, callback])
+				Signals to the server that all of the response headers and body have been sent.
+
+				This must be called on each response
+
+			response.finished BOOL
+				Set to true once response.end() executes
+
+			response.getHeader(name)
+				Returns a header STRING that has already been queued but not sent to the client.
+
+				This can only be called before the headers are flushed.
+
+
+
 
 
 
