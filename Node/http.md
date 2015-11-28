@@ -11,6 +11,18 @@ General Notes
 		  query: { name: 'ryan' },
 		  pathname: '/status' }
 
+	Header Considerations
+		'Connection': 'keep-alive'
+			Notify Node that the connection to the server should be persisted until the next request
+		'Content-length'
+			Sending this header will disable the default chunked encoding
+		'Expect'
+			This will immediately send the request headers (they wont be buffered until the body is written, etc.)
+
+			When sending a 'Expect:100-continue', you should set a timeout and listen for the continue event.
+		
+
+
 HTTP server/client
 	require('http')
 
@@ -27,6 +39,14 @@ HTTP server/client
 
 		returns an instance of the http.ClientRequest class.
 			This is a writable stream
+
+		Error Handling
+			An 'error' event is emitted on the returned request object
+
+			Exs of errors
+				DNS resolution
+				TCP level errors
+				HTTP parse errors
 
 		args
 			callback
@@ -58,6 +78,9 @@ HTTP server/client
 					When an agent as utilized the req will default to 'Connection: keep-alive'
 						keep-alive allows us to use a single TCP connection to send/receive multiple HTTP requests/responses.
 							If not used, a new connection will be established for every REQ/RESP pair.
+
+						This will notify Node that the connection to the server should be persisted until the next request
+
 					Possible Vals
 						undefined
 							use globalAgent for this host and port
