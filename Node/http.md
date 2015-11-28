@@ -478,10 +478,50 @@ HTTP server/client
 			response.finished BOOL
 				Set to true once response.end() executes
 
+			Note: 'implicit headers' are when you set the headers without directly calling response.writeHead()
+
 			response.getHeader(name)
 				Returns a header STRING that has already been queued but not sent to the client.
 
 				This can only be called before the headers are flushed.
+
+			response.headersSent BOOL
+
+			response.removeHeader(name)
+				Removes a header that's queued for sending
+
+			response.setHeader(name, value)
+				Adds a header to the sending queue.
+
+				Use an array of strings if you need to send muliple headers with the same name
+
+				EX:
+				response.setHeader("Set-Cookie", ["type=ninja", "language=javascript"]);
+
+			response.setTimeout(msecs, callback)
+				args
+					callback
+						Added as a listener for the 'timeout' event on the response object
+							If no 'timeout' listener is added to the request, the response, or the server, then the corresponding socket is destroyed when it times out.
+
+			response.statusCode
+				When using implicit headers, this property controls the status code that will be sent when the headers are flushed
+
+				Ex:
+				response.statusCode = 404;
+
+			response.statusMessage
+				Used when using implicit headers
+
+				If left undefined, then the standard message for the status code will be used
+
+				After the response header has been sent, this property indicates the status message which was sent out
+
+				Ex:
+				response.statusMessage = 'Not found';
+			
+
+
 
 
 
