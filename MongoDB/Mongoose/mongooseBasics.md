@@ -1,5 +1,29 @@
 // These are my notes while going through the Mongoose docs
 
+// Use this guide as a basic "startup" script, etc.
+
+Main Takeaways
+	Document Instance Methods
+		Very good way to make queries modular
+
+		When defining a Model you can add methods that will be shared across all document instances
+
+		Ex:
+		// define a schema
+		var animalSchema = new Schema({ name: String, type: String });
+
+		// assign a function to the "methods" object of our animalSchema
+		animalSchema.methods.findSimilarTypes = function (cb) {
+		  return this.model('Animal').find({ type: this.type }, cb);
+		}
+
+		var Animal = mongoose.model('Animal', animalSchema);
+		var dog = new Animal({ type: 'dog' });
+
+		dog.findSimilarTypes(function (err, dogs) {
+		  console.log(dogs); // woof
+		});
+
 
 
 
@@ -30,6 +54,7 @@ db.once('open', function (callback) {
 	
 	var Person = mongoose.model('Person', personSchema);
 	// Construct model from schema
+	// mongoose.model(modelName, schema):
 
 	// Model is a class in which we construct our documents
 	// Each document will be a zach with whatever was defined in our schema

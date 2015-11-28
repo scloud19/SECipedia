@@ -1,11 +1,45 @@
-// Can attach methods on Schema
+These are my notes while going through the Mongoose docs
 
-// NOTE: methods must be added to the schema before compiling it with mongoose.model()
-kittySchema.methods.speak = function () {
-  var greeting = this.name
-    ? "Meow name is " + this.name
-    : "I don't have a name";
-  console.log(greeting);
-}
+Make Takeaways
+	On the schema, you can set a date default that has a default: Date.now
+		(see below)
 
-var Kitten = mongoose.model('Kitten', kittySchema);
+
+Defining the schema
+	Each schema maps to a MongoDB collection and defines its "shape"
+
+	The permitted SchemaTypes
+		String
+		Number
+		Date
+		Buffer
+		Boolean
+		Mixed
+		ObjectId
+		Array
+
+	Ex:
+	var mongoose = require('mongoose');
+	var Schema = mongoose.Schema;
+
+	var blogSchema = new Schema({
+	  title:  String,
+	  author: String,
+	  body:   String,
+	  comments: [{ body: String, date: Date }],
+	  date: { type: Date, default: Date.now },
+	  hidden: Boolean,
+	  meta: {
+	    votes: Number,
+	    favs:  Number
+	  }
+	});
+
+	Schema.add 
+		Use to add additional keys later
+
+
+
+
+
+
