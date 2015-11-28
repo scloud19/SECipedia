@@ -3,6 +3,14 @@ General Notes
 
 	If utilizing sockets, check the 'clientError' event for error handling/logging (look below)
 
+	To parse URLS
+		EX:
+		require('url').parse('/status?name=ryan', true)
+		{ href: '/status?name=ryan',
+		  search: '?name=ryan',
+		  query: { name: 'ryan' },
+		  pathname: '/status' }
+
 HTTP server/client
 	require('http')
 
@@ -566,6 +574,91 @@ HTTP server/client
 					 In the example above, this works because 'hello world' only contains single byte chacters.
 
 					 If the body contains higher coded characters, utilize Buffer.byteLength()
+
+		http.IncomingMessage
+			Is created by http.Server or http.ClientRequest and passed as the first argument to the 'request' and 'response' event (respectively).
+
+			Events
+				close
+					The underlying connection was closed.
+
+
+					Just like the 'end' event, 'close' only occurs only once per response
+
+			Can be used to access response status, headers, and data
+
+			Is a Readable Stream
+
+			message.headers
+				The req/resp headers object
+
+			message.httpVersion
+
+			message.method
+				Only valid for requests from http.Server
+
+				Read only STRING
+
+				Ex: 'GET'
+
+			message.setTimeout(msecs, callback)
+				calls message.connection.setTimeout(msecs, callback)
+
+			message.statusCode
+				Only valid for the response obtained from http.ClientRequest
+
+				Ex: 404
+
+			message.statusMessage
+				Only valid for the response obtained from http.ClientRequest
+
+				EX: 'OK', "Internal Server Error"
+
+			message.socket
+				net.Socket OBJ associated with the connection
+
+				For HTTPS, to get the client's auth details
+					request.socket.getPeerCertificate()
+
+			message.trailers
+				OBJ
+
+				Only populated at the 'end' event
+
+			message.url
+				Only valid for request obtained from http.Server
+
+				Contains the URL that is present in the actual HTTP request:
+
+				EX:
+				GET /status?name=ryan HTTP/1.1\r\n
+				Accept: text/plain\r\n
+				\r\n
+
+				// Then request.url will be:
+				'/status?name=ryan'
+
+http.createServer([requestListener])
+	returns an instance of http.Server
+
+	requestListener
+		Added to the 'request' event
+
+http.get(options[, callback])
+	Convenience method for http.request()
+		Sets the method to GET
+		Calls req.end() automatically
+
+	EX:
+	http.get("http://www.google.com/index.html", function(res) {
+	  console.log("Got response: " + res.statusCode);
+	}).on('error', function(e) {
+	  console.log("Got error: " + e.message);
+	});
+
+
+
+
 
 
 
