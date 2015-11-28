@@ -21,6 +21,99 @@ HTTP server/client
 		Module parses HTTP messages into headers and body but that's it
 			Allows for many implementations
 
+	http.request(options[, callback])
+		Node maintains several connections per server to make HTTP requests.
+			You can utilize this function to make these requests.
+
+		returns an instance of the http.ClientRequest class.
+			This is a writable stream
+
+		args
+			callback
+				Added as a one time listener for the 'response' event
+			options
+				protocol
+				hostname
+					domain name or IP address of the server that is being requested
+				port
+					Port of remote server
+					DEF 80
+				localAddress
+					Local interface to bind for network connections
+				socketPath
+					Unix domain socket
+					If used don't specify hostname:port
+				method
+					Http request METHOD
+				path
+					ex: 
+					'/index.html?page=12'
+				headers
+					OBJ
+				auth
+					Basic authentication to compute an Authorization header
+					Ex:
+					'user:password'
+				agent
+					When an agent as utilized the req will default to 'Connection: keep-alive'
+						keep-alive allows us to use a single TCP connection to send/receive multiple HTTP requests/responses.
+							If not used, a new connection will be established for every REQ/RESP pair.
+					Possible Vals
+						undefined
+							use globalAgent for this host and port
+						Agent OBJ
+							false
+								opts out of connection pooling with an Agent.
+								Utilizes 'Connection: close'
+									If this is in the req or resp header,The connection SHOULD NOT be considered persistent after the current REQ/RESP is complete
+
+				EX: Uploading a file with a POST
+				var postData = querystring.stringify({
+				  'msg' : 'Hello World!'
+				});
+
+				var options = {
+				  hostname: 'www.google.com',
+				  port: 80,
+				  path: '/upload',
+				  method: 'POST',
+				  headers: {
+				    'Content-Type': 'application/x-www-form-urlencoded',
+				    'Content-Length': postData.length
+				  }
+				};
+
+				var req = http.request(options, function(res) {
+				  console.log('STATUS: ' + res.statusCode);
+				  console.log('HEADERS: ' + JSON.stringify(res.headers));
+				  res.setEncoding('utf8');
+				  res.on('data', function (chunk) {
+				    console.log('BODY: ' + chunk);
+				  });
+				  res.on('end', function() {
+				    console.log('No more data in response.')
+				  })
+				});
+
+				req.on('error', function(e) {
+				  console.log('problem with request: ' + e.message);
+				});
+
+				// write data to request body
+
+				req.write(postData);
+
+
+				req.end();
+
+				Node usually buffers the headers until .write() or .end() is called
+					It tries to pack headers/body into one TCP packet
+
+				Remember, with http.request() you must always call .end()
+
+
+
+
 	http.Agent class
 		Used for pooling sockets used in HTTP client requests
 			Pool
@@ -655,6 +748,8 @@ http.get(options[, callback])
 	}).on('error', function(e) {
 	  console.log("Got error: " + e.message);
 	});
+
+
 
 
 
