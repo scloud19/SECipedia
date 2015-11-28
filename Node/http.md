@@ -519,7 +519,60 @@ HTTP server/client
 
 				Ex:
 				response.statusMessage = 'Not found';
-			
+
+			response.write(chunk[, encoding][, callback])
+				The first time this is called, it will send the buffered header information and the first body to the client.
+
+				The second time this is called, Node assumes that you're going to be streaming data and buffers the response up to the first chunk of the body.
+
+				return
+					true
+						if the entire data was flushed successfully to the kernel buffer
+					false
+						if all or part of the data was queued in user memory.
+							at this point the 'drain' event will be emitted when the buffer is free again (for writes)
+
+				implicit header mode
+					If response.write() is called AND response.writeHead() hasn't been called, this mode will be invoked and the implicit headers will be flushed
+
+				Sends a chunk of the response body.
+					This method can be invoked multiple times to provide successive chunks of the body.
+
+					This has to do with the raw HTTP body
+
+				args
+					callback
+						invoked when the chunk has been flushed
+
+			response.writeContinue()
+				Sends a HTTP/1.1 100 Continue message to the client
+					This indicates that the request body should be sent.
+
+					Look at the 'checkContinue' event on the Server.
+
+			response.writeHead(statusCode[, statusMessage][, headers])
+				This method must only be called once on a message and it must be called before response.end()
+
+				You SHOULD call this method before calling response.write()
+
+				Ex:
+				var body = 'hello world';
+
+				response.writeHead(200, {
+				  'Content-Length': body.length,
+				  'Content-Type': 'text/plain' });
+				  
+				 Content-Length is given in bytes (not characters)
+					 In the example above, this works because 'hello world' only contains single byte chacters.
+
+					 If the body contains higher coded characters, utilize Buffer.byteLength()
+
+
+
+		
+
+
+
 
 
 
