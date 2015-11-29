@@ -70,6 +70,17 @@ Front Matter defaults
 		'defaults' key in _config.yml
 			Is an array of scope/value pairs that defines which defaults should be set for a particular file path, and optionally, a file type in that path.
 
+			Order of presidence
+				The most specific path wins
+					See example below
+
+
+			'types' key
+				Can be set to
+					pages, posts, drafts, ANY_COLLECTION_YOU_DEFINE
+				
+				We specify a type because we wouldn't ALL files in the project to have a default layout (ex: css, etc.)
+
 		Ex: Add a default layout to all files that are posts
 			defaults:
 			  -
@@ -79,8 +90,42 @@ Front Matter defaults
 			    values:
 			      layout: "default"
 
-			// We specify a type because we wouldn't ALL files in the project to have a default layout (ex: css, etc.)
-			
+
+		Ex: Muliple scope/value pairs
+		defaults:
+		  -
+		    scope:
+		      path: ""
+		      type: "posts"
+		    values:
+		      layout: "my-site"
+		  -
+		    scope:
+		      path: "projects"
+		      type: "pages"
+		    values:
+		      layout: "project" # overrides previous default layout
+		      author: "Mr. Hyde"
+
+			 // This path would reference the projects folder (if it exists)
+			 // These files will have the page.author variable set to "Mr. Hyde"
+
+		Ex: Utilizing your own colleciton in the config
+			collections:
+			  - my_collection:
+			    output: true
+
+			defaults:
+			  -
+			    scope:
+			      path: ""
+			      type: "my_collection" # a collection in your site, in plural form
+			    values:
+			      layout: "default"
+
+
+
+
 
 
 
