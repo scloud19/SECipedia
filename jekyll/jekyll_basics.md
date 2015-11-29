@@ -1,6 +1,25 @@
 // These are my notes while going through the jekyll documentation
 
+// This file includes BASIC commands, etc.
+
 What is Jekyll?
+	Static site generator
+
+	Process
+		Takes a template directory containing raw text files.
+		Runs the contents through a converter
+			Markdown, etc.
+			Liquid rendered
+		Outputs a ready-to-publish static website
+
+Quick-start
+	~ $ gem install jekyll
+	~ $ jekyll new myblog
+		// jekyll new .
+			// Installs into the CWD
+	~ $ cd myblog
+	~/myblog $ jekyll serve
+	# => Now browse to http://localhost:4000
 	
 
 jekyll build
