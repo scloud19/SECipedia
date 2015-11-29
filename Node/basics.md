@@ -1,6 +1,12 @@
 Tips. 
 	We think of Node as a web server, but it can be a file server, email server, etc.
+
 Basic Definitions
+	serialize
+		Translating an object into a format that can be stored or transfered.
+
+	Deserialize
+		Converting the format back into an object	
 	asynchronous (from Node's perspective)
 		Will not block the event loop
 

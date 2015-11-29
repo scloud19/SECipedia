@@ -15,6 +15,8 @@ TODO:
 	Blend this with stream info in basics.md
 
 Streams
+	The idea of dealing with things a chunk at a time.
+	
 
 	popular npm modules for stream creation
 		through - Helps with pause/resume stream logic
