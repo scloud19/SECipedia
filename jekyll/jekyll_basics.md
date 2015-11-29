@@ -45,9 +45,4 @@ $ jekyll serve --detach
 	--detach
 		allows us to keep this process in the BG
 
-_config.yml
-	Place this in the root of the source directory
 
-	Options
-		source: _source
-		destination: _deploy
