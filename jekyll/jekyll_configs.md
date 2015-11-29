@@ -4,6 +4,8 @@ Key Takeaways
 
 	Don't use tabs in config files
 
+	Utilize Front Matter defaults for DRY content
+
 _config.yml Options
 	source: _source
 		Where files will be read FROM
@@ -47,7 +49,7 @@ jekyll build FLAGS
 		{% endif %}
 
 		Ex: Of env utilization in development
-			
+
 
 
 jekyll serve FLAGS
@@ -58,9 +60,27 @@ jekyll serve FLAGS
 		Skips the initial site build that occurs before the server is started
 
 
+Front Matter defaults
+	Used so you don't need to repeat Front Matter material over and over
+		Ex: Same layout to each file
+			Same categories to a post
+			Author name custom variable
 
+	To set
+		'defaults' key in _config.yml
+			Is an array of scope/value pairs that defines which defaults should be set for a particular file path, and optionally, a file type in that path.
 
+		Ex: Add a default layout to all files that are posts
+			defaults:
+			  -
+			    scope:
+			      path: "" # an empty string here means all files in the project
+			      type: "posts"
+			    values:
+			      layout: "default"
 
+			// We specify a type because we wouldn't ALL files in the project to have a default layout (ex: css, etc.)
+			
 
 
 
