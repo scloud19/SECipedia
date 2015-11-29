@@ -51,6 +51,8 @@ Basic Definitions
 		Types of streams
 			Readable - You can only read from the stream
 			Writable - You can only write from the stream
+				writable
+					When inspecting a writable stream, if you see a writable property == true
 			Duplex - You can do both
 			Transform - Allows you to change the data as it moves through the stream (you can to reads and writes)
 			"Classic" - 
@@ -327,7 +329,9 @@ Node Basics
 			They both point to the same object, but sometimes exports wont work the way it should (in certain module patterns)
 				In general: use module.exports
 
-	Event Emitter 
+	Event Emitter
+		_events
+			When you inspect an object and it has this property, then it is an eventEmitter 
 		process
 			a global object which is an instance of EventEmitter.
 
@@ -367,6 +371,3 @@ Node Basics
 					}
 	HTTP Parser
 		Is a parser for HTTP messages written in C.  It parses both requests and responses.  This is utilized inside of node
-
-CURRENTLY AT
-	lecture 59- 8:30
