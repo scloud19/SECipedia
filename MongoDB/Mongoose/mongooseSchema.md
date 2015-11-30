@@ -1,12 +1,19 @@
-These are my notes while going through the Mongoose docs
+These are my notes while going through the Mongoose docs and various other sources
 
-Make Takeaways
+Main Takeaways
 	On the schema, you can set a date default that has a default: Date.now
 		(see below)
+	If using validations, make sure that you handle the error appropriately so the server wont crash if validation fails.
+
+	Schema.Types.Mixed
+		Utilized for objects with varied types in their key/val pairs
+			Great for using on API
 
 
 Defining the schema
 	Each schema maps to a MongoDB collection and defines its "shape"
+
+	If a field is submitted, but it isn't in the schema, Mongoose ignores it.
 
 	The permitted SchemaTypes
 		String
@@ -23,7 +30,13 @@ Defining the schema
 	var Schema = mongoose.Schema;
 
 	var blogSchema = new Schema({
-	  title:  String,
+	  title:  {
+	  	type: String,
+	  	required: true,
+	  	trim: true
+  	  },
+  	  followers: [Schema.Types.ObjectId],
+  	  meta: Schema.Types.Mixed,
 	  author: String,
 	  body:   String,
 	  comments: [{ body: String, date: Date }],
@@ -34,6 +47,26 @@ Defining the schema
 	    favs:  Number
 	  }
 	});
+
+	Misc key/values in Schema
+		Schema.Types.Mixed
+			Any object can be utilized here (with varied data types of field, etc.)
+
+		Schema.Types.ObjectId
+			Mongo Object ID type
+		trim
+			If we're saving a string, it will trim the excess whitespace
+		required
+			forces us to have this field
+
+			If this is utilized, make sure that the server doesn't crash when a validation fails.
+				Utilize appropriate error handling
+		match
+			For strings, we can match a REGEX for validation purposes
+		minlength
+			The minimum length of a string
+		maxlength
+			The maximum length of a string
 
 	Schema.add 
 		Use to add additional keys later
