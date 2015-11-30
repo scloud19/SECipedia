@@ -28,6 +28,7 @@ Defining the schema
 	Ex:
 	var mongoose = require('mongoose');
 	var Schema = mongoose.Schema;
+	var enumRoles = ['admin', 'user'];
 
 	var blogSchema = new Schema({
 	  title:  {
@@ -36,7 +37,10 @@ Defining the schema
 	  	trim: true
   	  },
   	  followers: [Schema.Types.ObjectId],
-  	  meta: Schema.Types.Mixed,
+  	  role: {
+  	  	type: String,
+  	  	enum: enumRoles
+  	  },
 	  author: String,
 	  body:   String,
 	  comments: [{ body: String, date: Date }],
@@ -49,8 +53,10 @@ Defining the schema
 	});
 
 	Misc key/values in Schema
+		enum
+			Only allows the values given in the enum array
 		Schema.Types.Mixed
-			Any object can be utilized here (with varied data types of field, etc.)
+			Any data type can be utilized here
 
 		Schema.Types.ObjectId
 			Mongo Object ID type
