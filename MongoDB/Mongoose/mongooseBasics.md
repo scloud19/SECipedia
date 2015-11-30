@@ -18,6 +18,8 @@ Main Takeaways
 		}
 
 		var Animal = mongoose.model('Animal', animalSchema);
+			// For a third argument, you can optionally pass a collection name STRING
+
 		var dog = new Animal({ type: 'dog' });
 
 		dog.findSimilarTypes(function (err, dogs) {
@@ -34,6 +36,7 @@ npm install mongoose
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://ADDRESS/DB_NAME');
 // We start a connection, but we need to know if it's successful
+// If you don't currently have DB_NAME, it will be created for you
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -73,6 +76,7 @@ db.once('open', function (callback) {
 	  // Logic if successfully saved
 	});
 
+
 	// We can access all of our documents that are connected to the Person model (which is current the 'zach' document)
 
 	Person.find(function (err, people) {
@@ -103,3 +107,9 @@ db.once('open', function (callback) {
 
 });
 
+.save() vs .update()
+	If you want to fire Mongoose pre/post hooks, utilize the save method (not update)
+
+	Utilize save if you're writing a whole object back to mongoDB
+
+	update is for adding additional information to a preexisting object that ALREADY exists in Mongo
