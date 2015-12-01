@@ -18,6 +18,13 @@ Key Takeaways
 		Ex: Linking to a PDF for readers to download
 		… you can [get the PDF]({{ site.url }}/assets/mydoc.pdf) directly.
 
+	code snippets
+		Ex:
+			{% highlight ruby linenos %}
+			{% endhighlight %}
+
+			linenos
+				adds line numbers
 
 Posts
 	_posts
@@ -37,11 +44,21 @@ Posts
 
 	Creating an index/list of posts for the blog
 		Ex: Create a list of links to your blog posts using Liquid templating language
-		
+
 			<ul>
 			  {% for post in site.posts %}
 			    <li>
 			      <a href="{{ post.url }}">{{ post.title }}</a>
+			      {{ post.excerpt }}
 			    </li>
 			  {% endfor %}
 			</ul>
+
+			// The excerpt is wrapped it p tags for you
+
+		Excerpts
+			excerpt_separator in _config.yml
+				Can customize how the excerpts look
+
+			Ex: Removing an excerpt's p tags
+				{{ post.excerpt | remove: '<p>' | remove: '</p>' }}
