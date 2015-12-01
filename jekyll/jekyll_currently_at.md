@@ -1,2 +1,1 @@
-http://jekyllrb.com/docs/configuration/
-	Precedence
+http://jekyllrb.com/docs/templates/#options-for-the-slugify-filter
