@@ -27,6 +27,16 @@ Key Topics
 		Once you are logged in, what can you do?
 
 	Users
+		Types of users (clients)
+			admin
+				Can do administrative commands that are server wide
+
+				These are users who are created in the admin db 
+
+			regular
+				Access a specific db
+				read/write or readOnly
+
 		Roles
 			The localhost exception
 				This exception (on this connection) only allows for the creation of the first user on the admin DB
@@ -87,6 +97,31 @@ Security
 					(authentication/authorization)
 					This is communication is NOT encrypted in this option without compiling with ssl option
 						The initial handshake (where credentials are shared) IS encrypted though
+
+					Ex: Creating client authentication and adding a user via localhost exception 
+
+						mongod --auth
+						// Start mongod
+
+						mongo --host localhost
+						// Connect into shell via localhost exception
+
+						// In shell...
+
+						use admin
+						db.addUser("the_admin", "PASSWORD")
+
+						// Now our localhost exception is gone and we need to authenticate to do anything
+
+						db.auth("the_admin", "PASSWORD")
+
+						// Note: This is in the context of the admin DB.  (We used "use admin")
+						// This makes it possible to have the same username across different databases but give them different passwords.
+
+
+
+
+
 				--keyFile FILE_NAME
 					This flag works on mongod/mongos
 					intracluster security/communication
