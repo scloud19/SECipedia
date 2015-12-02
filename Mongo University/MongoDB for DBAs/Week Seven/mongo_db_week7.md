@@ -1,5 +1,10 @@
-Important Security Links
-	https://docs.mongodb.org/manual/security/?_ga=1.140501363.1940964481.1446699147
+Additional Security Information
+	mongo_vulnerabilities.md
+
+General Tips
+	Moving between dbs on the system
+		Ex: 
+			db.getSisterDB('admin').system.users.find()
 
 Definitions
 	namespace
@@ -37,6 +42,9 @@ Key Topics
 				Access a specific db
 				read/write or readOnly
 
+				Write permissions
+					Also allow you to create an index
+
 		Roles
 			The localhost exception
 				This exception (on this connection) only allows for the creation of the first user on the admin DB
@@ -69,21 +77,38 @@ Key Topics
 					use admin
 					db.system.users.find()
 				
-				Ex: Creating a user in admin DB
+				Ex: Creating a user in admin DB via the localhost exception
+
+					mongod --auth
+					// Start mongod
+
+					mongo --host localhost
+					// COnnect into shell via localhost exception
+
 					use admin
 
-					var me = {z
+					var me = {
 						user: 'zach',
 						pwd: 'ssh',
 						roles: ['userAdminAnyDatabase', 'readWriteAnyDatabase']
 					}
-
-					// These roles are supported by Mongo.
 					
 					db.createUser( me )
 
+					// Note: This is in the context of the admin DB.  (We used "use admin")
+
+					// This makes it possible to potentially have the same username across different databases but give them different passwords.
+
+					// Once we create the user our localhost exception is gone.  So we can reconnect with the shell (as the user) or...
+
+					db.auth("zach", "ssh")
+
+					// Now we can access the admin db in the same mongo shell.
+
 				Ex: authenticating with the user
 					mongo localhost/admin -u zach -p ssh
+
+				Ex:
 
 
 Security
@@ -98,30 +123,6 @@ Security
 					This is communication is NOT encrypted in this option without compiling with ssl option
 						The initial handshake (where credentials are shared) IS encrypted though
 
-					Ex: Creating client authentication and adding a user via localhost exception 
-
-						mongod --auth
-						// Start mongod
-
-						mongo --host localhost
-						// Connect into shell via localhost exception
-
-						// In shell...
-
-						use admin
-						db.addUser("the_admin", "PASSWORD")
-
-						// Now our localhost exception is gone and we need to authenticate to do anything
-
-						db.auth("the_admin", "PASSWORD")
-
-						// Note: This is in the context of the admin DB.  (We used "use admin")
-						// This makes it possible to have the same username across different databases but give them different passwords.
-
-
-
-
-
 				--keyFile FILE_NAME
 					This flag works on mongod/mongos
 					intracluster security/communication
@@ -135,6 +136,20 @@ Security
 							contains a shared secret key
 							the cluster members use this to cross-authenticate with eachother
 
+							All cluster members must have this same file
+
+							Allows base64 legal characters
+
+							Ex: Creating a keyfile
+
+								touch keyfile
+								chmod 600 keyfile
+
+								// could use your own password for keyfile, or create one
+
+								openssl rand -base64 60 >> keyfile
+
+
 						Machines in the cluster authenticating amongst themselves
 
 						To run Mongo with encryption over the wire (and for intra-cluster communication), you need to compile mongodb with --ssl.
@@ -146,7 +161,7 @@ Security
 								This makes --auth more explicit
 
 								ex:
-								mongos --auth --keyFile FILE
+								mongos --auth --keyFile FILE --replSet HEY
 								mongod --auth --keyFile FILE
 
 								

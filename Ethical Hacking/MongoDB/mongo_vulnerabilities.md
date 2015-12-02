@@ -1,5 +1,12 @@
 MiM = Man in the middle
 
+Important Security Links
+	https://docs.mongodb.org/manual/security/?_ga=1.140501363.1940964481.1446699147
+
+	https://www.mongodb.com/collateral/mongodb-security-architecture
+		Security Whitepaper of MongoDB
+
+
 Vulnerabilities
 	You have to compile mongo from source utilizing an --ssl flag to have encryption on both the intracluster level and between mongo and clients.
 		Must people probably don't do this.
@@ -18,6 +25,12 @@ Potential Vulnerability
 		Applies only when there are no users created in the Mongo instance.
 
 		Vulnerabilities
+			createUser "in the clear"
+				db.createUser() sends password to the MongoDB instance without encryption. To encrypt the password during transmission, use TLS/SSL.
+
+				Easily intercept passwords from the shell to mongod, mongos?
+					App that "sniffs" this traffic and watches for .createUser invocations?
+
 			< Mongo 3.0
 				Connections that gained access using the localhost exception had unrestricted access to the MongoDB instance
 
