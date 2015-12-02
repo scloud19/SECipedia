@@ -80,19 +80,31 @@ Security
 	Security strategies
 		"Trusted Environment"
 			Locking down ports at the network layer so Mongo isn't publically accessible
-		mongoDB authentication
+		mongoDB authentication/authorization
 			use these flags on the CLI
 				--auth
 					securing client connections and access
+					(authentication/authorization)
+					This is communication is NOT encrypted in this option without compiling with ssl option
+						The initial handshake (where credentials are shared) IS encrypted though
 				--keyFile FILE_NAME
+					This flag works on mongod/mongos
 					intracluster security/communication
+						Is NOT encrypted with this option (without compiling with ssl)
+						This makes sure that all of the members of the cluster are legitimate
+							The initial handshake (where credentials are shared) IS encrypted though
+
+							This is important because if the server is a member of the cluster, you have a high level of access.
+
 						FILE_NAME
 							contains a shared secret key
 							the cluster members use this to cross-authenticate with eachother
 
 						Machines in the cluster authenticating amongst themselves
 
-						To run Mongo with encryption over the wire, you need to compile mongodb with --ssl.
+						To run Mongo with encryption over the wire (and for intra-cluster communication), you need to compile mongodb with --ssl.
+							Ex: scons all --ssl
+								// Need to build mongo from source
 
 						When working with a replica set or sharded cluster
 							in addition to the "--auth" you will pass a "--keyFile FILE_NAME"
