@@ -23,7 +23,12 @@ Key Takeaways
 
 		Need to have 'jekyll-gist' gem in project
 
-		
+		Ex:
+			{% gist parkr/931c1c8d465a04042403 jekyll-private-gist.markdown %}
+
+			The second argument (Optional)
+				Used to specify the filename in the gist to display
+
 
 
 
