@@ -1,8 +1,33 @@
 Key Takeaways
 	To create a post, simply put a file in the _posts directory with the format "YEAR-MONTH-DAY-title.MARKUP"
 
+	If sharing code snippets, make them a gist and share via the gist tag
+
 	post_url
 		A tag that you can utilize to link to other posts without having to worry about the URL's breaking
+
+			Ex: {% post_url 2010-07-21-name-of-post %}
+
+				If you're utilizing sub-directories
+
+				{% post_url /subdir/2010-07-21-name-of-post %}
+
+				No need to include the file ext when using post_url
+
+			Ex: Utilizing post_url in markdown
+
+				[Name of Link]({% post_url 2010-07-21-name-of-post %})
+
+	gist
+		Tag that embeds gists
+
+		Need to have 'jekyll-gist' gem in project
+
+		
+
+
+
+
 
 	assets directory
 		create this in the root folder
@@ -19,12 +44,22 @@ Key Takeaways
 		… you can [get the PDF]({{ site.url }}/assets/mydoc.pdf) directly.
 
 	code snippets
+		Rouge is the default highlighter
+
+		For this to work, you need a highlighting stylesheet
+			Ex: https://github.com/mojombo/tpw/blob/master/css/syntax.css
+
+			If using linenumbers, you can change their styling via '.lineno'
+
 		Ex:
 			{% highlight ruby linenos %}
 			{% endhighlight %}
 
 			linenos
 				adds line numbers
+
+		To find the correct tag for your language
+			https://github.com/jneen/rouge/wiki/List-of-supported-languages-and-lexers
 
 Posts
 	_posts

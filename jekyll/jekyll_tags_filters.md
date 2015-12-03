@@ -1,3 +1,7 @@
+Key Takeaways
+	When using liquid, you can always specify variables for filenames, etc.
+		EX: {% include {{MY_VAR}} %}
+
 Templates
 	Jekyll supports all standard Liquid tags/filters
 
@@ -52,6 +56,44 @@ Templates
 			{{ page.tags | sort }}
 			{{ site.posts | sort: 'author' }}
 			{{ site.pages | sort: 'title', 'last' }}
+
+		Making Slugs
+			slugify
+				Options (aka what to filter)
+					none
+						no characters
+					raw
+						spaces
+					default
+						spaces and non-alphanumeric characters
+					pretty
+						spaces and non-alphanumeric characters except for ._~!$&'()+,;=@
+	Tags
+		includes
+			For reusing small page fragments within your site
+
+			All includes must be placed in
+				<source>/_includes/
+
+			Ex: Using an include
+				{% include footer.html %}
+
+				OR
+
+				{% include {{MY_VAR}} %}
+
+			You can also pass parameters
+				Literals have quotes, variables don't
+
+				Ex: {% include footer.html param="value" variable-param=page.variable %}
+
+					In the include, you can access the param via:
+						{{ include.param }}
+
+
+
+
+
 
 		
 
