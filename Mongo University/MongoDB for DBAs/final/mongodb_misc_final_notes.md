@@ -38,5 +38,7 @@ Atomic Transactions
             Ex: An error during the write operation doesn't roll back all the changes that occured before.
               If you need "all-or-nothing" look at a two-phase commit.
               Look at https://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/ for more info and caveats
+mongod, mongos processes
+  Cache metadata, so if you're changing something of this nature (ex: shard config documents in a mongod config server), make sure to restart the servers in question (and any server that could be impacted)
 
 
