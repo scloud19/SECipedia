@@ -8,3 +8,15 @@ Rollback
 
     Rolled Back Data
       dbPath/rollback
+
+When trouble shooting RS, look at the optimeDate of the primary and secondaries.  Make sure that the secondaries match the optimeDate of the primary
+
+bsondump
+  Converts BSON files into human-readable formats (JSON, etc.)
+
+  Can be utilized to read the files from mongodump
+
+  Is a dianostic tool for inspecting BSON files.  It's not used for data ingestion or for any other functionality.
+
+  Ex:
+    bsondump collection.bson > collection.json
