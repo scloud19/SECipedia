@@ -25,7 +25,23 @@ General Tips/Info:
 			whenver machine restarts, it will start apache
 
 EC2
-	
+	Can create through
+		Autoscaling group
+		CloudFormation
+		Elastic Beanstalk
+		OpsWorks
+		Manually
+
+	Security
+		CloudTrail
+			Monitoring the calls made to EC2 API for your account (and calls made by the AWS Console), CLI, etc.
+
+	Elastic IP Addresses
+		Static IPs for dynamic cloud computing
+
+	Tags
+		Metadata for an instance
+
 	Instance Pricing
 		On Demand Instances
 			Fixed hourly pricing
@@ -66,7 +82,7 @@ EC2
 			Data warehousing and Parallel Computing
 
 	Storage Options
-		Local Instance Storage
+		Local Instance Storage aka Instance Store Volume
 			non-persistent
 		
 		Elastic Block Store (EBS)
@@ -206,10 +222,13 @@ EC2
 			
 			Step 4 - Add EC2 Instances
 				Enable Cross-Zone Load Balancing
-					What availability zones should be balanced.  
-						If unchecked, only the current availability zone.
+					I.e.: What availability zones should be balanced.  
+					
+					If unchecked, only the current availability zone.
+					
 					Checked: Can balance into all availability zones across the overarching region that it's created in.
 						You would want this checked because it's a good idea to spread ec2's across AZs 
+	
 	Bootstrap scripts
 		Run at the root level right when the instance goes live
 		Ex:
@@ -226,9 +245,10 @@ EC2
 
 			All of the same prompts when spinning up an EC2 instance
 
-		Create Auto scaling group
+		Create auto scaling group
 			You proceed to this step after you finish the launch configuration
-			You can utilize the health checks of an LB (seen in this file) to spin up additional ec2 instances in the auto scale group
+			
+			You can utilize the health checks on an LB (seen in this file) to spin up additional ec2 instances in the auto scale group
 
 			Step 1 - Configure Auto Scaling group details
 				Subnet
@@ -239,16 +259,22 @@ EC2
 	
 	Placement Groups
 		Only related to EC2s
-		A placement group is a logical grouping of instances with a single AZ.  Using placement groups enbables applications to participate in a low-latency, 10 Gbps network.  Placement groups are recommended for applications that benefit from low latency, high network throughput, or both.
+		
+		A placement group is a logical grouping of instances with a single AZ.  Using placement groups enables applications to participate in a low-latency, 10 Gbps network.  Placement groups are recommended for applications that benefit from low latency, high network throughput, or both.
 			You can't have a placement group across multiple AZs
+		
 			Helps with really good network throughput from one EC2 instance to another
+		
 			The name you specify for a placement group must be unique within your AWS account
-			Only certain types of instances can be launched in a place group
+		
+			Only certain types of instances can be launched in a placement group
 				Compute Optimized
 				GPU
 				Memory Optimized
 				Storage Optimized
+
 				Amazon recommends using the same instance type (and size) for all instances within the placement group
+				
 				You can't merge placement groups
 
-				Youc an't move an existing instance into a placement group.  You can create an AMI from your existing instance, and then launch a new instance from the AMI into a placement group
+				You can't move an existing instance into a placement group.  You can create an AMI from your existing instance, and then launch a new instance from the AMI into a placement group
