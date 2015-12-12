@@ -31,7 +31,14 @@ General Tips/Info:
 
 EC2
 	Regions/AZ
+		You can migrate an instance from one AZ to another
+		
 		Whenever you are in the AWS console, you'll only see resources for a given REGION
+
+		All communications between regions is across the public internet.  Thus you should use appropriate encryption
+			EC2 cross-region data transfer
+				Data transfer between regions is charged at the Internet data transfer rate for both the sending and receiving instance
+
 
 		EC2 resources are either global, tied to a region, or tied to a AZ.
 
@@ -84,6 +91,8 @@ EC2
 
 	Elastic IP Addresses
 		Static IPs for dynamic cloud computing
+
+		Can be utilized to rapidly mask the failure of an instance in one AZ by remapping the address to an instance in another AZ.
 
 	Tags
 		Metadata for an instance
@@ -203,6 +212,9 @@ EC2
 		Steps (in AWS console)
 			3 - Configure Instance
 				Subnet - Is the availability zone for the instance
+					Utilize the default
+						This will match based on system health and available capacity.
+							Only specify a custom when you need to logically isolate from a previous instance (fault tolerance)
 
 				Shutdown behavior (Stop or Terminate)
 					When you shutdown the instance, AWS can stop it (and the instance will persist) or terminate (the instance is deleted)
@@ -281,6 +293,7 @@ EC2
 			If sharing an AMI, AWS has an in-depth document for securely doing this.
 				Topics include shredding SSH keys (public keys and private keys)
 				Erasing bash history, etc.
+
 
 	Load Balancing (LB)
 		Client --> LB --> Servers
