@@ -1,5 +1,7 @@
 Key terms
 	AZ - Availability Zone
+	instance type
+		determines the hardware of the computer used for your instance
 
 Additional items to do for exam
 
@@ -24,7 +26,20 @@ General Tips/Info:
 		chkconfig httpd on
 			whenver machine restarts, it will start apache
 
+		A full instance hour will be charged for every transition from a stopped state to a running state.
+			Even if this occurs multiple times WITHIN the same hour.
+
 EC2
+	Regions/AZ
+		Whenever you are in the AWS console, you'll only see resources for a given REGION
+
+		EC2 resources are either global, tied to a region, or tied to a AZ.
+
+		Each region is completely independent
+			If you want to replicate across regions, you need to do this yourself
+		AZ's are physically isolated, but the AZ in a region are connected through low latency links.
+
+
 	Ways to access
 		AWS CLI
 			Provides commands for a broad set of AWS products
@@ -55,6 +70,11 @@ EC2
 	Security
 		CloudTrail
 			Monitoring the calls made to EC2 API for your account (and calls made by the AWS Console), CLI, etc.
+
+		Use IAM to control access to your AWS resources, including your instances.
+
+		Disable password-based logins for instances launched from your AMI.
+
 
 	Compliance
 		EC2 is compliant with Payment Card Industry (PCI) Data Security Standard (DSS)
@@ -167,6 +187,15 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		Must select an AMI that's in the same region as the instance
+			There are ways to copy the AMI to the region that you're using.
+		Categories
+			backed by Amazon EBS
+				root device for an instance launched from the AMI is an EBS volume.
+
+			backed by instance store
+				root device for an instance launched from the AMI is an instance store volume created from a template store in S3.
+
 		Amazon Linux AMI
 			Comes with a lot of items, including the AWS command line.  Very helpful because you don't have to install the CLI every time you boot up a new instance
 
@@ -177,6 +206,27 @@ EC2
 
 				Shutdown behavior (Stop or Terminate)
 					When you shutdown the instance, AWS can stop it (and the instance will persist) or terminate (the instance is deleted)
+
+					If you're doing a 'shutdown -h' in linux
+						State defaults to
+							'stop' 
+								if using an EBS volume for root
+							'terminate'
+								if using an instance-store root device
+
+					You will not be charged when instances are in these states.
+
+					Stopped state
+						All EBS volumes remain attached
+
+						In this state, you can attach or detach EBS volumes, create an AMI, change the kernel, RAM, instance type.
+
+					Terminated state
+						Attached EBS volumes are deleted unless the volume's deleteOnTermination attr is set to false.
+
+						The instance itself is deleted.
+
+
 
 				Advanced Details
 					Are bootstrap scripts that will be run in your EC2 instance when the instance is created
@@ -217,6 +267,8 @@ EC2
 			A: Add more EBS volumes to the instance and put them in a RAID configuration in the given OS
 	
 	Creating an AMI
+		'/' contains the AMI used to boot the instance
+
 		Create a snapshot of a volume
 		Go into the snapshot tab and select the snapshot
 		Actions tab, select "Create Image"

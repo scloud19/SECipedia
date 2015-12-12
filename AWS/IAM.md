@@ -2,6 +2,11 @@ Need to revisit for exam: Active Directory Integration
 
 
 IAM
+    Strategies
+        Outside access
+            Create 2 security groups.  1 for public access/1 for private.
+
+
     To initially set up everything in the main IAM console, you need to make sure that all of the security "checkmarks" are finished for the Security Status dialog
 
     Allows you to manage users and their level of access to the AWS Console
