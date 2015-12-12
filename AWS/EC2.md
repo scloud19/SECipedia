@@ -72,6 +72,39 @@ EC2
 		Elastic Block Store (EBS)
 			persistent
 
+			Useful linux commands
+				If you set up an EBS and attach it to an instance, you need to do these steps
+					lsblk - See file system and mount points
+						Thus you can see all attached EBS volumes
+					file -s PATH_TO_VOLUME
+						PATH is usually /dev/NAME_GIVEN_IN_LSBLK
+						If returned value is "data", then that means we don't have a formatted file system.  It's just raw.
+							If the name of the file system is returned, we skip the mkfs and simply mount the drive
+					mkfs -t ext4 /dev/NAME_GIVEN_IN_LSBLK
+						make file system
+						-t type
+					mkdir MOUNTPOINT_DIR
+					mount /dev/NAME_GIVEN_IN_LSBLK MOUNTPOINT_DIR
+				If you need to unmount the volume
+					umount /dev/NAME_GIVEN_IN_LSBLK
+
+					You can now go into the actions menu and detach the volume
+
+				If you go into the mountpoint directory, it is still there, but any attached files by the volume wont be present
+
+			Volumes (from EC2 console view)
+				Volume Type
+					gp2 - General Purpose SSD drive
+					standard - magnetic
+			
+				Once you've created a volume, make sure to attach it to a specific ec2 instance under the actions menu
+				
+				Snapshots
+					After creating a volume, you can create a snapshot for backup purposes
+					
+					Another use case: You can create your whole dev/QA ENV on magnetic storage, and when you are ready to transition QA over to PROD, you can take a snapshot of the volume and then create a volume from the snapshot (and set the storage type to SSD for example)
+
+
 			EBS' are tailored for EC2 utilization
 
 			You cant mount the same EBS storage into multiple Ec2s
@@ -136,56 +169,31 @@ EC2
 	Security Groups
 		A firewall that allows you to set inbound and outbound rules for different ports/protocols
 
-		By default all inbound traffic is restricted and all outbound traffic is allowed
+		By default, all inbound traffic is restricted and all outbound traffic is allowed
 
-	EBS
-		Useful linux commands
-			If you set up an EBS and attach it to an instance, you need to do these steps
-				lsblk - See file system and mount points
-					Thus you can see all attached EBS volumes
-				file -s PATH_TO_VOLUME
-					PATH is usually /dev/NAME_GIVEN_IN_LSBLK
-					If returned value is "data", then that means we don't have a formatted file system.  It's just raw.
-						If the name of the file system is returned, we skip the mkfs and simply mount the drive
-				mkfs -t ext4 /dev/NAME_GIVEN_IN_LSBLK
-					make file system
-					-t type
-				mkdir MOUNTPOINT_DIR
-				mount /dev/NAME_GIVEN_IN_LSBLK MOUNTPOINT_DIR
-			If you need to unmount the volume
-				umount /dev/NAME_GIVEN_IN_LSBLK
-
-					If you go into the mountpoint directory, it is still there, but any attached files by the volume wont be present
-				You can now go into the actions menu and detach the volume
-		Volumes (from EC2 console view)
-			Volume Type
-				gp2 - General Purpose SSD drive
-				standard - magnetic
-		Once you've created a volume, make sure to attach it to a specific ec2 instance under the actions menu
-			Snapshots
-				After creating an volume, you can create a snapshot for backup purposes
-				Another use case is you can create you whole dev/QA ENV on magnetic storage, and when you are read to transition QA over to PROD, you can take a snapshot of the volume and then create a volume from the snapshot (and set the storage type to SSD for example)
-
+		
 	Scenarios
 		You aren't using RDS and you want to run your db on an EC2 instance.  You aren't getting the disk I/O that you want, what do you do? 
 			A: Add more EBS volumes to the instance and put them in a RAID configuration in the given OS
+	
 	Creating an AMI
 		Create a snapshot of a volume
-		Go into snapshot tab and select the snapshot
+		Go into the snapshot tab and select the snapshot
 		Actions tab, select "Create Image"
 
 		The resulting AMI will be stored under the images tab
 			By default the AMI is private
-			Go back into actions tab and modify image permissions to make it public (if needed)
+			Go back into the actions tab and modify the image permissions to make it public (if needed)
 				You can also share it with a specific AWS account
+			
 			If sharing an AMI, AWS has an in-depth document for securely doing this.
-				Topics include shreding SSH keys (public keys and private keys)
+				Topics include shredding SSH keys (public keys and private keys)
 				Erasing bash history, etc.
+
 	Load Balancing (LB)
 		Client --> LB --> Servers
 
-		Note: You can use this LB created here to load balance into an Auto Scaling Group (which is generally touched upon below
-			)
+		Note: You can use the LB created here to load balance into an Auto Scaling Group (which is generally touched upon below)
 
 		Create a LB in EC2 console
 			Define the mappings of ports on the LB to ports on EC2 instances (they dont have to be the same)
@@ -195,10 +203,11 @@ EC2
 			
 			Step 2 (Configure Health Check)
 				Set the ping path to index.html (or a small healthcheck text file)
+			
 			Step 4 - Add EC2 Instances
 				Enable Cross-Zone Load Balancing
-					What availability zones could be balanced.  
-					If unchecked, only the current availability zone.
+					What availability zones should be balanced.  
+						If unchecked, only the current availability zone.
 					Checked: Can balance into all availability zones across the overarching region that it's created in.
 						You would want this checked because it's a good idea to spread ec2's across AZs 
 	Bootstrap scripts
