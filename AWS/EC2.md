@@ -25,6 +25,26 @@ General Tips/Info:
 			whenver machine restarts, it will start apache
 
 EC2
+	Ways to access
+		AWS CLI
+			Provides commands for a broad set of AWS products
+			Support on Windows, Mac, Linux
+		
+		AWS EC2 CLI
+			Commands for EC2, EBS, VPC
+			Supprt on Windows, Mac, Linux
+
+		Language specific SDK
+			Provide basic functions that automate tasks such as cryptographically signing your requests, retrying the requests, error handling.
+
+		You can also interact/configure EC2 instances remotely via the Query API.
+			HTTP/HTTPS requests that use GET/POST
+
+			For client to EC2 communication
+
+
+
+	
 	Can create through
 		Autoscaling group
 		CloudFormation
@@ -35,6 +55,12 @@ EC2
 	Security
 		CloudTrail
 			Monitoring the calls made to EC2 API for your account (and calls made by the AWS Console), CLI, etc.
+
+	Compliance
+		EC2 is compliant with Payment Card Industry (PCI) Data Security Standard (DSS)
+
+		To see all compliant AWS services
+			http://aws.amazon.com/compliance/pci-dss-level-1-faqs/
 
 	Elastic IP Addresses
 		Static IPs for dynamic cloud computing
@@ -55,8 +81,6 @@ EC2
 			Ex: You can have the reserved servers as a base and utilize the on-demand servers for scaling groups
 
 		Spot Instances
-			Enable you to bid whatever price you want
-			
 			Only use this if your application has flexible start and end times
 
 			You set a maximum price that you're willing to pay, and if the current price is under that, you get the instance.  However, if at any time the prices exceeds your maximum price, then your instance is lost.
