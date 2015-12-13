@@ -1,3 +1,7 @@
+Out of the complete EC2 user guide, I haven't Done
+	http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-tutorials.html
+		The tutorials listed in this tab
+
 Key terms
 	AZ - Availability Zone
 	instance type
@@ -15,6 +19,31 @@ General Tips/Info:
 		Get public IP
 			curl http://169.254.169.254/latest/meta-data/public-ipv4
 	
+	Best Practices
+		Remember to regularly patch the OS and all applications inside
+
+		Use separate EBS volumes for the operating system vs your data
+
+		Only use the instance store for temporary data.
+
+		Use instance metadata and custom resource tags to track resources.
+
+		Regularly back up your instance using EBS snapshots.
+
+		Deploy critical components of you app across multiple AZ and replicate your data appropriately.
+
+		Design your apps to handle dynamic IP addressing when your instance starts.
+			EX: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
+
+		Setup appropriate monitoring
+			http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring_ec2.html
+
+		Ensure that you can handle failover.
+			Basic EX: Manually attach network interface or Elastic IP address to a replacement instance.
+				OR, you can utilize an auto scaling.
+
+			Regularly test the process of recovering your instances and EBS volumes if they fail.
+
 
 	Helpful linux commands
 		service httpd status
@@ -181,7 +210,6 @@ EC2
 			persistent
 
 			Useful linux commands
-				Add a volume to your instance
 					An AWS EBS volume serves as network-attached storage
 
 					View mounted volumes
@@ -205,6 +233,8 @@ EC2
 
 
 				If you set up an EBS and attach it to an instance, you need to do these steps
+					NOTE: Sometimes when you create a volume from a snapshot, the data on the volume is contained in a partition (such as /dev/xvdf1) instead of the root of the volume. In such a case, you would mount the /dev/xvdf1 partition
+
 					lsblk - See file system and mount points
 						Thus you can see all attached EBS volumes
 					file -s PATH_TO_VOLUME
@@ -439,6 +469,7 @@ EC2
 						By default, go ahead and select every AZ possible
 			Step 2 - Configure scaling policies
 				When a certain alarm is triggered, you can increase/decrease the ec2 group size.
+
 	
 	Placement Groups
 		Only related to EC2s
