@@ -288,6 +288,10 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		An AMI includes the following
+			A template for the root volume for the instance
+				EX: OS, App Servers, Applications
+			Launch permissions that control which AWS accounts can use the AMI to launch instances
 		Must select an AMI that's in the same region as the instance
 			There are ways to copy the AMI to the region that you're using.
 		Categories
