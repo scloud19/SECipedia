@@ -30,6 +30,22 @@ General Tips/Info:
 			Even if this occurs multiple times WITHIN the same hour.
 
 EC2
+	Connecting
+		utilize the public DNS name
+			This can change if the instance is stopped
+
+		Connect via browser
+			You can connect via the browser in the AWS Console.
+			This will automatically input the IP and you can even cache the location of your pem file (on the HD).
+			User-name will be ec2-user for AWS AMI Image
+
+		Connect via mac/linux
+			Once you download the .pem file make sure to set the permissions so only you can read it
+				chmod 400 PEM_FILE.pem
+
+			$  ssh -i /path/my-key-pair.pem ec2-user@public_dns_name
+
+
 	Security Groups
 		Ex name: IAM_USERNAME_SG_REGION_IDENT
 		Act as a firewall for associated instances
@@ -52,9 +68,7 @@ EC2
 			Suggested naming conventions:
 				IAM_USER_NAME-key-pair-REGION_NAME
 
-			Once you download the .pem file make sure to set the permissions so only you can read it
-				chmod 400 PEM_FILE.pem
-
+			
 	Regions/AZ
 		You can migrate an instance from one AZ to another
 
@@ -167,6 +181,29 @@ EC2
 			persistent
 
 			Useful linux commands
+				Add a volume to your instance
+					An AWS EBS volume serves as network-attached storage
+
+					View mounted volumes
+						df -h
+
+						EX:
+						Filesystem             Size   Used  Avail Use% Mounted on
+						/dev/xvda1             8.0G   1.1G   6.9G  14% /
+						tmpfs                  298M      0   298M   0% /dev/shm
+
+						The root device contains the image used to boot the instance.  There's also room to install additional software, etc.
+
+					In EC2 navigation plane, under EBS, click Volumes.
+						Select the same AZ that you used when you created your instance.
+					
+					Create the volume
+
+					Find the volume in the console and select 'Attach Volume'
+
+
+
+
 				If you set up an EBS and attach it to an instance, you need to do these steps
 					lsblk - See file system and mount points
 						Thus you can see all attached EBS volumes
@@ -225,10 +262,12 @@ EC2
 			There are ways to copy the AMI to the region that you're using.
 		Categories
 			Items across both categories
-				When an instance is launched, the image that's used to boot the instance is copied to the root volume (typically sda1)
+				When an instance is launched, the image that's used to boot the instance is copied to the root volume (typically sda1).  There is typically additional space on the root volume for adding software,etc.
 
 			backed by Amazon EBS
 				root device for an instance launched from the AMI is an EBS volume which is created from an EBS snapshot.
+
+				The root (and any EBS volumes that you attach additionally) will be housed in the same AZ as your instance.
 
 				AMI's backed by EBS are the recommended path because they launch faster and use persistent storage.
 
