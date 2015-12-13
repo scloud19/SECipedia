@@ -1,7 +1,3 @@
-Out of the complete EC2 user guide, I haven't Done
-	http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-tutorials.html
-		The tutorials listed in this tab
-
 Key terms
 	AZ - Availability Zone
 	instance type
@@ -57,6 +53,7 @@ General Tips/Info:
 
 		A full instance hour will be charged for every transition from a stopped state to a running state.
 			Even if this occurs multiple times WITHIN the same hour.
+			EX: An instance hour is $.10.  If you left the instance on for an hour, you would be charged $.10.  If you stopped and restarted that instance twice during that hour, you would be charged $.30 for that hour of usage. (initial $.10 for the start, then 2 x $.10 for the subsequent starts
 
 EC2
 	Connecting
@@ -288,12 +285,36 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		If creating an AMI
+			You need to look into
+				Which flavors of the Amazon Linux AMI are recommended on each Amazon EC2 instance type. (http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/)
+
+		Linux AMIs use one of two types of virtualization
+			paravirtual (PV)
+
+			hardware virtual machine (HVM)
+				Recommended for the best performance.
+
+
+			Main differences between the above types
+				The way in which they boot and whether they can take advantage of special hardware extensions (CPU, network, and storage) for better performance.
+
+
+
+		General Tips
+			You can utilize a public AMI, customize it and then create your own AMI from that.
+
 		An AMI includes the following
 			A template for the root volume for the instance
 				EX: OS, App Servers, Applications
+			
 			Launch permissions that control which AWS accounts can use the AMI to launch instances
+
+			Block device mapping that specifies the volumes to attach to the instance when it's launched
+
 		Must select an AMI that's in the same region as the instance
 			There are ways to copy the AMI to the region that you're using.
+		
 		Categories
 			Items across both categories
 				When an instance is launched, the image that's used to boot the instance is copied to the root volume (typically sda1).  There is typically additional space on the root volume for adding software,etc.
@@ -337,6 +358,18 @@ EC2
 				These types of instances don't support the "stop" action, only terminate.
 
 				Data is deleted if the instance fails.
+
+				Instance attributes are fixed for the life of an instance
+					EX: You can't change the instance type, kernel, RAM disk, and user data, etc.  This is because you can't STOP the instance to make the changes.
+
+					Cost benefits vs EBS backed instances
+						Instance Store Backed
+							You're charged for instance usage and storing your AMI in S3
+
+						EBS Backed
+							You're charged for instance usage, EBS volume usage, and storing your AMI as an EBS snapshot
+
+
 
 		Amazon Linux AMI
 			Comes with a lot of items, including the AWS command line.  Very helpful because you don't have to install the CLI every time you boot up a new instance
