@@ -6,6 +6,8 @@ IAM
         Outside access
             Create 2 security groups.  1 for public access/1 for private.
 
+        Don't give people the creds for the main AWS account.  For example, Setup an 
+
 
     To initially set up everything in the main IAM console, you need to make sure that all of the security "checkmarks" are finished for the Security Status dialog
 

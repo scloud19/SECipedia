@@ -32,7 +32,7 @@ General Tips/Info:
 EC2
 	Regions/AZ
 		You can migrate an instance from one AZ to another
-		
+
 		Whenever you are in the AWS console, you'll only see resources for a given REGION
 
 		All communications between regions is across the public internet.  Thus you should use appropriate encryption
@@ -199,11 +199,46 @@ EC2
 		Must select an AMI that's in the same region as the instance
 			There are ways to copy the AMI to the region that you're using.
 		Categories
+			Items across both categories
+				When an instance is launched, the image that's used to boot the instance is copied to the root volume (typically sda1)
+
 			backed by Amazon EBS
-				root device for an instance launched from the AMI is an EBS volume.
+				root device for an instance launched from the AMI is an EBS volume which is created from an EBS snapshot.
+
+				AMI's backed by EBS are the recommended path because they launch faster and use persistent storage.
+
+				these ami's automatically have an EBS volume attached
+
+				When launching an EBS-backed instance, an EBS volume is created for each EBS snapshot that's referenced by the AMI that you use.  You can optionally use other EBS volumes or instance store volumes as well.
+
+				Stopped state
+						All EBS volumes remain attached
+
+						In this state, you can attach or detach EBS volumes, create an AMI, change the kernel, RAM, instance type, change the size of the instance, attach your root volume to a different running instance for debugging, etc.
+
+				Terminated state
+					By default, the root device volume and the other EBS volumes attached during LAUNCH (aka from AMI, others attached during config) are automatically deleted when the instance terminates.
+
+					By default, any EBS volumes that you attach to a RUNNING instance are detached with their data intact on termination.  You can attach and detached volume to any running instance.
+
+				EBS backed instance failure
+					Stop and then start again (try this first)
+
+					Automatically snapshot all relevant volumes and create a new AMI.
+						http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
+					
+
+
+
 
 			backed by instance store
 				root device for an instance launched from the AMI is an instance store volume created from a template store in S3.
+
+				Instances that use this setup automatically have instance store volumes available, with one serving as the root device volume.
+
+				These types of instances don't support the "stop" action, only terminate.
+
+				Data is deleted if the instance fails.
 
 		Amazon Linux AMI
 			Comes with a lot of items, including the AWS command line.  Very helpful because you don't have to install the CLI every time you boot up a new instance
@@ -228,13 +263,8 @@ EC2
 
 					You will not be charged when instances are in these states.
 
-					Stopped state
-						All EBS volumes remain attached
-
-						In this state, you can attach or detach EBS volumes, create an AMI, change the kernel, RAM, instance type.
-
 					Terminated state
-						Attached EBS volumes are deleted unless the volume's deleteOnTermination attr is set to false.
+						
 
 						The instance itself is deleted.
 
