@@ -30,6 +30,31 @@ General Tips/Info:
 			Even if this occurs multiple times WITHIN the same hour.
 
 EC2
+	Security Groups
+		Ex name: IAM_USERNAME_SG_REGION_IDENT
+		Act as a firewall for associated instances
+
+		If launching an EC2 instance in a VPC, you can utilize the VPC console to set up the security groups
+
+		If you plan to launch instances in multiple regions, you'll need to create a security group in each region.
+			In general, make sure the security group is in the same region as your key-pair
+
+		CIDR notation for only 1 IP:
+			IP/32
+
+
+	Key Pairs
+		AWS uses public-key cryptography to secure the login information for your instance.
+			A linux instance has no password; you use a key pair to log in to your instance via ssh.
+
+			If you plan to launch the ec2 instance in multiple regions, you'll need to create a key-pair for each region.
+
+			Suggested naming conventions:
+				IAM_USER_NAME-key-pair-REGION_NAME
+
+			Once you download the .pem file make sure to set the permissions so only you can read it
+				chmod 400 PEM_FILE.pem
+
 	Regions/AZ
 		You can migrate an instance from one AZ to another
 
@@ -226,7 +251,7 @@ EC2
 
 					Automatically snapshot all relevant volumes and create a new AMI.
 						http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
-					
+
 
 
 
