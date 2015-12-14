@@ -285,6 +285,30 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		Security considerations
+			If utilizing a non-amazon public AMI, you need to make sure that there isn't any pre-installed credentials that would allow unwanted access to your instance, or any pre-configured remote logging that could transmit sensitive data to a third party.  These are just a few examples.
+
+			In general, check the documentation for the Linux distro used by the AMI for info about improving the security of the system.
+
+			While doing the following sanitation/check, initiate 2 ssh sessions until you've removed credentials that you don't recognize and confirmed that you can still log into your instance via SSH.
+				Find any unauthorized public SSH keys.  The only key in the file should be the key used to launch the AMI.
+					sudo find / -name "authorized_keys" -print -exec cat {} \;
+						http://unix.stackexchange.com/questions/12902/how-to-run-find-exec
+				Disable password-based authentication for root.
+					Open ssh_config and edit the PermitRootLogin
+						PermitRootLogin without-password
+							OR
+						PermitRootLogin No
+							To disable completely
+				
+				Check whether there are any other user accounts that are able to log in to your instnace.
+
+				Check for open ports that you aren't using and running network services listening for incoming connections.
+
+				Prevent preconfigured remote logging
+
+
+
 		If creating an AMI
 			You need to look into
 				Which flavors of the Amazon Linux AMI are recommended on each Amazon EC2 instance type. (http://aws.amazon.com/amazon-linux-ami/instance-type-matrix/)
