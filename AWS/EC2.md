@@ -303,6 +303,10 @@ EC2
 
 				Disable Local Root Access
 					sudo passwd -l root
+						Double check this
+
+						Does not impact sudo
+					
 				
 				Check whether there are any other user accounts that are able to log in to your instnace.
 
