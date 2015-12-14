@@ -294,18 +294,25 @@ EC2
 				Find any unauthorized public SSH keys.  The only key in the file should be the key used to launch the AMI.
 					sudo find / -name "authorized_keys" -print -exec cat {} \;
 						http://unix.stackexchange.com/questions/12902/how-to-run-find-exec
-				Disable password-based authentication for root.
+				Disable password-based remote authentication for root.
 					Open ssh_config and edit the PermitRootLogin
 						PermitRootLogin without-password
 							OR
 						PermitRootLogin No
 							To disable completely
+
+				Disable Local Root Access
+					sudo passwd -l root
 				
 				Check whether there are any other user accounts that are able to log in to your instnace.
 
 				Check for open ports that you aren't using and running network services listening for incoming connections.
 
-				Prevent preconfigured remote logging
+				Prevent preconfigured remote logging by deleting the existing configuration file and restart the rsyslog service
+
+				Make sure that all cron jobs legit
+
+				Run a yum update, etc. on a regular basis.  You need to make sure that this doesn't break any of your other software, etc.
 
 
 
