@@ -107,6 +107,42 @@ EC2
 				Credit Example
 					For example, if a t2.small instance had a CPU utilization of 5% for the hour, it would have used 3 CPU credits (5% of 60 minutes), but it would have earned 12 CPU credits during the hour, so the difference of 9 CPU credits would be added to the CPU credit balance. Any CPU credits in the balance that reached their 24 hour expiration date during that time (which could be as many as 12 credits if the instance was completely idle 24 hours ago) would also be removed from the balance. If the amount of credits expired is greater than those earned, the credit balance will go down; conversely, if the amount of credits expired is fewer than those earned, the credit balance will go up.
 
+				What happens if you use all of the credits?
+					Performance will remain at the baseline performance level.
+
+					You can't buy more credits, you need to move to a larger T2 size or a fixed performance instance (M3,C3, etc.)
+
+				You can see the credit balance in the CloudWatch console.
+
+				"Burst times"
+					CPU credits are spent more quickly than they are earned.
+
+			C4 Instances
+				Ideal for compute-bound applications that need high performance processors
+					Ex:
+							Batch processing workloads
+							Media transcoding
+							High-traffic web servers, massively multiplayer online (MMO) gaming servers, ad serving engines, etc.
+							High performance computing
+
+				Hardware specs
+					Go to AWS for all instances for latest info.
+
+				EBS-optimized by default
+					Deliver dedicated block storage throughput to EBS ranging from 500 Mbps to 4,000 Mbps
+
+					You can enable enhanced networking capabilities.
+						Gives significantly higher packet per second (PPS) performance, lower latencies and overall higher network performance.
+
+						Can cluster C4 instances in a placement group
+
+						c4.8xlarge
+							Ability to control processor C-states and P-states on Linux.
+								C-states
+									Control the sleep levels that a core can enter when it's inactive
+
+									Ex: With the exception of C0, where the CPU is active and busy doing something, a C-state in an idle stat
+
 
 
 
