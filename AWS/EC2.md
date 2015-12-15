@@ -58,6 +58,60 @@ General Tips/Info:
 			EX: An instance hour is $.10.  If you left the instance on for an hour, you would be charged $.10.  If you stopped and restarted that instance twice during that hour, you would be charged $.30 for that hour of usage. (initial $.10 for the start, then 2 x $.10 for the subsequent starts
 
 EC2
+	Instance Types
+
+
+
+		T2
+			Moderate baseline performance and the capability to burst to significantly higher performance as required by your workload.
+
+			Intended for workloads that don't use the full CPU consistently, but occasionally need a "boost"
+
+			Exs: web servers, dev envs, small dbs.
+
+			Part of free tier
+
+			Can't be a
+				Spot Instance 
+				Dedicated Instance
+			
+			CPU credits
+				These are for T2 instances because they are the only type that can "burst"
+					Traditional EC2 types provide fixed performance, but T2 instances provide a baseline level of CPU performance with the ability to burst above that level. 
+				
+				One CPU credit is equal to one vCPU running at 100% utilization for one minute.
+
+				Other combinations of vCPUs, utilization, and time are also equal to one CPU credit.
+					Ex: 1 vCPU running at 50% utilization for 2 mins OR
+							2 vCPUs (on t2.medium and t2.large, for ex) running at 25% utilization for two mins.
+
+				How CPU credits are earned
+					http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html
+						Look at the credits earned table, etc.
+
+					Each T2 instance starts with a CPU credit balance and then continuously recieves a set rate of CPU credits per hour, depending on the instance size.
+
+					When a T2 instance uses fewer CPU resources than its base performance allows (i.e. it's idling, etc.), the unused CPU credits (or the net between what was earned/spent) is stored in a credit balance for up to 24 hours.  This "built" credits will allow for bursting.
+
+					When the T2 instance requires more CPU resources than its base performance allows, it uses credits from the CPU credit balance to burst up to 100% utilization.
+						The more credits your T2 instance has, the more time it can burst beyond its base performance level when more performance is needed.
+
+				CPU credits expiring
+					Initial CPU credits don't expire, but they are used first when an instance uses CPU credits.
+
+					The non-initial earned credits will expire in 24 hours
+
+					The CPU credit balance for an instance does not persist between instance stops/starts
+						Once the instance restarts, it will receive its initial credit balance again.
+
+				Credit Example
+					For example, if a t2.small instance had a CPU utilization of 5% for the hour, it would have used 3 CPU credits (5% of 60 minutes), but it would have earned 12 CPU credits during the hour, so the difference of 9 CPU credits would be added to the CPU credit balance. Any CPU credits in the balance that reached their 24 hour expiration date during that time (which could be as many as 12 credits if the instance was completely idle 24 hours ago) would also be removed from the balance. If the amount of credits expired is greater than those earned, the credit balance will go down; conversely, if the amount of credits expired is fewer than those earned, the credit balance will go up.
+
+
+
+
+
+
 	Connecting
 		utilize the public DNS name
 			This can change if the instance is stopped
@@ -288,6 +342,9 @@ EC2
 	
 	AMIs - Amazon Machine Image
 		Amazon Linux AMI
+			Security
+				AL AMIs are configured to automatically install security updates at launch time.
+
 			Package management
 				yum update -y
 					Updates the packages.
@@ -296,9 +353,20 @@ EC2
 				AL is designed to be used with package repos hosted in each AWS ec2 region.
 					These repos provide ongoing updates to packages in the AL AMI, as well as access to hundreds of additional common open source server apps.
 
+
 					These repos are accessed using yum
 						http://aws.amazon.com/amazon-linux-ami/2015.09-packages/
 							A list of packages available for the .09 release
+								Always check to see if a package is here first before installing yourself
+
+							Ex: sudo yum install httpd
+
+							Access to the Extra Packages for Enterprise Linux (EPEL) repo is configured, but isn't enabled by default.  EPEL provides third-party packages in addition to those that are in the AL repos.
+
+				AL supports scp and sftp for uploading apps onto a live instance
+
+
+
 
 
 
@@ -369,6 +437,9 @@ EC2
 						action: PACKAGE_SETUP
 							Prepares yum repo
 							Handles package actions defined in user data
+
+							Your custom applications can be uploaded during the instance launch by using this action.
+
 						action: RUNCMD
 							Runs a shell command
 						action: RUN_USER_SCRIPTS
