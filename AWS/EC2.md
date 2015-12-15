@@ -3,6 +3,8 @@ Key terms
 	instance type
 		determines the hardware of the computer used for your instance
 
+	AL - Amazon Linux
+
 Additional items to do for exam
 
 
@@ -285,6 +287,217 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		Amazon Linux AMI
+			Package management
+				yum update -y
+					Updates the packages.
+					Rolls you from one version of AL to the next.
+
+				AL is designed to be used with package repos hosted in each AWS ec2 region.
+					These repos provide ongoing updates to packages in the AL AMI, as well as access to hundreds of additional common open source server apps.
+
+					These repos are accessed using yum
+						http://aws.amazon.com/amazon-linux-ami/2015.09-packages/
+							A list of packages available for the .09 release
+
+
+
+				lock-on-launch
+					Locks your newly launched instance to receive updates only from the specified release of the AMI.
+						EX: You launch a 2015.03 AMI and lock-on-launch
+							You will receive only the updates that were released prior to the 2015.09 AMI.
+
+						You can do this to mitigate the risk for breaking changes
+
+						To enable
+							Launch an Ec2 instance with the following user data passed to cloud-init.
+								Can pass info into cloud-init using the EC2 console or the ec2-run-instances -f
+
+					You can also lock existing instances
+						Edit /etc/yum.conf.
+						Comment out releasever=latest
+						Run "yum clean all" to clear the cache
+
+
+			AWS provides ongoing security and maintenance updates to all instances running Amazon Linux
+
+			Doesn't allow remote root SSH by default.
+			Password authentication is disabled to prevent brute-force attacks
+
+			Only account that can log in via ssh is "ec2-user"
+				This account has sudo privileges
+
+			image metadata
+				cat /etc/image-id
+								/system-release
+								/system-release-cpe
+									Machine readable file
+
+			For instances launched using IAM roles, a simple script has been included to prepare AWS_CREDENTIAL_FILE, JAVA_HOME, AWS_PATH, PATH, and product-specific environment variables after a credential file has been installed to simplify the configuration of these tools.
+
+			/opt/aws/bin
+				sym links to /bin directories in each of the installed tools directories
+
+			/opt/aws/{apitools|amitools}
+				Products are installed in directories of the form NAME-VERSION and a symlink NAME that is attached to the most recently installed version.
+
+			/opt/aws/{apitools|amitools}/NAME/environment.sh
+				Used by files in /etc/profile.d/ to set product specific ENV variables.
+
+			cloud-init
+				An open source package for bootstrapping Linux images in a cloud ENV.
+					You can specify actions that should happen to your instance at boot time.
+
+					Amazon Linux uses cloud-init to perform initial config of the ec2-user
+
+					More info
+						http://cloudinit.readthedocs.org/en/latest/
+
+					AL uses theses cloud-init actions(config via /etc/sysconfig/cloudinit)
+						action: INIT (always runs)
+							Sets a default locale
+							
+							Sets the hostname
+							
+							Parses and handles user data
+						
+						action: CONFIG_SSH
+							Generates host private SSH keys
+						
+							Adds a user's public SSH keys to .ssh/authorized_keys for easy login and administration
+						
+						action: PACKAGE_SETUP
+							Prepares yum repo
+							Handles package actions defined in user data
+						action: RUNCMD
+							Runs a shell command
+						action: RUN_USER_SCRIPTS
+							Executes user scripts found in user data
+						action: CONFIG_MOUNTS
+							Mounts ephemeral drives
+						action: CONFIG_LOCALE
+							Sets the locale in the locale configuration file according to user data
+
+						Supported User-Data Formats
+							NOTE: You can also specify the user-data (in general) under Launch EC2/Step 3 Configure Instance/Advanced Details
+
+							There are ways to blend different formats by using MIME
+								http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonLinuxAMIBasics.html
+							
+							Gzip	
+								Will be automatically decompressed
+
+							Base64 decoding
+
+							User-Data script
+								Begins with "#!" or Content-Type: text/x-shellscript
+
+								Script is executed by /etc/init.d/cloud-init-user-scripts
+									Occurs during the first boot cycle and it occurs after the initial config actions are performed
+
+							Include file
+								Begins with #include or Content-Type: text/x-include-url
+
+								Contains a list of URLs, one per line.
+									Each of the URLs is read and loaded
+
+								Content can be gzipped, MIME-multi-part, plain text.
+
+							Cloud Config Data
+								Begins with #cloud-config or Content-Type: text/cloud-config
+
+							Cloud Boothook
+								Begins with #cloud-boothook or Content-Type: text/cloud-boothook
+
+								Earliest hook available.
+
+								Note that there is no mechanism provided for running it only one time. The boothook must take care of this itself. It is provided with the instance ID in the environment variable INSTANCE_ID. Use this variable to provide a once-per-instance set of boothook data.
+
+
+								/var/lib/cloud
+									This is where the content is stored
+
+
+
+
+
+
+
+
+
+
+
+		Deregister
+			AMI/Actions/Deregister
+				Note the ID if you're deleting the snapshot
+
+			This will not delete the snapshot
+
+		Copying an AMI
+			Tips
+				Make sure all of the configs for the transfered AMI are updated for the new region.  If not, cross-region performance problems/costs can occur.
+			Benefits
+				You can copy AMIs that you own to other AWS regions to help with fault-tolerance
+
+				Consistent deployment
+					Have a base AMI that you utilize
+
+			Limits
+				You can copy both EBS-Backed and instance store-backed AMIs
+
+				You can copy to as many regions as you'd like
+
+				Linux AMI with encrypted volumes
+					You can't copy it using the console.
+						But, you can manually copy the snapshot for each volume to the destination region.
+							Then, register a new AMI in the destination region, specifying the snapshots in its block device mapping.
+
+
+			Each copy of an AMI results in a new AMI with its own unique AMI ID
+
+			The AMI is launched into the region that it's in.
+
+		Creating you own EBS-Backed AMI from an Instance
+			Launch an instance from an AMI that's similar to the AMI that you'd like to create (aka base AMI).
+
+			Once you're finished with your customizations, stop the instance
+
+			Create the image
+				This is automatically registered by AWS for EBS-Backed AMIs
+
+				The instance is automatically powered down before creating the AMI to ensure that everything on the instance is stopped and in a constant state during the creation process.
+					If you're confident that you DON'T need this, you can override this default behavior (aka dont power down and reboot the instance).  
+						Useful for "hot backups", etc.
+
+					Some file systems, like xfs, can freeze and unfreeze activity
+						This helps make it safe to create the image without rebooting the instance.
+
+				During the creation process, AWS creates snapshots of your instance's root volume and any other EBS volumes attached to your instance.
+					If any of these volumes are encrypted, the new AMI will only launch on instances that support EBS encryption.
+
+				To speed up the creation process, it is recommended to create snapshots of your volumes immediately before creating the AMI.
+					http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-snapshot.html
+
+				Once the process completes, you have a new AMI and snapshot created from the root volume of the instance.
+					When the AMI is launched, AWS creates a new EBS volume for the root volume using the snapshot.
+
+				If you add instance-store volumes or EBS volumes to your instance in addition to the root device, the block device mapping for the new AMI contains is updated with this information.
+					Remember the instance-store volumes will not contain any information.
+
+				When creating the image, you can modify
+					The size of the root volume
+
+				Remember: Don't delete the snapshot that's associated with the AMI
+
+		Creating a Linux AMI from a Snapshot
+			EC2 Console
+				Snapshots (under EBS)
+					Choose the snapshot and choose Actions/Create Image
+						If utilizing a PV virtualization type
+							You must specify a Kernel ID and RAM disk ID.
+							If you choose the default Kernel ID, your instance may fail the health checks if it's incompatible with the instance.
+
+
 		Security considerations
 			If utilizing a non-amazon public AMI, you need to make sure that there isn't any pre-installed credentials that would allow unwanted access to your instance, or any pre-configured remote logging that could transmit sensitive data to a third party.  These are just a few examples.
 
@@ -306,7 +519,7 @@ EC2
 						Double check this
 
 						Does not impact sudo
-					
+
 				
 				Check whether there are any other user accounts that are able to log in to your instnace.
 
@@ -408,6 +621,8 @@ EC2
 
 		Amazon Linux AMI
 			Comes with a lot of items, including the AWS command line.  Very helpful because you don't have to install the CLI every time you boot up a new instance
+
+
 
 	Configuring an instance
 		Steps (in AWS console)
