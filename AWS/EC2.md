@@ -118,7 +118,7 @@ EC2
 					CPU credits are spent more quickly than they are earned.
 
 			C4 Instances
-				Ideal for compute-bound applications that need high performance processors
+				Ideal for compute-bound applications that need high performance processors (think 'C'ompute)
 					Ex:
 							Batch processing workloads
 							Media transcoding
@@ -138,11 +138,29 @@ EC2
 
 						c4.8xlarge
 							Ability to control processor C-states and P-states on Linux.
-								C-states
-									Control the sleep levels that a core can enter when it's inactive
+								C-states control the sleep levels that a core can enter when it's inactive
 
-									Ex: With the exception of C0, where the CPU is active and busy doing something, a C-state in an idle stat
+								P-states control the desired performance (in CPU frequency)
 
+							Provides 36 vCPUs, which can cause some issues in some Linux OSs that have a vCPU limit of 32.
+								It's strongly recommended that you use the latest AMIs
+									Ex: AL AMI 2015.06(HVM)
+
+					Linux GPU Instances
+						For high parallel processing capability
+							provide access to NVIDIA GPUs with up to 1536 CUDA cores and 4 GB of video memory.
+								CUDA allows an API for CUDA enabled GPUs.  It is an architecture that allows for parallel computing of GPUs.
+
+							Can use GPU instances to help with scientific, engineering, graphics apps/workloads, game streaming, 3-D app streaming and rendering apps by leveraging CUDA or OpenCL parallel computing frameworks.
+
+						Can cluster into a placement group
+
+						These instances can't access the GPS unless the NVIDIA drivers are installed
+							NVIDIA provides AMIs for GPU utilization (includes drivers, etc.)
+
+
+
+						
 
 
 
