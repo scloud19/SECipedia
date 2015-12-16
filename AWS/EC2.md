@@ -145,6 +145,80 @@ EC2
 							Provides 36 vCPUs, which can cause some issues in some Linux OSs that have a vCPU limit of 32.
 								It's strongly recommended that you use the latest AMIs
 									Ex: AL AMI 2015.06(HVM)
+					D2 Instances
+						Designed for workloads that require high sequential read/write access to very large data sets on local storage.
+
+						Ex:
+							Massive parallel processing data warehouse.
+
+							MapReduce/Hadoop distributed computing
+
+							Log/data processing apps
+
+						Primary data storage is HSS-based instance storage.
+
+						EBS-optimized by default
+
+						Can enable enhanced networking abilities
+
+						Can cluster into a placement group
+
+						d2.8xlarge
+							Provide the ability to control process C-states and P-states on linux.
+
+							Capable of providing up to 3.5 GB/s read performance and 3.1 GB/s write performance with a 2 MiB block size.
+
+							Has 36 vCPUs, so make sure your kernel supports it.
+
+						Can utilize up to 244 GiB of RAM.
+
+
+
+
+					I2 Instances
+						Optimized to deliver tens of thousands of low-latency, random I/O operations per second (IOPS) to applications
+
+						Good for
+							NoSQL databases
+
+							Clustered DB
+							
+							Online transaction processing systems
+
+						Can enable enhanced networking abilities
+
+						Can cluster in a placement group
+
+						Can enable EBS-optimization to obtain additional, dedicated capacity for Amazon EBS I/O
+
+						Primary data storage is SSD-based instance storage.
+							Only lives for the life of the instance
+
+						If you utilize the SSD-based instance store volumes available to the instance, you can get at least:
+							Look at SSD I/O Performance table on http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/i2-instances.html
+
+						As you fill the SSD-based instance storage on your instance, the number of write IOPS will decrease.
+
+						Write Amplification
+							Ratio of SSD write operations to user write operations
+
+							Occurs from extra work the SSD controller must do to find space, rewrite existing data, and erase unused space so it can be rewritten.  This is collectively a garbage collection process
+
+							To mitigate against this
+								Over-provisioning
+									Leave 10% of the volume unparitioned so that the SSD controller can use it for over-provisioning.  This decreases the storage that you can use, but increases performance.
+
+									This isn't done by default
+
+							I2 instance store-backed volumes support TRIM.
+								You can utilize this command to notify the SSD controller whenever you no longer need data that you've written.
+
+								This gives the controller more free space, which decreases write amplification.
+
+
+
+
+
 
 					Linux GPU Instances
 						For high parallel processing capability
@@ -292,6 +366,55 @@ EC2
 
 			Look at certain times for more competitive rates
 				Ex: Sunday morning between 2-4 am
+
+			Good for data analysis, batch jobs, background processing, and optional tasks.
+				Maybe utilize this with SQS, etc. because the spot instance can be pulled out at any time.
+
+			Prices are adjusted on the hour
+
+			Spot pool
+				Set of unused EC2 instances with the same instance type, operating system, Availability Zone,and network platform (ex: Ec2-VPC)
+
+			Spot price
+				The current market price of a Spot instance per hour.
+					This is set based on the last fulfilled bid.
+
+				Everyone pays the same spot price, regardless of your bid
+
+				At the start of each instance hour, you're billed based on the Spot Price.  If your Spot instance is interrupted in the middle of an instance hour because the Spot price exceeded your bid, you are not billed for the partial hour of use.
+					If you manually terminate your instance at this time, you WILL be billed for the partial hour of use.
+
+				Spot instances with a predefined duration use a fixed hourly price that remains in effect for the Spot instance while it runs.
+
+			Spot instance request (Spot bid)
+				The maximum price that you're willing to pay per hour for a Spot instance.
+
+				A Spot Instance request is either one-time or persistent.
+					Persistent
+						Once the termination of an instance occurs, the spot instance request will be automatically resubmitted.
+
+				The request can optionally specify a duration for the Spot instance.
+
+			Spot fleet
+				A set of Spot instances that is launched based on criteria that you specify.
+
+				The fleet selects the Spot pools that meet your needs and launches Spot instances to meet your target capacity.
+
+				The fleet also maintains the target capacity over time by launching replacement instances once other instances have been terminated.
+
+			When a spot instance is about to be terminated, the instance is given a 2 minute notice.
+
+			Ways of launching
+				Via ec2
+
+				Configure an auto scaling group (with a bid price) to launch spot instances
+
+				With EMR
+
+				Through a CloudFormation Template
+
+				AWS SDK for Java/.Net
+					You can utilize the Java/.Net programming language to manage your Spot Instances
 
 	Different Types of Instances
 		General Purpose
