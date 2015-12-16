@@ -350,71 +350,104 @@ EC2
 		On Demand Instances
 			Fixed hourly pricing
 
-		Reserved Instances
-			1 year or 3 year terms.
+		
 
-			There's a significant discount on the hourly rate for these types of commitments
-			Can pay upfront or as you go
+		Instance Purchasing Options
+			Dedicated Hosts, Spot Instances, Reserved Instances
+			
+			Dedicated Hosts
+				A physical server with EC2 instance capacity fully dedicated to your use.
 
-			Ex: You can have the reserved servers as a base and utilize the on-demand servers for scaling groups
+				Difference between Dedicated Hosts and Dedicated Instances
+					Can both be used to launch EC2 instances onto physical servers that are dedicated to your use.
 
-		Spot Instances
-			Only use this if your application has flexible start and end times
+					There are no performance, security, or physical differences between Dedicated instances and dedicated hosts.  Although, dedicated hosts give you additional visibility and control over how instances are placed on a physical server
 
-			You set a maximum price that you're willing to pay, and if the current price is under that, you get the instance.  However, if at any time the prices exceeds your maximum price, then your instance is lost.
-				You need to be writing to something with durability (i.e. s3 bucket, etc)
+				Pricing and Billing
+					On-Demand billing is automatica
 
-			Look at certain times for more competitive rates
-				Ex: Sunday morning between 2-4 am
+			Reserved Instances
+				1 year or 3 year terms.
 
-			Good for data analysis, batch jobs, background processing, and optional tasks.
-				Maybe utilize this with SQS, etc. because the spot instance can be pulled out at any time.
+				Is not a physical instance, it's a reserved price.
 
-			Prices are adjusted on the hour
+				When you purchase a Reserved instance, the reservation is automatically applied to running instances that match your specified parameters.
 
-			Spot pool
-				Set of unused EC2 instances with the same instance type, operating system, Availability Zone,and network platform (ex: Ec2-VPC)
+				No Upfront and Partial Upfront Reserved instances are billed for usage on an hourly basis, regardless of whether or not they are being used. All Upfront Reserved instances have no additional hourly charges.
 
-			Spot price
-				The current market price of a Spot instance per hour.
-					This is set based on the last fulfilled bid.
+				You can use Auto Scaling or other AWS services to launch the On-Demand instances that use your Reserved instance benefits.
 
-				Everyone pays the same spot price, regardless of your bid
+				You can also sell your Reserved instance
 
-				At the start of each instance hour, you're billed based on the Spot Price.  If your Spot instance is interrupted in the middle of an instance hour because the Spot price exceeded your bid, you are not billed for the partial hour of use.
-					If you manually terminate your instance at this time, you WILL be billed for the partial hour of use.
+				Modifying Reserved Instances
+					You can
+						Switch AZ within the same region
+						Change between EC2-VPC and EC2-Classic
+						Change the instance type within the same family
 
-				Spot instances with a predefined duration use a fixed hourly price that remains in effect for the Spot instance while it runs.
 
-			Spot instance request (Spot bid)
-				The maximum price that you're willing to pay per hour for a Spot instance.
+				There's a significant discount on the hourly rate for these types of commitments
+				Can pay upfront or as you go
 
-				A Spot Instance request is either one-time or persistent.
-					Persistent
-						Once the termination of an instance occurs, the spot instance request will be automatically resubmitted.
+				Ex: You can have the reserved servers as a base and utilize the on-demand servers for scaling groups
 
-				The request can optionally specify a duration for the Spot instance.
+			Spot Instances
+				Only use this if your application has flexible start and end times
 
-			Spot fleet
-				A set of Spot instances that is launched based on criteria that you specify.
+				You set a maximum price that you're willing to pay, and if the current price is under that, you get the instance.  However, if at any time the prices exceeds your maximum price, then your instance is lost.
+					You need to be writing to something with durability (i.e. s3 bucket, etc)
 
-				The fleet selects the Spot pools that meet your needs and launches Spot instances to meet your target capacity.
+				Look at certain times for more competitive rates
+					Ex: Sunday morning between 2-4 am
 
-				The fleet also maintains the target capacity over time by launching replacement instances once other instances have been terminated.
+				Good for data analysis, batch jobs, background processing, and optional tasks.
+					Maybe utilize this with SQS, etc. because the spot instance can be pulled out at any time.
 
-			When a spot instance is about to be terminated, the instance is given a 2 minute notice.
+				Prices are adjusted on the hour
 
-			Ways of launching
-				Via ec2
+				Spot pool
+					Set of unused EC2 instances with the same instance type, operating system, Availability Zone,and network platform (ex: Ec2-VPC)
 
-				Configure an auto scaling group (with a bid price) to launch spot instances
+				Spot price
+					The current market price of a Spot instance per hour.
+						This is set based on the last fulfilled bid.
 
-				With EMR
+					Everyone pays the same spot price, regardless of your bid
 
-				Through a CloudFormation Template
+					At the start of each instance hour, you're billed based on the Spot Price.  If your Spot instance is interrupted in the middle of an instance hour because the Spot price exceeded your bid, you are not billed for the partial hour of use.
+						If you manually terminate your instance at this time, you WILL be billed for the partial hour of use.
 
-				AWS SDK for Java/.Net
-					You can utilize the Java/.Net programming language to manage your Spot Instances
+					Spot instances with a predefined duration use a fixed hourly price that remains in effect for the Spot instance while it runs.
+
+				Spot instance request (Spot bid)
+					The maximum price that you're willing to pay per hour for a Spot instance.
+
+					A Spot Instance request is either one-time or persistent.
+						Persistent
+							Once the termination of an instance occurs, the spot instance request will be automatically resubmitted.
+
+					The request can optionally specify a duration for the Spot instance.
+
+				Spot fleet
+					A set of Spot instances that is launched based on criteria that you specify.
+
+					The fleet selects the Spot pools that meet your needs and launches Spot instances to meet your target capacity.
+
+					The fleet also maintains the target capacity over time by launching replacement instances once other instances have been terminated.
+
+				When a spot instance is about to be terminated, the instance is given a 2 minute notice.
+
+				Ways of launching
+					Via ec2
+
+					Configure an auto scaling group (with a bid price) to launch spot instances
+
+					With EMR
+
+					Through a CloudFormation Template
+
+					AWS SDK for Java/.Net
+						You can utilize the Java/.Net programming language to manage your Spot Instances
 
 	Different Types of Instances
 		General Purpose
