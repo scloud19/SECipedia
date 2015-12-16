@@ -58,6 +58,23 @@ General Tips/Info:
 			EX: An instance hour is $.10.  If you left the instance on for an hour, you would be charged $.10.  If you stopped and restarted that instance twice during that hour, you would be charged $.30 for that hour of usage. (initial $.10 for the start, then 2 x $.10 for the subsequent starts
 
 EC2
+	Instance Lifecycle
+		1) Pending
+			When you launch, the instance enters the pending state
+		2) Running
+			Start to get billed for each hour or partial hour that you keep the instance running.
+		3) Stop/Start (In EBS-backed instances)
+			If the instance is running in Ec2-VPC, it retains its private IP address (thus any associated Elastic IPs still map correctly, etc.)
+
+			Each time you transition an instance from stopped to running, a full instance hour is charged
+
+			Instance Reboot
+				It's recommended you use EC2 interface to reboot your instance instead of running the OS command.
+
+				
+
+
+
 	Instance Types
 
 
@@ -361,10 +378,25 @@ EC2
 				Difference between Dedicated Hosts and Dedicated Instances
 					Can both be used to launch EC2 instances onto physical servers that are dedicated to your use.
 
+					Dedicated instances
+						Dedicated Instances are Amazon EC2 instances that run in a VPC on hardware that's dedicated to a single customer. Your Dedicated Instances are physically isolated at the host hardware level from your instances that aren't Dedicated Instances and from instances that belong to other AWS accounts.
+
+					Dedicated Hosts
+						You can use also use Dedicated Hosts to launch Amazon EC2 instances on physical servers that are dedicated for your use. Dedicated Hosts give you additional visibility and control over how instances are placed on a physical server, and you can reliably use the same physical server over time.
+
 					There are no performance, security, or physical differences between Dedicated instances and dedicated hosts.  Although, dedicated hosts give you additional visibility and control over how instances are placed on a physical server
 
+				Auto scaling groups are not supported
+
+				Placement groups are not supported
+
+				Configurations
+					Dedicated hosts are configured to support a single instance type capacity.  The number of instances you can launch onto a Dedicated host depends on the instance type that the Dedicated host is configured to support.
+						Ex: You allocated a c3.xlarge instance on a Dedicated host.  
+							You have the right to launch up to 8 c3.xlarge instances on that host.
+
 				Pricing and Billing
-					On-Demand billing is automatica
+					An On-Demand pricing model.
 
 			Reserved Instances
 				1 year or 3 year terms.
