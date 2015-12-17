@@ -64,14 +64,25 @@ EC2
 		2) Running
 			Start to get billed for each hour or partial hour that you keep the instance running.
 		3) Stop/Start (In EBS-backed instances)
-			If the instance is running in Ec2-VPC, it retains its private IP address (thus any associated Elastic IPs still map correctly, etc.)
+			If the instance is running in Ec2-VPC, it retains its private IP address (thus any associated Elastic IPs still map correctly, etc.)  
+				Remember that the instance DOES get a new public IP, unless it has an Elastic IP addr (which doesnt change).
 
 			Each time you transition an instance from stopped to running, a full instance hour is charged
+
+
 
 			Instance Reboot
 				It's recommended you use EC2 interface to reboot your instance instead of running the OS command.
 
-				
+				Rebooting an instance is equiv. to rebooting an operating system.  The instance reamins on the same host computer and maintains its public DNS name/IP, private IP address, and any data on its instance store volumes.
+
+				Rebooting an instance doesn't start a new instance billing hour.
+
+			Termination
+				Each EBS volume supports the DeleteOnTermination attr, which controls whether the volume is deleted or preserved when you terminate the instance it's attached to.
+					The default is to delete the root device volume and preserve any other EBS volumes.
+
+				OS shutdown commands always terminate an instance store-backed instance
 
 
 
@@ -583,11 +594,203 @@ EC2
 						Ex: Different types of config docs, etc.
 	
 	AMIs - Amazon Machine Image
+		Performing Updates
+			Start a screen session incase you get disconnected
+
+				$ screen
+
+				If you get disconnected
+					$ screen -ls
+
+					Find the pid
+
+					$ screen -r PID
+
+				When finished
+					$ exit
+
+		 	$ sudo yum update
+
+		 	Reboot the instance
+
+		 	Updating a single package
+		 		$ sudo yum update openssl
+
+
+
+
 		Amazon Linux AMI
+			Compiling from source
+				$ yum groupinstall "Development Tools"
+					Installs compilers, etc.
+
+				If needed, decompress the tarball
+					$ tar -xzf SOFTWARE.tar.gz
+
+					Look at README or INSTALL file in root
+
+			Managing User Accounts in the instance
+				Default system user account
+					ec2-user
+
+					Linux system users shouldn't be confused with IAM users
+
+				Add users
+					$ sudo adduser NEWUSER
+
+					This adds an entry in /etc/passwd, creates a NEWUSER group, and creates a home directory in /home/NEWUSER
+
+					Provide remote access to this account
+						Must create a .ssh directory in the NEWUSER home directory and create a file within named "authorized_keys".  It is this file that will contain a public key.
+
+						$ sudo su - NEWUSER
+							Look for prompt change
+
+						mkdir .ssh
+
+						chmod 700 .ssh
+							Owner can read/write/exec
+
+						touch .ssh/authorized_keys
+
+						chmod 600 .ssh/authorized_keys
+
+						Add in a public key for the user that you created through the EC2 console
+							Ex: ssh-rsa JIBBERISH
+
+				To remove a user from the system
+					$ sudo userdel -r OLD_USER
+						-r deleted the user's home directory and mail spool
+
+
+
+
+			Hostnames
+				With each instance, there is a private DNS
+					Structure
+						ip-12-34-56-78.us-west-2.compute.internal
+
+						compute = service
+
+						Part of this hostname is displayed at the shell prompt when you log into you instance
+
+					Each time you stop and restart a your VPC EC2 instance, these parts change
+						Public IP
+						Public DNS name
+						system hostname
+						shell prompt
+
+				Changing the System Hostname
+					If you have a public DNS name registered for the IP address of your instance (ex zach.com), you can set the system hostname so your instance identifies itself as a part of that domain.
+
+					This name is internal to the instance, and is used for a variety of networking functions
+
+					To change
+						/etc/sysconfig/network
+							HOSTNAME=ENTER_HOST_HERE.COM
+						sudo reboot
+						$ hostname
+							used to verify
+
+					Change the system hostname without a public DNS
+
+						/etc/sysconfig/network
+							HOSTNAME=DOMAIN_PREFIX_HERE.localdomain
+
+						/etc/hosts
+							Change the 127.0.0.1 entry
+								127.0.0.1 DOMAIN_PREFIX_HERE.localdomain DOMAIN_PREFIX_HERE localhost localhost.localdomain
+
+						sudo reboot
+						$ hostname
+							to verify
+
+				Setting up dynamic DNS on your linux instance
+					When you launch an EC2 instance, it's assigned a public IP and public DNS name
+
+					As these names are quite long, etc. there is a "Dynamic DNS" service which provides custom DNS host names.  
+
+					You can use a dynamic DNS provider with EC2 and configure the instance to update the IP address associated with a public DNS name each time the instance starts.
+						Look at http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dynamic-dns.html
+
+						Note that this service might take a few minutes to update the DNS record, so it isn't ideal for failover, etc.
+
+
+			User Data: Scripts and cloud-init directives
+				You can pass scripts and cloud-init directives into the User data field when starting an EC2 instance via the console (step 6)
+
+				Can be leveraged to run commands on startup, etc.
+
+				Only run during the first boot cycle when an instance is launched
+
+				User data scripts must start with #! characters and the path to the interpreter that you want to read the script (commonly /bin/bash)
+
+				Scripts entered as user data are executed as root, so you don't need to use sudo.
+					Any files that you create will be owned by root, so you must modify permissions if you need non-root access.
+
+				Debugging
+					/var/log/cloud-init.log
+						Captures console output while your startup script is running, etc.
+
+
+
+
+
 			Security
 				AL AMIs are configured to automatically install security updates at launch time.
 
-			Package management
+			Package/dependency management
+				Done through yum
+
+				Launch with two repos enabled
+					amzn-main
+					amzn-updates
+
+					Amazon Linux instances have the GPG keys and repository information for the EPEL repository installed by default
+						Contains extra software
+
+				Installing Software Packages from a repo that has been added (or already present)
+					$ yum install PACKAGE
+
+				Install RPM package files that have been downloaded from the internet
+					$ yum install MY_PACKAGE.rpm
+
+
+				Repo Management
+					Adding a repo to /etc/yum.repos.d
+						sudo yum-config-manager --add-repo https://www.test.com/repository.repo
+
+					Enable a yum repo
+						$ sudo yum-config-manager --enable EXAMPLE
+
+					$ yum grouplist
+						To list the groups that are already installed on your system
+						(and the groups available for install)
+
+
+						Yum also combines several packages itno groups that you can install with one command to perform a particular task (ex: installing a web server, etc.)
+
+					To get more info about a group
+						$ yum groupinfo "Group Name"
+
+						This command lists all of the mandatory, default, and optional packages that can be installed with that group.
+
+					Install a group of packages
+						yum groupinstall "GROUP NAME"
+
+						By default, this will only install the madatory and default packages in the group listing
+							EX: To install more than this
+								yum --setopt=group_package_types=mandatory,default,optional groupinstall "Performance Tools"
+
+
+
+
+				Finding Software Packages
+					$ yum search
+						Allows you to search the descriptions of packages that are available for your configured repos.
+
+						Multi word searches in quotation marks only return results that match the exact query.
+
 				yum update -y
 					Updates the packages.
 					Rolls you from one version of AL to the next.
