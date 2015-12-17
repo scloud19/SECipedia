@@ -58,6 +58,7 @@ General Tips/Info:
 			EX: An instance hour is $.10.  If you left the instance on for an hour, you would be charged $.10.  If you stopped and restarted that instance twice during that hour, you would be charged $.30 for that hour of usage. (initial $.10 for the start, then 2 x $.10 for the subsequent starts
 
 EC2
+
 	Instance Lifecycle
 		1) Pending
 			When you launch, the instance enters the pending state
@@ -717,6 +718,11 @@ EC2
 
 
 			User Data: Scripts and cloud-init directives
+				User data is executed only at launch.  
+					If you stop an instance, modify the user data, and start the instance, the new user data is not executed automatically.
+						There is ways to modify the user data in the AWS console.
+
+
 				You can pass scripts and cloud-init directives into the User data field when starting an EC2 instance via the console (step 6)
 
 				Can be leveraged to run commands on startup, etc.
@@ -732,6 +738,12 @@ EC2
 					/var/log/cloud-init.log
 						Captures console output while your startup script is running, etc.
 
+				To access user data inside the instance
+					http://169.254.169.254/latest/user-data
+
+				Ex of launching multiple Ec2 instances (with user data) and using a launch index to script off of what instance should get what user data
+					Example: AMI Launch Index Value
+						http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
 
 
 
@@ -1295,3 +1307,64 @@ EC2
 				You can't merge placement groups
 
 				You can't move an existing instance into a placement group.  You can create an AMI from your existing instance, and then launch a new instance from the AMI into a placement group
+
+	Instance Metadata
+		Great for scripting purposes.
+			Ex: Get me the local IP and do something, etc.
+		Dynamic data
+			Exs: Instance identity document that is generated when the instance in launched
+
+		You can access the user data that you supplied when launching your instance.
+
+		You can only access instance metadata and user data from within the instance, but that data itself isn't protected by cryptography.
+			Don't store sensitive data (passwords, etc.) in this way.
+
+		To view all categories of instance metadata within an instance
+			curl http://169.254.169.254/latest/meta-data/
+				The gets the 'latest' version of the API for the metadata.  Go into the root directory to see all versions.  It might be smart to correlate this to a fixed version of the API.
+
+	Amazon EC2 Run Command
+		Enables you to remotely manage the configuration of your EC2 instances without having to locally login to the instance/s in question.
+
+		You can simultaneously execute commands on multiple instances
+
+
+		Exs:
+			Run Shell scripts
+			Add users or groups and configure permissions
+			View all running services
+			Stop/Start services
+			View system resources
+			View log files
+			Perform file operations
+			Install/Uninstall apps
+
+		This command utilizes pre-defined EC2 Simple Systems Manager (SSM) documents.
+			You determine what you want to do on an instance, and you select the pre-defined SSM document to perform the operation.
+				Ex: AWS-RunShellScript doc to execute shell scripts on an instance
+
+		Runs through the instance's given IAM role.
+			Through IAM, you can control which commands a user/group of users can perform on one or more instances.
+
+		Stores the command history for 30 days, and is also replicated into CloudTrail (persisted until deletion).
+
+		You can send multiple commands at the same time, and they execute asynchronously.
+			The order of command execution is not guaranteed.
+
+		If the instance is unresponsive when the command is issued, it is placed into a queue (for up to 31 days).
+
+	Importing/Exporting Instances
+		You can use the AWS VM Import/Export tools to import VM images from your local ENV into AWS and convert them into AMIs or instances.  
+			Then, you can export the VM images back to your local ENV.
+
+			VM Import/Export is compatible with
+				Citrix Xen
+				Microsoft Hyper-V
+				VMware vSphere
+
+		Can be used to migrate apps and workloads, copy your VM image catalog, create a disaster recovery repo for VM images.
+
+	Monitoring
+		Beginning Steps
+			Establish a baseline for normal performance in the ENV.
+				Ex: CPU/network utilization, disk I/O 
