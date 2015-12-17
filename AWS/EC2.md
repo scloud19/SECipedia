@@ -1368,3 +1368,52 @@ EC2
 		Beginning Steps
 			Establish a baseline for normal performance in the ENV.
 				Ex: CPU/network utilization, disk I/O 
+
+		At a minimum, you should monitor
+			These will help gain a baseline as well, 
+			These EC2 Metrics in CloudWatch
+				CPUUtilization
+				NetworkIn (for network utilization)
+				NetworkOut
+				DiskReadOps
+				DiskWriteOps
+				DiskReadBytes
+				DiskWriteBytes
+			Memory utilization
+			Memory used
+			Memory available
+			Disk Swap utilization
+			Swap used
+			Disk Space utilization
+			Disk Space used
+			Disk Space available
+
+		Automated Monitoring Tools
+			System Status Checks
+				These might need AWS involvement to repair (or you can try starting/stopping your instance to 'reset')
+				Exs:
+					Loss of network connectivity
+					Loss of system power
+					Software issues on the physical host
+					Hardware issues on the physical host
+
+			Instance Status Checks
+				Monitor the software and network configuration of your individual instance.
+
+				These checks detect problems that require your involvement to repair.
+
+				Exs of instance status check failures:
+					Failed system status checks
+					Misconfigured networking/startup config
+					Exhausted memory
+					Corrupted file system
+					Incompatible kernel
+
+			AWS CloudWatch Alarms
+				Watch a single metric over a time period, and perform one or more actions based on the value of the metric.
+					Action is a notification sent to an SNS topic or Auto Scaling policy.  
+
+					Alarms invoke actions for sustained state changes only.  Alarms will not invoke actions simply because they are in a particular state, the state must have changed and been maintained for a specified number of periods.
+
+					CloudWatch Logs
+						Monitor, store, and access your log files from Ec2 instances, CloudTrail, or other sources.
