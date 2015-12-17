@@ -1364,6 +1364,11 @@ EC2
 
 		Can be used to migrate apps and workloads, copy your VM image catalog, create a disaster recovery repo for VM images.
 
+	Scheduling Events for your instances
+		AWS can schedule events for your instances
+			Ex: reboot, stop/start, retirement
+
+
 	Monitoring
 		Beginning Steps
 			Establish a baseline for normal performance in the ENV.
@@ -1389,25 +1394,35 @@ EC2
 			Disk Space available
 
 		Automated Monitoring Tools
-			System Status Checks
-				These might need AWS involvement to repair (or you can try starting/stopping your instance to 'reset')
-				Exs:
-					Loss of network connectivity
-					Loss of system power
-					Software issues on the physical host
-					Hardware issues on the physical host
+			Status Checks
+				AWS performs automated checks on every running EC2 instance to identify hardware and software issues.
 
-			Instance Status Checks
-				Monitor the software and network configuration of your individual instance.
+				Viewing Status checks(creating alarms based on the checks)
+					EC2 Console 
 
-				These checks detect problems that require your involvement to repair.
 
-				Exs of instance status check failures:
-					Failed system status checks
-					Misconfigured networking/startup config
-					Exhausted memory
-					Corrupted file system
-					Incompatible kernel
+				Are performed every minute and each returns a pass/fail status.  If all checks pass, the overall status of the instance is OK.  If one or more checks fail, the overall status is impaired.
+					You can trigger alarms based off of these checks.
+
+				System Status Checks
+					These might need AWS involvement to repair (or you can try starting/stopping your instance to 'reset')
+					Exs:
+						Loss of network connectivity
+						Loss of system power
+						Software issues on the physical host
+						Hardware issues on the physical host
+
+				Instance Status Checks
+					Monitor the software and network configuration of your individual instance.
+
+					These checks detect problems that require your involvement to repair.
+
+					Exs of instance status check failures:
+						Failed system status checks
+						Misconfigured networking/startup config
+						Exhausted memory
+						Corrupted file system
+						Incompatible kernel
 
 			AWS CloudWatch Alarms
 				Watch a single metric over a time period, and perform one or more actions based on the value of the metric.
@@ -1415,5 +1430,19 @@ EC2
 
 					Alarms invoke actions for sustained state changes only.  Alarms will not invoke actions simply because they are in a particular state, the state must have changed and been maintained for a specified number of periods.
 
-					CloudWatch Logs
-						Monitor, store, and access your log files from Ec2 instances, CloudTrail, or other sources.
+			CloudWatch Logs
+				Monitor, store, and access your log files from Ec2 instances, CloudTrail, or other sources.
+
+			EC2 Monitoring Scripts
+				Perl scripts that can monitor memory, disk, swap file usage in your instances.
+					http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html
+
+		Manual Monitoring Tools
+			The Ec2 and CloudWatch console dashboards provide an at-a-glance view of the state of your EC2 env.
+
+			Make sure to check the log files on your ec2 instances
+
+		
+
+
+

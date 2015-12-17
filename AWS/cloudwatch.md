@@ -12,6 +12,8 @@ CloudWatch
 	Detailed Monitoring
 		Polls every minute
 
+	Information is stored for 2 weeks
+
 	You can set alarms based on certain metrics that are being monitored
 		Ex: Send me an email or text every time the CPU Utilization goes over 80%
 			When the alarm occurs, you can define different actions.
@@ -21,3 +23,6 @@ CloudWatch
 				EC2 Action
 					Stop this instance or terminate it
 						Ex: If CPU utilization is less than 10%
+
+	EC2 Monitoring
+
