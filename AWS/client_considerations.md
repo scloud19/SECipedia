@@ -13,6 +13,8 @@ EBS
     Another use case: You can create your whole dev/QA ENV on magnetic storage, and when you are ready to transition QA over to PROD, you can take a snapshot of the volume and then create a volume from the snapshot (and set the storage type to SSD for example)
  
 EC2 instance
+  Recommended security groups for web servers/db servers
+    http://docs.aws.amazon.com/es_es/AmazonVPC/latest/UserGuide/VPC_Scenario3.html
   Set a reminder to run a yum update.
     Need to make sure that there isn't any breaking changes
 

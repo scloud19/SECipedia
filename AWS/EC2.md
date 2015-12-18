@@ -18,6 +18,9 @@ General Tips/Info:
 			curl http://169.254.169.254/latest/meta-data/public-ipv4
 	
 	Best Practices
+		Create a key-pair for each user on a single instance
+			Don't give all users the same key-pair
+
 		Remember to regularly patch the OS and all applications inside
 
 		Use separate EBS volumes for the operating system vs your data
@@ -58,6 +61,75 @@ General Tips/Info:
 			EX: An instance hour is $.10.  If you left the instance on for an hour, you would be charged $.10.  If you stopped and restarted that instance twice during that hour, you would be charged $.30 for that hour of usage. (initial $.10 for the start, then 2 x $.10 for the subsequent starts
 
 EC2
+	Security
+		Security Groups
+			CIDR
+				If you use the /0 prefix after the IP address, this opens the given port (in a security group setting, etc.) to everyone.
+
+				If you're specifying a SINGLE IP for access, utilize the /32 prefix after the IP.
+			A virtual firewall that controls the traffic for one or more instances
+
+			Rules
+				In the source field you can specify
+					1 IP address
+
+					IP address range
+
+					The name of a security group
+						This allows instances associated with the security groups to access eacthother
+
+						This doesn't copy the security rules from one group to another
+
+						You can specify one of the following security groups
+							The current security group
+								Thus there is a rule in the security group that references itself.
+									This will allow traffic from other instances associated with the security group.
+							If EC2-VPC
+								A different security group for the same VPC
+
+				If there are 2 rules for the same port, AWS uses the one that is most permissive (aka "open")
+
+
+				Are always permissive; you can't create rules that deny traffic
+					If a rule for a particular protocol isn't set, the traffic isn't allowed.
+
+				Security groups are stateful
+					If you send a request from your instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules.
+
+					In a VPC, this also means that responses to allowed inbound traffic are allowed to flow out, regardless of outbound rules.
+
+					If your instance (host A) initiates traffic to host B and uses a protocol other than TCP, UDP, or ICMP, your instance’s firewall only tracks the IP address and protocol number for the purpose of allowing response traffic from host B. If host B initiates traffic to your instance in a separate request within 600 seconds of the original request or response, your instance accepts it regardless of inbound security group rules, because it’s regarded as response traffic. For VPC security groups, you can control this by modifying your security group’s outbound rules to permit only certain types of outbound traffic. Alternatively, you can use a network ACL for your subnet — network ACLs are stateless and therefore do not automatically allow response traffic. For more information, see Network ACLs in the Amazon VPC User Guide.
+
+					If you want to ensure that traffic is immediately interrupted when you remove a security group rule, you can use a network ACL for your subnet — network ACLs are stateless and therefore do not automatically allow response traffic. For more information, see Network ACLs in the Amazon VPC User Guide.
+
+
+			Are associated with network interfaces
+				Changing an instance's security groups changes the security groups associated with the primary network interface (eth0).
+
+				You can change the security groups associated with any other network interface.
+
+			You can add multiple security groups to an instance
+
+			If you're using a VPC, you must use security groups created specifically for your VPC.
+				Are you launch an instance in a VPC, you can change its security groups
+
+			You can update a security group at any time, and all associated instances are automatically updated.
+
+
+		Fingerprinting
+			You can utilize the fingerprint that's displayed in EC2's Key Pairs page to verify that the private key you have on your local machine matches the public key that's stored in AWS.
+
+		Deleting A Key Pair
+			You can delete a key pair using the ec2 console
+
+			In this process, you are only deleting EC2's copy of the public key.
+
+			This only revokes access to instances that haven't been launched.  
+
+			If you're using an Auto Scaling group (ex: Elastic Beanstalk), ensure that the key pair that you're deleting is not specified in your launch config.
+				In the event of an emergency, the instance launch fails of the key pair can't be found.
+
+
 
 	Instance Lifecycle
 		1) Pending
