@@ -46,3 +46,6 @@ CloudWatch
     stop, terminate, reboot, recover instances.
       Importance: We need alarms for if an instance fails, etc.
       Look up best practices for these alarms/actions
+
+  Once I find the metrics that I need to follow, find their location at
+    http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring_ec2.html

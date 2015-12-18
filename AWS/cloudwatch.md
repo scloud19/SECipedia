@@ -36,7 +36,7 @@ CloudWatch
 	EC2 Monitoring
 		Can create alarms that automatically stop, terminate, reboot, or recover your EC2 instance.
 			You can add these actions to any alarm that is set on an Ec2 per-instance metric.
-			 
+
 			STOP/TERMINATE
 				Can help you save money.
 			REBOOT/RECOVER
@@ -44,6 +44,20 @@ CloudWatch
 
 				EC2ActionsAccess
 					IAM role enables AWS to perform alarm actions on your behalf.
+
+		Certain metrics aren't provided through CloudWatch.  AWS has provided perl scripts that allow you to monitor memory, swap, disk space metrics.
+			http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html
+
+		Common alarm actions
+			http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingAlarmActions.html
+				Stop Idle Instance
+				Send email about servers with unusually high traffic
+				Stop servers with unusually high traffic
+				Stop an instance experiencing a memory leak
+				stop an impaired instance
+				terminate instances when batch processing jobs are complete
+
+
 
 
 
@@ -59,3 +73,5 @@ CloudWatch
 				AMI ID
 
 			You can also monitor an individual instance in the EC2 Console
+
+
