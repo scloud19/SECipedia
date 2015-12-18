@@ -24,5 +24,30 @@ CloudWatch
 					Stop this instance or terminate it
 						Ex: If CPU utilization is less than 10%
 
-	EC2 Monitoring
+			Send an email based on Load Balancer Latency
+				http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/US_AlarmAtThresholdELB.html
 
+			Send email based on CPU usage
+				http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/US_AlarmAtThresholdEC2.html
+
+			Send email based on EBS Throughput (KiB/s)
+				http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/US_AlarmAtThresholdEBS.html
+
+	EC2 Monitoring
+		Can create alarms that automatically stop, terminate, reboot, or recover your EC2 instance.
+			STOP/TERMINATE
+				Can help you save money.
+			REBOOT/RECOVER
+				Automatically reboot instances or recover them onto new hardware if a system impairment occurs. 
+		For instances on which you've enabled detailed monitoring, you can also get aggregated data across groups of similar instances.
+			Each data point covers the instance's previous 1 minute of activity. (If non-detailed monitoring is enabled, each data point covers the instance's previous 5 minutes of activity.)
+
+			Metrics are completely separate across regions, AWS can't aggregate metrics across regions through CloudWatch
+
+			When aggregating, you can further refine the metrics via dimensions
+
+			You can also aggregate statistics by
+				auto scaling group
+				AMI ID
+
+			You can also monitor an individual instance in the EC2 Console

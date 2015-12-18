@@ -35,4 +35,6 @@ Regions
     Look at what regions you're launching into and their legal considerations.
         
 
-  
+CloudWatch
+  Google common setups for Cloudwatch
+    Look for example in cloudwatch.md
