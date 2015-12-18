@@ -38,3 +38,11 @@ Regions
 CloudWatch
   Google common setups for Cloudwatch
     Look for example in cloudwatch.md
+
+  Look at setting alarms for when CPU utilization is below a threshold for 24 hours
+    Maybe we can stop the instance to save the client money?
+
+  In general, set alarms for
+    stop, terminate, reboot, recover instances.
+      Importance: We need alarms for if an instance fails, etc.
+      Look up best practices for these alarms/actions

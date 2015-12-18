@@ -35,10 +35,18 @@ CloudWatch
 
 	EC2 Monitoring
 		Can create alarms that automatically stop, terminate, reboot, or recover your EC2 instance.
+			You can add these actions to any alarm that is set on an Ec2 per-instance metric.
+			 
 			STOP/TERMINATE
 				Can help you save money.
 			REBOOT/RECOVER
-				Automatically reboot instances or recover them onto new hardware if a system impairment occurs. 
+				Automatically reboot instances or recover them onto new hardware if a system impairment occurs.
+
+				EC2ActionsAccess
+					IAM role enables AWS to perform alarm actions on your behalf.
+
+
+
 		For instances on which you've enabled detailed monitoring, you can also get aggregated data across groups of similar instances.
 			Each data point covers the instance's previous 1 minute of activity. (If non-detailed monitoring is enabled, each data point covers the instance's previous 5 minutes of activity.)
 

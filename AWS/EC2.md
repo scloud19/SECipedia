@@ -1404,6 +1404,10 @@ EC2
 				Are performed every minute and each returns a pass/fail status.  If all checks pass, the overall status of the instance is OK.  If one or more checks fail, the overall status is impaired.
 					You can trigger alarms based off of these checks.
 
+				Types of checks
+					System Status Checks
+					Instance Status Checks
+
 				System Status Checks
 					These might need AWS involvement to repair (or you can try starting/stopping your instance to 'reset')
 					Exs:
@@ -1411,6 +1415,16 @@ EC2
 						Loss of system power
 						Software issues on the physical host
 						Hardware issues on the physical host
+
+					We can create an alarm that automatically recovers an instance when these types of checks fails.
+						The recover action is only supported on
+							C3, C4, M3, M4, R3, and T2 instance types.
+							
+							Use EBS storage exclusively
+
+							Instances with shared tenancy
+
+					Remember that after a recovery, the instance retrieves a new public IP (if not using an EIP)
 
 				Instance Status Checks
 					Monitor the software and network configuration of your individual instance.
