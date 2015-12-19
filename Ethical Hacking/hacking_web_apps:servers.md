@@ -1,4 +1,8 @@
+Look in Google Hacking for related searches
+
 Software/Websites
+  shodan.io
+    Can search for vulnerable webservers in the search bar.
   w3dt.net/tools/httprecon
     Used for server fingerprinting
       aka: Makes requests to a webserver and looks at responses.  If the responses match a pattern, you can deduce the webserver, etc. being everything.
@@ -52,7 +56,34 @@ Server Recon
 DNS Registery
   If you hack this, you can reroute traffic
 
+Error logs
+  If you can access them, search for server variables
+
+  Additionally, look for "cookie" as you can utilize this for session hijacking.
+    Potentially do google search for common cookie strings "HTTP_COOKIE", etc. to find error logs and other items.
+
 Insecure Webserver Configs
+  Only give information in the response headers that's absolutely necessary.
+    Don't reveal the "server" header, etc.
+  Make sure that there isn't ANY backups that are being stored on the website itself
+
+  Werkzeug
+    shodan.io
+      search for wekzeug
+
+    Python debugging library for HTTP connections
+
+    It can allow code to be executed from within the browser
+
+    Sometimes this isn't DISABLED in prod 
+
+  domain.com/elmah
+    Very popular ASP.NET error logging module.  Can sometimes get to through this URL
+      Ex Google Search: inurl:elmah.axd filetype:axd "Error log for"
+        "Error log for" comes in the elmah error log file
+
+
+
   If error messages are on
     Error based SQL injection
 

@@ -1,0 +1,19 @@
+More Ideas
+  Google
+    "Google Hacking"
+    If google indexes ftps, what other types of protocols does it index?
+
+Google Searches
+  inurl:elmah.axd filetype:axd "Error log for"
+    This is for a popular error logging module, but you can use this for other urlnames or files.
+      Ex: database.bak
+
+  inurl:ftp inurl:web.config filetype:config
+    Google will actually index ftp URLs as well
+      As long as anonymous access is enabled
+
+      web.config
+        ASP.NET config file that contains very sensitive information
+
+      filetype:config
+        This helps mitigate false positives, such as open source projects on github.
