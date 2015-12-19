@@ -62,7 +62,29 @@ Error logs
   Additionally, look for "cookie" as you can utilize this for session hijacking.
     Potentially do google search for common cookie strings "HTTP_COOKIE", etc. to find error logs and other items.
 
+Insecure SSL/TLS Configs
+  ssllabs.com/ssltest to see a domains SSL config is correct.
+    Usually PaaS servers will be more secure (and recieve better grades) but IaaS won't be.
+      The middleware/ssl implementation is being managed for you
+
+  If a website supports the following it is insecure
+    SSL 3
+      Last version of SSL protocol that was used before TLS
+
+      SSL effectively died in 2014 with the Poodle vulnerability
+    SHA1
+      considered insecure against well-funded opponents
+    
+    RC4 cipher
+      Aside: This cipher is behind the WEP vulnerability
+    Forward secrecy support
+
+    POODLE vulnerability
+      Both in SSL 3 and TLS
+
 Insecure Webserver Configs
+  In general, need to follow principle of least privilege
+
   Only give information in the response headers that's absolutely necessary.
     Don't reveal the "server" header, etc.
   Make sure that there isn't ANY backups that are being stored on the website itself

@@ -4,11 +4,14 @@ More Ideas
     If google indexes ftps, what other types of protocols does it index?
 
 Google Searches
+  Look for coporate fileshares that aren't locked down.
+
   inurl:elmah.axd filetype:axd "Error log for"
     This is for a popular error logging module, but you can use this for other urlnames or files.
       Ex: database.bak
 
   inurl:ftp inurl:web.config filetype:config
+    If you find these ftp's, can these ftps also be written to as well?
     Google will actually index ftp URLs as well
       As long as anonymous access is enabled
 
