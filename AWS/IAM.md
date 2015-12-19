@@ -10,6 +10,41 @@ IAM
           It is recommended that you don't even access the main AWS account.  In this case:
             Setup an an adminstrator group and add the user to the group.  Then, the user can access AWS using a special URL and the creds for the IAM user.
 
+    Policy Structure
+
+        {
+          "Statement":[{
+            "Effect":"effect",
+            "Action":"action",
+            "Resource":"arn",
+            "Condition":{
+              "condition":{
+                "key":"value"
+                }
+              }
+            }
+          ]
+        }
+
+        Values in Key-Value pairs
+            effect
+                Values: Allow/Deny
+                    Default
+                        IAM users don't have permission to use resources and API actions.
+
+                    An explicit deny overrides any allows
+            resource
+                The resource that's affected by the action.
+
+                Need to utilize the Amazon Resource Name (arn)
+
+                If the API action doesn't support ARNs, use * to specify that all resources can be affected by the action
+
+
+
+
+
+
 
     To initially set up everything in the main IAM console, you need to make sure that all of the security "checkmarks" are finished for the Security Status dialog
 

@@ -87,6 +87,15 @@ EC2
 							If EC2-VPC
 								A different security group for the same VPC
 
+						You can make all instances in a security group talk to eachother (by assigning all of them to the same security group), or instances from different security groups talk to eachother.
+							To make this happen, in the inbound rules allow
+								ALL ICMP
+								ALL TCP
+								ALL UDP
+								
+								Source: The security group that's associated with the instance/s that you want to link to.
+
+
 				If there are 2 rules for the same port, AWS uses the one that is most permissive (aka "open")
 
 
