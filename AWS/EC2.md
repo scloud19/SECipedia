@@ -5,10 +5,17 @@ Key terms
 
 	AL - Amazon Linux
 
+	NAT - Network Address Translation
+		Maps a public IP to a private IP
+
 Additional items to do for exam
 
 
 General Tips/Info:
+	Instances that access other instances through their public NAP IP are charged for regional or Internet data transfer, depending on whether the instances are in the same region.
+		For cost effectiveness, look at ways around this.
+			Launching into all of those instances into a VPC?
+	Instances that access other instances through 
 	Use DNS names whenever possible, AWS can switch IPs
 
 	The URL in which to access instance metadata
@@ -138,7 +145,8 @@ EC2
 			If you're using an Auto Scaling group (ex: Elastic Beanstalk), ensure that the key pair that you're deleting is not specified in your launch config.
 				In the event of an emergency, the instance launch fails of the key pair can't be found.
 
-
+	Elastic IP Address
+		A static IP that's ass
 
 	Instance Lifecycle
 		1) Pending
@@ -148,6 +156,13 @@ EC2
 				At this point, you're guaranteed
 					If launched into a VPC, the private IP address is given from the range of the subnet (if you don't specify one yourself).  For the primary private IP, this is linked to eth0.
 						For instances launched in a VPC, the private IP remains associated with the network interface when the instance is stopped/restarted.  It is released when the instance is terminated.
+							Aside: You can associate multiple private IPs with an instance
+								Use cases
+									Host multiple websites on a single server by using multiple SSL certificates on a single server and associating each certificate with a specific IP address.
+
+									Operate network appliances, such as firewalls or load balancers, that have multiple private IP addresses for each network interface
+
+									Direct internal traffic to a standby instance in case another instance fails, by reassigning the secondary private IP address to the standby instance.
 		3) Stop/Start (In EBS-backed instances)
 			If the instance is running in Ec2-VPC, it retains its private IP address (thus any associated Elastic IPs still map correctly, etc.)  
 				Remember that the instance DOES get a new public IP, unless it has an Elastic IP addr (which doesnt change).
