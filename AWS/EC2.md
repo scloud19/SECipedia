@@ -475,7 +475,53 @@ EC2
 		Can be utilized to rapidly mask the failure of an instance in one AZ by remapping the address to an instance in another AZ.
 
 			Elastic Network Interfaces (ENI)
-				
+				Is a virtual network interface that you can attach to an instance in a VPC.
+
+				Each instance in a VPC has a default ENI (the primary network interface) that is assigned a private IP address from the IP address range of your VPC.
+					You can't detach a primary network interface from an instance.  Although, you can create and attach additional ENI's.
+						Multiple ENIs are useful when
+							Create a management network.
+
+							Use network and security appliances in your VPC.
+
+							Create dual-homed instances with workloads/roles on distinct subnets.
+
+							Create a low-budget, high-availability solution.
+
+					Creating a Management Network
+						The secondary ENI on the instance handles public-facing traffic and the primary ENI handles back-end management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls.
+							Public facing interface
+								May (may not) be behind a load balancer
+
+								Has an associated security group that allows access to the server from the internet.
+
+							Private Interface
+								Has an associated security group allowing SSH access from an allowed range of IPs either from within the VPC or from the Internet, etc.
+
+							Make a secondary private IP for incoming traffic on an ENI
+								In the event of an instance failure, you can move the interface and/or secondary private IP address to a standby instance.
+
+				An ENI can include the following attributes
+					A primary private IP address
+
+					One or more secondary private IP address
+
+					One Elastic IP address per private IP address
+
+					One public IP address, which can be auto-assigned to the elastic network interface for eth0 when you launch an instance, but only when you create an elastic network interface for eth0 instead of using an existing network interface.
+
+					One or more security groups
+
+					A MAC address
+
+					A source/destination check flag
+
+					You can create an ENI, attach it to an instance, detach it from an instance, and attach it to another instance.
+						The attributes in the ENI are preserved as it moves
+
+						When you move an ENI from one instance to another, network traffic is redirected to the new instance
+
+
 
 	Tags
 		Metadata for an instance

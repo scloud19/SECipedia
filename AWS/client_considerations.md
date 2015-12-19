@@ -16,7 +16,12 @@ EC2 instance
     Instances that access other instances through their public NAP IP are charged for regional or Internet data transfer, depending on whether the instances are in the same region.
     For cost effectiveness, look at ways around this.
       Launching into all of those instances into a VPC?
-      
+
+
+    Elastic Network Interface (ENI )
+      Make a secondary private IP for incoming traffic on an ENI
+        In the event of an instance failure, you can move the interface and/or secondary private IP address to a standby instance.
+
   Recommended security groups for web servers/db servers
     http://docs.aws.amazon.com/es_es/AmazonVPC/latest/UserGuide/VPC_Scenario3.html
   Set a reminder to run a yum update.
