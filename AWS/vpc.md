@@ -55,6 +55,8 @@ VPC
 			All subnets in default VPC have an internet gateway attached
 
 			Each EC2 instance has both a public and private IP
+				You can use a private IP addresses to communicate between instances in the same VPC.
+
 
 			If you delete the default VPC the only way to get it back is to contact AWS
 	VPC Peering

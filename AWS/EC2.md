@@ -145,6 +145,9 @@ EC2
 			When you launch, the instance enters the pending state
 		2) Running
 			Start to get billed for each hour or partial hour that you keep the instance running.
+				At this point, you're guaranteed
+					If launched into a VPC, the private IP address is given from the range of the subnet (if you don't specify one yourself).  For the primary private IP, this is linked to eth0.
+						For instances launched in a VPC, the private IP remains associated with the network interface when the instance is stopped/restarted.  It is released when the instance is terminated.
 		3) Stop/Start (In EBS-backed instances)
 			If the instance is running in Ec2-VPC, it retains its private IP address (thus any associated Elastic IPs still map correctly, etc.)  
 				Remember that the instance DOES get a new public IP, unless it has an Elastic IP addr (which doesnt change).
@@ -751,6 +754,8 @@ EC2
 				With each instance, there is a private DNS
 					Structure
 						ip-12-34-56-78.us-west-2.compute.internal
+
+					This allows instances within a VPC to communicate with eachother
 
 						compute = service
 

@@ -1,5 +1,10 @@
 Need to revisit for exam: Active Directory Integration
 
+Need to revisit for my own learning
+    Do this after learning about IAM
+        http://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html (and the nested documents)
+
+        http://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
 
 IAM
     Strategies
@@ -39,6 +44,9 @@ IAM
                 Need to utilize the Amazon Resource Name (arn)
 
                 If the API action doesn't support ARNs, use * to specify that all resources can be affected by the action
+
+            condition
+                These are optional and can be used to control when your policy will be in effect.
 
 
 
