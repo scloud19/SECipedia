@@ -146,7 +146,8 @@ EC2
 				In the event of an emergency, the instance launch fails of the key pair can't be found.
 
 	Elastic IP Address
-		A static IP that's ass
+		A static IP that's associated with your AWS account (not a particular instance)
+			This means that you can assign to whatever instance you want, and utilize it for failover situations
 
 	Instance Lifecycle
 		1) Pending
@@ -157,6 +158,8 @@ EC2
 					If launched into a VPC, the private IP address is given from the range of the subnet (if you don't specify one yourself).  For the primary private IP, this is linked to eth0.
 						For instances launched in a VPC, the private IP remains associated with the network interface when the instance is stopped/restarted.  It is released when the instance is terminated.
 							Aside: You can associate multiple private IPs with an instance
+								On an instance, you can have multiple private IPs, with each one corresponding to an elastic IP.
+
 								Use cases
 									Host multiple websites on a single server by using multiple SSL certificates on a single server and associating each certificate with a specific IP address.
 
@@ -470,6 +473,9 @@ EC2
 		Static IPs for dynamic cloud computing
 
 		Can be utilized to rapidly mask the failure of an instance in one AZ by remapping the address to an instance in another AZ.
+
+			Elastic Network Interfaces (ENI)
+				
 
 	Tags
 		Metadata for an instance
