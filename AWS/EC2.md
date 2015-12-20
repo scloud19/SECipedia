@@ -489,6 +489,8 @@ EC2
 							Create a low-budget, high-availability solution.
 
 					Creating a Management Network
+						(Currently AT)
+						
 						The secondary ENI on the instance handles public-facing traffic and the primary ENI handles back-end management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls.
 							Public facing interface
 								May (may not) be behind a load balancer
