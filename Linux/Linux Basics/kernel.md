@@ -59,7 +59,9 @@ Kernel
                                 When does the kernel run?
                                     Between process time slices during a context switch
 
-                                TODO: Bring up threads, what are cores, etc.
+                                CURRENTLY AT
+
+                                TODO: Bring up threads, what are cores, etc.  Read wikipedia on linx kernal, etc.
 
 
 
