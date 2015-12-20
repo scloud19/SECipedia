@@ -41,6 +41,26 @@ Kernel
                             The kernel's responsibility.
 
                             Ex: A process is running in user mode but the time slice is up.  What occurs?
+                                1) The CPU interrupts the current process based on an internal timer, switches into kernel mode, and hands control back to the kernel.
+
+                                2) The kernel records the current state of the CPU and memory.
+
+                                3) Now that the kernel has control, it performs any tasks that might of come up during the previous time slice.
+                                    Ex: Collecting I/O, etc.
+
+                                4) The kernel is now ready to let another process execute.  Here, the kernel looks at the list of processes that are ready to run and chooses one.
+                                    Q: how does this choosing process occur?
+
+                                5) Kernel prepares the memory (and CPU) for this new process.
+                                    Ex: The kernel will tell the CPU, "this is how long the time slice will last"
+
+                                6) To begin execution, the kernel switches the CPU into user mode.  Thus, the kernel gives control of the CPU to the process.
+
+                                When does the kernel run?
+                                    Between process time slices during a context switch
+
+                                TODO: Bring up threads, what are cores, etc.
+
 
 
 
