@@ -1,9 +1,49 @@
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
+
+
 Helpful commands
     File System
         lsblk - show hard drive structure and mountpoints
+
+Composed of levels (in order)
+    Hardware
+        CPU, RAM, Disks, Network Ports
+
+        Main memory (RAM) is perhaps the most important area of the hardware.
+            In raw form, just a big storage area for bunch of 0s and 1s.
+                bit
+                    0/1
+            This memory is where the running kernel and processes reside.
+
+            All input and output from peripheral devices flows through main memory.
+
+            The CPU
+                Is just an operator on memory.
+
+                It reads its instructions and data from the memory and write data back out to memory
+        State
+            Often heard when discussing memory, processes, the kernel, etc.
+
+            A state is a particular arrangement of bits.
+    Kernel
+        See kernel.md
+
+
+    User space
+        Refers to the parts of main memory that the user processes can access.
+            If a process makes a mistake and crashes, the consequences are limited and can be cleaned up by the kernel.
+                Obviously, certain user processes (given the right permissions), can do serious harm
+        user mode
+            restricts access to a usually small subset of memory and safe CPU operations
+
+        Is made of
+            Processes aka user processes
+                the running programs that the kernel manages
+        Exs:
+            GUIs, Servers, Shell
+
 
 Linux File System
     Proper to refer to "folders" as directories

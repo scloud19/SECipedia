@@ -4,7 +4,27 @@ it might of changed.
 (E)xam point.  I just started denoting this at this point in my studies.  I should go back and denote this for all of the previous lectures.
 
 SQS
+	Can't prioritize your messages
+		They can be delivered entirely at random
+
+		If you're building a service that needs to prioritize messages
+			Create 2 queues, one would be a high priority queue.
+				The EC2 instances would poll the high priority queue.  If it's empty, then they'd start to poll the lower priority queue.
+
+				But for the exam, SQS by ITSELF doesn't offer any kind of priority mechanism.
+
 	Longest running service on AWS
+
+	Visibility Time Out
+		Default: 30 seconds
+		Maximum 12 hours
+
+		Ex:
+			You have an SQS queue for watermarking images.  An EC2 instance polls that queue and takes a message.  When this occurs, the message is still in the queue, but it isn't directly visible to other EC2 instances.
+				In this scenario, the Ec2 instance has a default time frame of 30 seconds to finish the processing, unless the message reappears in the queue.
+					This occurs for fault tolerance.  What if that Ec2 instance goes down in the middle of processing an image? 
+
+			If you need a longer time frame, SWF offers a max of 12 months visibility timeout.
 
 
 	Provides you access to a message queue that can be used to store messages while waiting for a computer to process them.

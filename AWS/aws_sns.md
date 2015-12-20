@@ -7,7 +7,7 @@ SNS
   Follows the "publish-subscribe" (pub-sub) messaging paradigm.
     Notifications are delivered to clients using a "push" mechanism that eliminates the need to "poll" for new information.
 
-  With SQS, you have to poll.  But with SNS, you don't
+  With SQS, you have to poll.  But with SNS, you don't; it's "push" based.
 
   These push notifications can be a text message, email, to SQS queues, or to any HTTP endpoint.
     Can also send push notifications to Apple, Google, Fire OS, and Window's devices; as well as Android devices in China with Baidu Cloud Push.
@@ -20,13 +20,15 @@ SNS
     SNS is arranged by topics.
 
     You can group multiple recipients using topics.
+      Ex: Subscribe all of IT to a topic and when a critical service goes down, push an email notification to that topic to notify IT of the lapse.
 
     A topic is an "access point" for allowing recipients to dynamically subscribe for identical copies of the same notification.
 
     One topic can support deliveries to multiple endpoint types
       Ex: You can group together iOS, Android, and SMS recipients.
+        When you publish once to a topic, SNS delivers appropriately formatted copies of your message to each subscriber.
 
-    When you publish once to a topic, SNS delivers appropriately formatted copies of your message to each subscriber.
+
 
 
 
