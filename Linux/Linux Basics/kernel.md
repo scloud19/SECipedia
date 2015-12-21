@@ -44,6 +44,7 @@ Kernel
                                 1) The CPU interrupts the current process based on an internal timer, switches into kernel mode, and hands control back to the kernel.
 
                                 2) The kernel records the current state of the CPU and memory.
+                                    When it's time to resume the interrupted process, this information will be utilized to get everything running again.
 
                                 3) Now that the kernel has control, it performs any tasks that might of come up during the previous time slice.
                                     Ex: Collecting I/O, etc.
@@ -59,7 +60,9 @@ Kernel
                                 When does the kernel run?
                                     Between process time slices during a context switch
 
-                                CURRENTLY AT
+                                Multi-CPU considerations
+                                    More complicated because the kernel doesn't need to give away control of its current CPU in order to allow a process to run on a different CPU.
+                                        Typically, the kernel does so anyway to maximize the usage of all available CPUs
 
                                 TODO: Bring up threads, what are cores, etc.  Read wikipedia on linx kernal, etc.
 
@@ -75,6 +78,33 @@ Kernel
 
         Memory management
             Keeps track of all memory, how it's shared between processes, etc.
+
+            Specifically, the kernel manages memory during the context switch in which these must be taken into account
+                The kernel must have its own private area in memory that user processes can't access
+            
+                Each user process needs its own section of memory
+                
+                One user process may not access the private memory of another process
+
+                User processes can share memory
+
+                Some memory in the user processes can be read-only
+
+                The system can use more memory than is physically present by using disk space.
+
+            MMU (Memory Management Unit)
+                Is housed inside modern CPU's
+
+                Enables virtual memory
+                    A memory access scheme
+
+                    When a process is using virtual memory it doesn't access the memory by its physical location in the hardware. Instead, the kernel sets up each process to act as if it had an entire machine to itself.
+
+
+
+
+
+
 
         Device Drivers
             The "middle man" between the hardware and process.
