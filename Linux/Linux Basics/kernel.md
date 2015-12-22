@@ -64,11 +64,6 @@ Kernel
                                     More complicated because the kernel doesn't need to give away control of its current CPU in order to allow a process to run on a different CPU.
                                         Typically, the kernel does so anyway to maximize the usage of all available CPUs
 
-                                TODO: Bring up threads, what are cores, etc.  Read wikipedia on linx kernal, etc.
-
-
-
-
 
                         These "time slices" are so small that the system appears to be MULTITASKING (running processes at the same time)
 
