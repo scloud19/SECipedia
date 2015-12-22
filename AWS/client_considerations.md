@@ -18,7 +18,7 @@ EC2 instance
       Launching into all of those instances into a VPC?
 
 
-    Elastic Network Interface (ENI )
+    Elastic Network Interface (ENI)
       Make a secondary private IP for incoming traffic on an ENI
         In the event of an instance failure, you can move the interface and/or secondary private IP address to a standby instance.
 
@@ -60,3 +60,6 @@ CloudWatch
 
   Once I find the metrics that I need to follow, find their location at
     http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring_ec2.html
+
+CloudFront
+  What kind of CDN considerations do they need?  This dramatically increases load times for users.
