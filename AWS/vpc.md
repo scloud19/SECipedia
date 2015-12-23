@@ -59,17 +59,29 @@ VPC
 
 
 			If you delete the default VPC the only way to get it back is to contact AWS
+	
 	VPC Peering
 		Allows you to connect multiple VPCs together (in one AWS account or between many)
+			They have to be in the same region
+
+		AWS uses existing infrastructure of a VPC to create a VPC peering connection; it is neither a gateway nor a VPN connection, and it doesn't rely on a separate piece of physical hardware.
+			There is no single point of failure for communication or a bandwidth bottleneck.
+
 
 		You connect one VPC to another via a direct network route using private IP addresses
+			In other words, they don't need to be routed over the public internet 
 
 		Instances will behave as if they were on the same private network
 
-		Archecture
-			Star configuration
-				Ex: 1 central VPC with 4 others on "arms"
-				This way, all traffic between VPC's has to go through the central node
+		The VPCs that are peering can't share an overlapping CIDR block
+			Ex 10.0.0.0/16 and 10.0.0.0/24 couldn't
+			communicate with eachother
+
+		Architecture
+			Doesn't support transitive peering relationships.
+				Ex: A -- B -- C
+					VPC A couldn't speak to VPC C.
+					For this to occur, A would need to be directly linked with C.
 
 	Restrictions
 		5 VPCs per region (can be increased by request) <-- Only restriction on exam

@@ -9,6 +9,9 @@ If running large scale NoSQL DB on EC2 instance
 Do consolidating billing for separate ENV's, etc.?
   Look at consolidated billing file
 
+For different ENVs, projects, etc. make sure to create tags and then aggregate them via resource group.
+  Look at aws_misc
+
   Helps for keeping track of various departments, etc.
 
 EBS

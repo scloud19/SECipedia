@@ -1,3 +1,5 @@
+For a more polished implementation of this file, see my kernel slides in securing-the-stack lectures folder.
+
 Kernel
     Runs in kernel mode, as opposed to "user mode"
                 Kernel mode code has unrestricted access to the processor and main memory.
@@ -122,13 +124,13 @@ Kernel
 
             2) The kernel may allocate some working-memory pages to the new process.
 
-            3) As the process runs, it might reach a point where the next instruction in its code isn't in any of the pages that the kernel initially loaded.  At this point, a "page fault" is triggered by the process and the kernel takes over.  The kernel then loads the necessary pages into memory, and then lets the program resume execution.
+            3) As the process runs, it might reach a point where the next instruction in its code isn't in any of the pages that the kernel initially loaded.  At this point, a "page fault" is triggered by the MMU and the kernel takes over.  The kernel then loads the necessary pages into memory, and then lets the program resume execution.
                 If the program requires more working memory than was initially allocated, the kernel handles it by finding free pages (or by making room) and assigning them to the process.
 
             Page Fault
-                If a memory page is not ready when a process wants to use it, the process triggers a page fault.
+                If a memory page is not ready when a process wants to use it, the MMU triggers a page fault.
 
-                When this occurs, the kernel takes control of the CPU from the process in order to get the page ready.
+                When this occurs, the kernel takes control of the CPU from the process in order to get the page ready at the given physical address.
 
                 Types: Minor and Major
                     Minor Page Faults
