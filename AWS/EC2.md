@@ -12,6 +12,10 @@ Additional items to do for exam
 
 
 General Tips/Info:
+	A subnet is NOT an AZ.  
+		However, in a default VPC, there are 3 different subnets that are spread across 3 AZs
+
+	If you create an AMI from an instance, that instance WILL be rebooted (unless no reboot is checked)
 	Instances that access other instances through their public NAP IP are charged for regional or Internet data transfer, depending on whether the instances are in the same region.
 		For cost effectiveness, look at ways around this.
 			Launching into all of those instances into a VPC?
@@ -490,7 +494,7 @@ EC2
 
 					Creating a Management Network
 						(Currently AT)
-						
+
 						The secondary ENI on the instance handles public-facing traffic and the primary ENI handles back-end management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls.
 							Public facing interface
 								May (may not) be behind a load balancer
@@ -664,10 +668,15 @@ EC2
 
 	Storage Options
 		Local Instance Storage aka Instance Store Volume
-			non-persistent
+			non-persistent, sometimes called ephemeral storage
 		
 		Elastic Block Store (EBS)
+			Can be detached and reattached to other EC2 instances
 			persistent
+				Instance store volumes can't do this
+
+			Instances with these volumes can be stopped, and the data will persist.
+				If you do this with an EC2 instance with instance store drives, the data will be wiped on those drives
 
 			Useful linux commands
 					An AWS EBS volume serves as network-attached storage
@@ -1431,9 +1440,12 @@ EC2
 		Create auto scaling group
 			You proceed to this step after you finish the launch configuration
 			
-			You can utilize the health checks on an LB (seen in this file) to spin up additional ec2 instances in the auto scale group
 
 			Step 1 - Configure Auto Scaling group details
+				You can utilize the health checks on an LB (seen in this file) to spin up additional ec2 instances in the auto scale group
+					Make sure that the health checks provision enough time for an EC2 instance to start up correctly.
+						If not, it will try to start a new instance, then delete it, and do an infinite loop.
+
 				Subnet
 					This includes the availability zones that will be auto-scaled into.  The point of auto-scaling is to give you fault tolerance, so if you have 2 instances, select 2 availability zones (AWS will try to spread the load across AZ as much as possible).
 						By default, go ahead and select every AZ possible
@@ -1475,8 +1487,11 @@ EC2
 			Don't store sensitive data (passwords, etc.) in this way.
 
 		To view all categories of instance metadata within an instance
+			Remember if you are after an IP address, etc. you want the instance's METADATA not its user data.
 			curl http://169.254.169.254/latest/meta-data/
 				The gets the 'latest' version of the API for the metadata.  Go into the root directory to see all versions.  It might be smart to correlate this to a fixed version of the API.
+
+				Remember IP addr for exam
 
 	Amazon EC2 Run Command
 		Enables you to remotely manage the configuration of your EC2 instances without having to locally login to the instance/s in question.

@@ -38,6 +38,9 @@ Relational (Online Transaction Processing-OLTP)
 
 		Multi-AZ deployment
 		AWS will maintain a synchronous standby replica in a different AZ than the DB instance.  This will automatically fail over to the standby if needed
+			Make sure to utilize the ENDPOINT DNS name when doing this type of deployment.  If a SQL server goes down, AWS will automatically remap the DNS into an instance in a new AZ.
+
+
 			Only MySQL can be utilized for read replicas
 		MySql
 

@@ -6,6 +6,11 @@ Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on 
 If running large scale NoSQL DB on EC2 instance
   Look at provisioned IOPS SSD EBS
 
+Do consolidating billing for separate ENV's, etc.?
+  Look at consolidated billing file
+
+  Helps for keeping track of various departments, etc.
+
 EBS
   Snapshots
     After creating a volume, you can create a snapshot for backup purposes

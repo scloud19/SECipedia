@@ -15,6 +15,18 @@ Delivery Methods
       You must store the media files in an s3 bucket.
       To utilize live streaming, use a web distribution
 
-You can put CF in front of an S3 bucket or Load Balancer
+  Setting Up
+    It is a good idea to put all of your CDN content in an S3 bucket.
 
-When setting up
+    You can put CF in front of an S3 bucket or Load Balancer
+    When setting up with an S3 bucket, restrict bucket access to make sure that people don't sidestep the CDN
+
+    If you're utilizing this with apache (and you want to serve the files out of the DF distro)
+      httpd.conf
+        Find AllowOverride and change to "ALL"
+          AllowOverride All
+      htaccess
+        Create an htaccess file with a regex that will reroute certain URLs to your cloudfront distro
+
+        Google "Url rewrite generator"
+

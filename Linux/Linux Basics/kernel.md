@@ -81,11 +81,16 @@ Kernel
                 
                 One user process may not access the private memory of another process
 
-                User processes can share memory
+                If requested, user processes can share memory in a common, “public” area.
+                    This request comes from the kernel in the form of a system call.
+
+
 
                 Some memory in the user processes can be read-only
 
                 The system can use more memory than is physically present by using disk space.
+
+                CURRENTLY AT: Read WIKIPEDIA entry for virtual memory and comment on it in Slides as a transition piece.
 
             MMU (Memory Management Unit)
                 Is housed inside modern CPU's
@@ -103,6 +108,8 @@ Kernel
 
                 Enables virtual memory
                     A memory access scheme
+
+                    
 
                     When a process is using virtual memory it doesn't access the memory by its physical location in the hardware. Instead, the kernel sets up each process to act as if it had an entire machine to itself.
 
