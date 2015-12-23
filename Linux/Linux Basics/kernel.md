@@ -90,7 +90,6 @@ Kernel
 
                 The system can use more memory than is physically present by using disk space.
 
-                CURRENTLY AT: Read WIKIPEDIA entry for virtual memory and comment on it in Slides as a transition piece.
 
             MMU (Memory Management Unit)
                 Is housed inside modern CPU's
@@ -101,15 +100,20 @@ Kernel
 
                 The kernel maintains a data structure, called a page table, that contains a mapping of a processes' virtual page addresses to a real page addresses in memory
 
-                As a process accesses memory, the MMU translates the virtual addresses used by the process into read addresses based on the kernel's page table
+                As a process accesses memory, the MMU translates the virtual addresses used by the process into real addresses based on the kernel's page table
 
                 A user process doesn't actually need all of its pages to be immediately available in order to run.  The kernel generally loads and allocates pages as a process needs them.  This is known as on-demand paging or just demand paging.
 
 
                 Enables virtual memory
-                    A memory access scheme
+                    A memory access scheme that is implemented using hardware and software.
 
-                    
+                    Maps "virtual addresses" (memory addresses used by a program) into "physical addresses" in computer memory
+
+                    Inside a program, it's "virtual address space" is seen as a continuous "chunk" of memory.  The program doesn't need to worry about where other process' are using memory.
+                        From the program's perspective, it's the only process on the machine
+
+
 
                     When a process is using virtual memory it doesn't access the memory by its physical location in the hardware. Instead, the kernel sets up each process to act as if it had an entire machine to itself.
 
