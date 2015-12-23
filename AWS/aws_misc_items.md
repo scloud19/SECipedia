@@ -38,6 +38,24 @@ DNS
 
     A DNS zone is the part of a domain for which an individual DNS server is responsible.
 
+  What do DNS requests to name servers look like?
+    But just how exactly did your computer know what webpage to display for you, and what server to pull it from?
+
+    Your web-browser knows you typed InMotionHosting.com into the address bar.
+
+    Your computer then uses DNS to retrieve the current nameservers for InMotionHosting.com.
+
+    Our public nameservers; ns.inmotionhosting.com and ns2.inmotionhosting.com are retrieved.
+
+    Your computer asks our nameservers for the A (address) record for InMotionHosting.com.
+
+    Our public nameservers respond back with the IP address 192.145.237.216
+
+    Your computer sends a request to that IP address along with the page you're requesting.
+
+    Our web server hosting InMotionHosting.com then sends your web-browser the requested page.
+
+
 
   Common DNS Types (Dont need to know for exam)
     SOA Records
@@ -51,7 +69,10 @@ DNS
     NS Records
       Name Server records
 
-      Used by 
+      Used by Top Level Domain servers to direct traffic to the Content DNS server which contains the authoritative DNS records.
+
+      HERE: ADD THIS IN https://www.bytemark.co.uk/support/document_library/dnsworks/
+
     A Records
     CNAMES
     MX Records
