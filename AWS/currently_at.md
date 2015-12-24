@@ -1,3 +1,10 @@
+guru website
+  same lectures between architect and developer courses
+    2,6,13
+
+  for architect course
+    havent looked at whitepapers
+
 
 
 

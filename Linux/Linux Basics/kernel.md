@@ -166,8 +166,32 @@ Kernel
         Device Drivers
             The "middle man" between the hardware and process.
 
+            Usually, a device is accessible only in kernel mode because improper user process access could do harm to the machine
+                Ex: A user process asking to shutdown the machine
+
+            At kernel layer to provide a simplified API to software developers
+                If it wasn't, developers would have to tailor code to each unique device
+
         System calls and support
             processes use system calls to communicate with the kernel.
+
+            aka "syscalls"
+
+            Used to implement security
+
+            Exs: If a process needs to read/write to a file, it does so through a system call
+
+            Important system calls
+                fork()
+                    Can be called from a process.
+
+                    When this occurs, the kernel creates a nearly identical copy of the process.
+                
+                exec()
+                    When a process calls exec(PROGRAM_NAME), the kernel will start PROGRAM_NAME and replace the current process with the new process.
+
+            With the exception 
+
 
 
 
