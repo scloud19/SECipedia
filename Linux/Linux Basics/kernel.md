@@ -186,11 +186,20 @@ Kernel
                     Can be called from a process.
 
                     When this occurs, the kernel creates a nearly identical copy of the process.
+
+                    With the exception init, all user processes start as the result of fork()
                 
                 exec()
+                    For purposes if this series, exec() will refer to a family of system calls, not an exact C function.
+
                     When a process calls exec(PROGRAM_NAME), the kernel will start PROGRAM_NAME and replace the current process with the new process.
 
-            With the exception 
+            Ex: Behind the scenes of $ ls
+                shell --> fork() --> copy of shell --> exec(ls) --> ls
+
+                shell is a user process that calls fork.  Once the new shell is spawned, the process is replaced by the ls process
+
+
 
 
 
