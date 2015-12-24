@@ -25,7 +25,7 @@ Apache
 
   Apache Structure
     Modular Nature
-      Modules are the "powerhouses" that run various parts of apache.  Directives are used to configure these modules and are place in
+      Modules are the "powerhouses" that run various parts of apache.  Directives are used to configure these modules and are place in /etc/httpd/conf/httpd.conf
 
       Server binary contains these modules
         core
