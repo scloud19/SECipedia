@@ -31,8 +31,10 @@ Composed of levels (in order)
         See kernel.md
 
 
-    User space
-        Refers to the parts of main memory that the user processes can access.
+    User space aka "userland"
+
+        Refers to the kernel allocated parts of main memory that the user processes can access.
+
             If a process makes a mistake and crashes, the consequences are limited and can be cleaned up by the kernel.
                 Obviously, certain user processes (given the right permissions), can do serious harm
         user mode
@@ -41,8 +43,39 @@ Composed of levels (in order)
         Is made of
             Processes aka user processes
                 the running programs that the kernel manages
+
+                user processes make up the environment that you directly interact with. 
         Exs:
             GUIs, Servers, Shell
+
+        In general, a process is simply a state (or image) in memory.
+            As such "user space" can refer to the memory of the entire collection of running processes.
+
+        Most of the "real action" occurs in the user space
+            Refer to user_processes.png
+                From the kernel's POV, these processes are the same.
+
+                Shows the layered structure of the types of system components that user processes represent.
+                    Network Configuration, etc.
+                        Is the closest to the kernel and performs a more singular (simple) task, relative to the layers above.
+
+                    Each layer builds on eachother, you can see the emphasis on modularity. 
+                        If a module wants to use another, it's usually at a lower layer.
+
+                    Top layer is the closest to the user's control
+
+        Every user-space process has a user owner
+            User in *nix
+                An entity that can run processes and own files
+
+                Has a username "zroof" but the kernel manages by numeric ids called "userids"
+
+            Processes are said to run as the owner.
+
+            Root user
+                Still runs in the OS's user mode, NOT kernel mode
+
+
 
 
 Linux File System

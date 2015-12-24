@@ -173,6 +173,8 @@ Kernel
                 If it wasn't, developers would have to tailor code to each unique device
 
         System calls and support
+            Ref picture
+            
             processes use system calls to communicate with the kernel.
 
             aka "syscalls"
