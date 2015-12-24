@@ -1,5 +1,9 @@
 /etc/httpd/conf/httpd.conf
 
+Misc items in httpd.conf file
+  Include conf.d/*.conf
+    will load all of the .conf files in the conf.d directive
+
 Common directives
   Listen 80
     the listening port
@@ -40,13 +44,47 @@ Common directives
   Multi-Process Settings
     To improve latency, apache maintains a pool of "spare" server processes.  Apache will spawn new processes if things get busy, and kill processes off if server load diminishes.
 
-    These directives (below) shouldn't need to be tweaked.
+    These directives (below) shouldn't need to be tweake
+
+      Container directives
+        Use XML-style opening/closing tags
+
+        Restrict the scope the of the directives they contain.
+
+        Ex:
+          <Directory "/var/www">
+            AllowOverride None
+            Options None
+          </Directory>
+
+          These directives only are applied for the /var/www directory.
+
+          Other containers
+            <Location>
+            <VirtualHost>
 
     Directives:
+      The following directive will only work if the 
+      prefork module is loaded.
+    
+    <IfModule prefork.c>
       StartServers 8
         Number of child server processes created on startup.  As the number of processes is dynamically controlled depending on the load, there is usually little reason to adjust this parameter.
       MinSpareServers 5
+        Idle servers that can be added due to load
       MaxSpareServers 20
+       Idle servers that can be added due to load
       ServerLimit 256
-      MaxClients 256
 
+      MaxClients 256
+        Maximum number of connections that will be processed simultaneously.  For additional requests that exceed this number, they will be queued.
+          Remember HTTP is stateless
+    <IfModule>
+
+      Other directives
+        ServerRoot '/etc/httpd'
+          Where the log files and configuration file are.
+          The files/directories that are referenced in the conf files will be relative to this directory.
+
+        DirectoryIndex index.html
+          What file apache will serve if a directory is requested
