@@ -51,5 +51,13 @@ Apache
 
   Tutorial: Segway to apache_config.md
 
+  Creating Content
+    Adding our own index.html
+      cd /var/www/html
+      sudo su
+      echo hello world > index.html
+      chown -R apache:apache *
+      # apache owner/group
+      exit
 
-
+    Tutorial: Segway into apache_virtual_hosting.md

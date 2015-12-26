@@ -1,5 +1,8 @@
 /etc/httpd/conf/httpd.conf
 
+Tips for viewing file without all of the comments
+grep -v "^#" /etc/httpd/conf/httpd.conf | less
+
 Misc items in httpd.conf file
   Include conf.d/*.conf
     will load all of the .conf files in the conf.d directive
