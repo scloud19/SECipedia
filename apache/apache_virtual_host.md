@@ -36,18 +36,35 @@ Virtual Hosting
         <VirtualHost *:80>
           ServerName daMAN.securingthestack.com
           DocumentRoot /var/www/html/daMAN
-          ErrorLog /var/log/httpd/
+          ErrorLog /var/log/httpd/daMAN/error_log
+          TransferLog /var/log/httpd/daMAN/access_log
         </VirtualHost>
 
         <VirtualHost *:80>
           ServerName dawoMAN.securingthestack.com
           DocumentRoot /var/www/html/dawoMAN
+          ErrorLog /var/log/httpd/dawoMAN/error_log
+          TransferLog /var/log/httpd/dawoMAN/access_log
         </VirtualHost>
 
+        # You can bind almost any directive to the virtualHost container
 
         # If you have a current site, make sure that it's
         # entered as a vhost
 
+        Tutorial: Look at enumeration.pic and talk about how to blacklist IP from apache.
+          Talk about the importance of looking in logs
+          Reverse IP lookup for: 180.129.156.3
+            IP range is from the china
+
+        Tutorial:
+          For name-based virtual hosting in PROD, we would have seperate DNS entries for our domains and would point them to the same IP address.  But, to mimic this in our local ENV.
+
+            /etc/hosts/
+              127.0.0.1 localhost
+              127.0.0.1 daMAN.securingthestack.com
+              127.0.0.1 dawoMAN.securingthestack.com
+              
 
 
 
