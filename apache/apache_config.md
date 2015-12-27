@@ -1,5 +1,6 @@
 /etc/httpd/conf/httpd.conf
 
+
 Tips for viewing file without all of the comments
 grep -v "^#" /etc/httpd/conf/httpd.conf | less
 
@@ -63,8 +64,17 @@ Common directives
           These directives only are applied for the /var/www directory.
 
           Other containers
-            <Location>
-            <VirtualHost>
+            Note: There are closely related directives that match on a regex instead of a string
+            
+            <Location /admin>
+              Matches against the path of a URL
+              Ex: http://securingthestack.com/admin
+
+            <Files "*.gif">
+              Wildcard/RegEX matching
+
+            <VirtualHost *:80>
+              For any virtual host (with any IP) that uses port 80
 
     Directives:
       The following directive will only work if the 
