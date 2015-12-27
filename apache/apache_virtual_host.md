@@ -8,6 +8,9 @@ Virtual Hosting
   Apache allows for virtual hosting
 
   2 ways to do virtual hosting
+    Name-Based Virtual Hosting and IP-Based Virtual Hosting
+
+
     Name-Based Virtual Hosting
       Different DNS enteries that resolve to the same IP
         Ex:
@@ -64,6 +67,21 @@ Virtual Hosting
               127.0.0.1 localhost
               127.0.0.1 daMAN.securingthestack.com
               127.0.0.1 dawoMAN.securingthestack.com
+
+        IP-Based Virtual Hosting
+          The same basic idea as Name-Based Virtual Hosting, but the DNS enteries resolve to a unique IP, not to the same IP address.
+            Apache needs to be listening on both of these IP addresses.
+
+            Based on the IP-Address, Apache then maps to a corresponding DocumentRoot directive
+
+        Other approaches to serve multiple sites from one computer
+          Run multiple instances of apache on one box
+            CON: Each instance must listen on a different port.  With default web traffic going to port 80, this can be a challenge
+
+          Run multiple virtual machines on one box
+            Each VM would be mapped to a IP address and port
+
+            CON: Big memory footprint
               
 
 

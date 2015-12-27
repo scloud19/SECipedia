@@ -60,5 +60,7 @@ Apache
       # apache owner/group
       exit
 
-    Tutorial: Segway into apache_virtual_hosting.md
+    Tutorial:
+      Segway into apache_virtual_hosting.md
+      apache_access_control.md
 
