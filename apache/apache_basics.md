@@ -7,7 +7,18 @@ Apache
     Put in bootup script
       You don't need to put sudo infront of these commands because the script is run as root
 
-      yum install -y httpd
+      yum update
+
+      Start by searching Apache docs for current version
+
+      yum search httpd
+        Find one that matches the current version
+
+      yum info httpd
+        To double check version number
+
+    
+      yum install -y PACKAGE_NAME
       service httpd start
         Starts the service immediately
       chkconfig httpd on

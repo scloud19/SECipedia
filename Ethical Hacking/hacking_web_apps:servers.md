@@ -1,3 +1,5 @@
+Look at apache_security_tips.md for bad defaults on apache servers.  This bad defaults can be used in DoSing
+
 Look in Google Hacking for related searches
 
 Software/Websites
