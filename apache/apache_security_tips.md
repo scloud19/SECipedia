@@ -15,6 +15,11 @@ Security Tips In Apache
   Denial of Service (DoS) Attacks
     Basic Idea
       Application servers typically allocate an operating system thread/process for each connection.  As a process is a relatively memory intensive resource, it's very easy to initiate DoS attacks.
+        Older vs newer editions of Apache?  Does this hold now?
+
+      Do a DoS lecture and go into more depth
+        Have a broad nginx lecture (like this one) and have a section on preventing DoS attacks (and other items) in nginx.
+          https://www.nginx.com/blog/http-keepalives-and-web-performance/
 
       "HTTP Heavy Lifting"
 
@@ -30,34 +35,40 @@ Security Tips In Apache
           This isn't effective against DDoS attacks (Distributed Denial of Service Attacks)
 
     Server Configs that can help if you're receiving a DoS attack (or are highly vulnerable to them)
+
+      In general look at all directives that you utilize for their timeouts.  In particular, I'd also reference the ones below:
       
-      KeepAliveTimeout directive
-        Number of seconds apache will wait before closing the connection.
-          Thus, if no requests are sent in a certain time frame, the connection is "idle" and it is closed.
+        KeepAliveTimeout directive
+          Talk about apache concurrency vulnerabilities and SSL
+            https://www.nginx.com/blog/http-keepalives-and-web-performance/
+            You know that there's a DoS risk if a website is using apache and SSL (put this in ethical hacking notes)
 
-          Once the connection is established, the timeout value specified in the Timeout directive applies.
-            It is important to know the differences between the directives.
+          Number of seconds apache will wait before closing the connection.
+            Thus, if no requests are sent in a certain time frame, the connection is "idle" and it is closed.
 
-        KeepAlive (On|Off) Directive
-          You can turn KeepAlive on/off as well
+            Once the connection is established, the timeout value specified in the Timeout directive applies.
+              It is important to know the differences between the directives.
 
-          However, just like lowering the KeepAliveTimeout, there can be performance implications to this action.
-            
-            Without KeepAlive
-              For every client request 
-                  
-                  Opening connection
-                    Three-way TCP handshake
+          KeepAlive (On|Off) Directive
+            You can turn KeepAlive on/off as well
+
+            However, just like lowering the KeepAliveTimeout, there can be performance implications to this action.
+              
+              Without KeepAlive
+                For every client request 
                     
-                  Client sends an HTTP request
-                  Client receives an HTTP response
+                    Opening connection
+                      Three-way TCP handshake
+                      
+                    Client sends an HTTP request
+                    Client receives an HTTP response
 
-                  Closing connection
-                    Two-way handshake
+                    Closing connection
+                      Two-way handshake
 
-          In a DoS attack, you must weigh the costs/benefits when changing keepAlives
-            Pros: Concurrency portion of DoS in mitigated
-            Cons: Extra overhead of connections being established
+            In a DoS attack, you must weigh the costs/benefits when changing keepAlives
+              Pros: Concurrency portion of DoS in mitigated
+              Cons: Extra overhead of connections being established
 
 
 
