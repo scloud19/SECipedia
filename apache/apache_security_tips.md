@@ -13,6 +13,11 @@ Security Tips In Apache
 
 
   Denial of Service (DoS) Attacks
+    Basic Idea
+      Application servers typically allocate an operating system thread/process for each connection.  As a process is a relatively memory intensive resource, it's very easy to initiate DoS attacks.
+
+      "HTTP Heavy Lifting"
+
     Try to prevent responses to clients by typing up resources on the server.
 
     You can't prevent these attacks entirely, but you can do create mitigating factors.
@@ -32,6 +37,33 @@ Security Tips In Apache
 
           Once the connection is established, the timeout value specified in the Timeout directive applies.
             It is important to know the differences between the directives.
+
+        KeepAlive (On|Off) Directive
+          You can turn KeepAlive on/off as well
+
+          However, just like lowering the KeepAliveTimeout, there can be performance implications to this action.
+            
+            Without KeepAlive
+              For every client request 
+                  
+                  Opening connection
+                    Three-way TCP handshake
+                    
+                  Client sends an HTTP request
+                  Client receives an HTTP response
+
+                  Closing connection
+                    Two-way handshake
+
+          In a DoS attack, you must weigh the costs/benefits when changing keepAlives
+            Pros: Concurrency portion of DoS in mitigated
+            Cons: Extra overhead of connections being established
+
+
+
+
+
+
 
       
       RequestReadTimeout directive
