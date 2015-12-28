@@ -24,19 +24,30 @@ Security Tips In Apache
         Many firewalls can be configured to restrict the number of simultaneous connections from any unique IP/network.
           This isn't effective against DDoS attacks (Distributed Denial of Service Attacks)
 
-    Server Configs that can help
+    Server Configs that can help if you're receiving a DoS attack (or are highly vulnerable to them)
+      
+      KeepAliveTimeout directive
+        Number of seconds apache will wait before closing the connection.
+          Thus, if no requests are sent in a certain time frame, the connection is "idle" and it is closed.
+
+          Once the connection is established, the timeout value specified in the Timeout directive applies.
+            It is important to know the differences between the directives.
+
       
       RequestReadTimeout directive
         Sets a limit for the amount of time a client can take when finishing the request
 
       TimeOut Directive
         If receiving a DoS attack, one should look at this config first.
+          Ex: The default is 1 minute, but if you're receiving a DoS attack, it might be wise to lower this to a few seconds.
 
         Be very careful, as this is an "aggregate" directive which affects multiple settings that CAN have adverse consequences.
 
         Has a larger footprint then the RequestReadTimeout directive.
           This directive sets a timeout for
             reading data from a client
+              But what if a client trickles data very slowly?
+                Hard to mitigate against this.
 
             When sending data to a client, the maximum time to wait for a acknowledgment of a packet (ACK) when the send buffer is full (client is "slow" to receive packets)
 
@@ -49,6 +60,7 @@ Security Tips In Apache
 
             If you're utilizing Apache as a Proxy and have NOT set the ProxyTimeout directive
               This will set a timeout on proxy processes.
+                See the mod_proxy documentation (anything the references the default timeout value) for the scope of the timeout.
 
 
 
