@@ -30,7 +30,26 @@ Security Tips In Apache
         Sets a limit for the amount of time a client can take when finishing the request
 
       TimeOut Directive
-        Has a larger footprint then the RequestReadTimeout directive.
-
         If receiving a DoS attack, one should look at this config first.
+
+        Be very careful, as this is an "aggregate" directive which affects multiple settings that CAN have adverse consequences.
+
+        Has a larger footprint then the RequestReadTimeout directive.
+          This directive sets a timeout for
+            reading data from a client
+
+            When sending data to a client, the maximum time to wait for a acknowledgment of a packet (ACK) when the send buffer is full (client is "slow" to receive packets)
+
+            Max waiting time for output from a CGI script
+              If you have running CGI scripts, you need to make sure that your timeout isn't too low!  This might effect this setting!
+
+            Max waiting time for output from a filtering process
+              Filtering processes can include compression, etc.
+                Make sure that your timeout value takes into account filters that are in place already!
+
+            If you're utilizing Apache as a Proxy and have NOT set the ProxyTimeout directive
+              This will set a timeout on proxy processes.
+
+
+
 
