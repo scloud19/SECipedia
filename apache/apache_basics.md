@@ -1,4 +1,5 @@
-# Run as root
+Notes for tutorial
+  in the beginning, say all of the versions of the binaries that I'm using... I.e. Apache 2.4 and what Amazon Linux, etc.
 
 Apache
   For tutorial

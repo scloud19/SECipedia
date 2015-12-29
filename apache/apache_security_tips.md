@@ -30,6 +30,17 @@ Security Tips In Apache
     Note: The above setting is the default in httpd 2.3.9 (and above).  So, unless properly configured, prior versions of apache can have a SIGNIFICANT security risk.
 
   Protecting the directory structure of the server
+    Default Access
+      If Apache can "see" a file/symlink in DocumentRoot directive, it's accessible publically (by default)
+        This holds true if the symlink directs to a directory outside of the DocumentRoot
+
+        Ex:
+        sudo ln -s / /var/www/html/index.html
+          Now navigate to your domain in the browser
+
+        
+
+
     
 
   Include a WAF module
