@@ -7,7 +7,7 @@ Code Level Security
     Looks at the privileges that a piece of code has.
       Ex: Read/write access to filesystem? If so, what files?
           Access to network resources? If so, code in what directories can initiate these connections?
-            Ex: Linux, code needs privileged access to access ports 1024 (and lower)
+            Ex: Linux socket access: code needs privileged access to access ports 1024 (and lower)
 
           Takeaway: These situations can get very nuanced and we need a high level of granularity :)
 
