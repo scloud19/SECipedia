@@ -13,8 +13,10 @@ Security Tips In Apache
       Most of the time, if there's a vulnerability, it isn't in the Apache Server code.  It's from add-on code, CGI scripts, or the OS.
         You must keep abreast of updates/vulnerabilities to these items.
 
-  General CGI considerations
+  Include a WAF module
+    Ex: http://modsecurity.org/
 
+    I'll be doing a lecture on firewalls in the future, but this can help for now.
 
   Server Side Includes (SSIs)
     Are pieces of code that are placed in HTML pages, and are evaluated on the server before the requested pages are sent to the user.
@@ -27,6 +29,7 @@ Security Tips In Apache
 
     exec cmd
       Will run a command on the linux server as the apache user/group (if that user was specified in the httpd.conf).  Obviously this can be a huge security risk for a shared hosting environment.
+        This is also true for modules that include other content, including: mod_php, mod_perl, mod_python, etc.
 
     Potential Help
       suEXEC
