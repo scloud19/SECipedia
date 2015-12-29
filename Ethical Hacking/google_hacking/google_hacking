@@ -4,6 +4,11 @@ More Ideas
     If google indexes ftps, what other types of protocols does it index?
 
 Google Searches
+  If someone accidentally does a index.html symlink to their root directory in their web hosting directory, then a user can potentially access all files on the server.
+    You'll see page like directory_trav.png
+
+    In general, do a google search for pages like this that show inappropriate file access.  Maybe there's a ubiquitous line of HTML that is persistent in these types of situations.  What about the folder icon pic? (Maybe you can key off of that)
+
   Look for coporate fileshares that aren't locked down.
 
   inurl:elmah.axd filetype:axd "Error log for"

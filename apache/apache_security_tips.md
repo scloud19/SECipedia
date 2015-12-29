@@ -13,6 +13,25 @@ Security Tips In Apache
       Most of the time, if there's a vulnerability, it isn't in the Apache Server code.  It's from add-on code, CGI scripts, or the OS.
         You must keep abreast of updates/vulnerabilities to these items.
 
+
+  .htaccess
+    .htaccess files allow one to override configurations (including security configs) on a per directory basis.
+
+    You want to stop users from setting up .htaccess files which can override your main security settings.
+
+    To mitigate this risk, place this directive in the httpd.conf:
+
+    <Directory "/">
+      AllowOverride None
+    </Directory>
+
+    This will prevent use of .htaccess files in all directories apart from those specifically enabled in httpd.conf
+
+    Note: The above setting is the default in httpd 2.3.9 (and above).  So, unless properly configured, prior versions of apache can have a SIGNIFICANT security risk.
+
+  Protecting the directory structure of the server
+    
+
   Include a WAF module
     Ex: http://modsecurity.org/
 
