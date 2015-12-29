@@ -13,6 +13,9 @@ Security Tips In Apache
       Most of the time, if there's a vulnerability, it isn't in the Apache Server code.  It's from add-on code, CGI scripts, or the OS.
         You must keep abreast of updates/vulnerabilities to these items.
 
+  General CGI considerations
+
+
   Server Side Includes (SSIs)
     Are pieces of code that are placed in HTML pages, and are evaluated on the server before the requested pages are sent to the user.
 
@@ -28,12 +31,12 @@ Security Tips In Apache
     Potential Help
       suEXEC
         Provides users of httpd the ability to run CGI and SSI programs under user IDs that are different from the user ID of the web server (i.e., the "apache" user).
+          Ex: This can dramatically reduce security holes because all user initiated CGI and SSI programs run as the web server.  By locking down an SSI/CGI program to a unique user, we can give much more granular permissions.
 
         https://httpd.apache.org/docs/2.4/suexec.html
 
         CAUTION:  The configs aren't the most intuitive.  If you make a small mistake, the security consequences can be catastrophic. 
 
-      
       When turning on SSI, don't turn on this feature for *.htm or *.html
         Not only for security but also for performance.
         Any file extension that is SSI-enabled has to be parsed (line-by-line) from httpd.
@@ -42,13 +45,27 @@ Security Tips In Apache
           Ex: *.shtml
             This is a convention and helps narrow down the footprint in case something goes wrong.
 
+      Another option: IncludesNOEXEC
+        Server-side includes are permitted, but the #exec cmd and #exec cgi are disabled.
 
+        In general: to set up SSI's for a given directory.   
+          Note: It's very important to lock down CGI scripts and SSI's to a particular directory.
+            At this point, it's important to modify the permissions of this directory accordingly.
+              Ex: If the use-case is correct, don't give users write access to this directory.
 
+          <Directory "PATH_TO_DIR">
+            Options Includes
+          </Directory>
 
+          You can change to
 
-  
+          <Directory "PATH_TO_DIR">
+            Options IncludesNOEXEC
+          </Directory>
 
-
+          Note:
+          <--#include virtual="..." -->
+            Users may still use virtual includes (seen above) to execute CGI scripts if you have set up the ScriptAlias directive.
 
 
   Permissions for ServerRoot Directories
