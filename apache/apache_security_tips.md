@@ -38,7 +38,50 @@ Security Tips In Apache
         sudo ln -s / /var/www/html/index.html
           Now navigate to your domain in the browser
 
+  UserDir Directive
+    In httpd.conf make sure to disallow setting a user's directory to /
+
+    UserDir disabled root
+
+  Logs
+    Inspect your logs for common vulnerability requests
+
+    Ex: Apache Tomcat Source.jsp malformed request information disclosure vulnerability.
+      /jsp/source.jsp?/jsp/ /jsp/source.jsp??
+
+      To find how many times this request occured, do:
+
+      grep -c "/jsp/source.jsp?/jsp/ /jsp/source.jsp??" LOG_FILE
+
+      Another useful item to search for:
+      grep "client denied" error_log | tail -n 10
+
+      Look at my chinese logs and try to pull out some patterns and some common grep strings.  Do a Google search for good grep patterns for apache.
+
+    Order Of Precedence in Configuration Files 
+      If you have multiple containers that match a given directory/etc/etc. how are the corresponding directives applied?
+        This can have VERY important security considerations because certain containers directives can unexpectedly override others, which might leave HUGE security holes in your application.
+
+        In short: Try your best to NOT have multiple sections reference the same/similar namespace (ESPECIALLY if the contrasting sections directives provide different access controls)
+          Ex: One container's directive gives access to /, and another
+
+      order of precedence
+        http://httpd.apache.org/docs/2.4/sections.html#merging
+
+        The order of merging is:
+
+        1) <Directory> (except regular expressions) and .htaccess done simultaneously (with .htaccess, if allowed, overriding <Directory>)
+
+        2) <DirectoryMatch> (and <Directory "~">)
         
+        3) <Files> and <FilesMatch> done simultaneously
+        
+        4) <Location> and <LocationMatch> done simultaneously
+        
+        5) <If>
+
+
+
 
 
     
