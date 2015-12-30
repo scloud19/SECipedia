@@ -91,6 +91,9 @@ Security Tips In Apache
               Contains directives that apply only is a condition if the specified EXPRESSION evaluates to true
 
           General Notes about order of precedence
+            Nested sections are merged after non-nested sections of the 
+            same type.
+
             If directive containers are in a given configuration file, their respective directives will be processed in the order that they appear in the file.
               Exception
                 The only exception is the <Directory> container (from the first group).  This directive container is processed in the shortest directory path to the longest (regardless of the config file ordering)
@@ -115,7 +118,17 @@ Security Tips In Apache
                   The contents of these "injected" files will be treated as if they were "injected" at the place of the 'Include' directive.
 
             Other considerations
-              Directives
+              <VirtualHost>
+                 If a given directive container exists both inside a <VirtualHost> and outside of it, the directive container inside of <VirtualHost> will be applied last.
+
+                 This is useful because it allows a virtual host's configs to override the main server configs.
+
+              <Proxy>
+                If a request is being served by the mod_proxy module, then the <Proxy> container will take the place of the <Directory> container in the order of precedence.
+
+            Cross-module considerations
+              How do the previous                  
+
 
 
 
