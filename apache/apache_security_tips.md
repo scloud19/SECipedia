@@ -30,6 +30,9 @@ Security Tips In Apache
     Note: The above setting is the default in httpd 2.3.9 (and above).  So, unless properly configured, prior versions of apache can have a SIGNIFICANT security risk.
 
   Protecting the directory structure of the server
+    Go back to this section in the apache notes and implement the Require all denied sections, but need to check that it works in my config files.  This will help against symlink attacks.
+
+
     Default Access
       If Apache can "see" a file/symlink in DocumentRoot directive, it's accessible publically (by default)
         This holds true if the symlink directs to a directory outside of the DocumentRoot
@@ -87,10 +90,39 @@ Security Tips In Apache
           5) <If EXPRESSION>
               Contains directives that apply only is a condition if the specified EXPRESSION evaluates to true
 
-            Each number above refers to a "merging group"
-
           General Notes about order of precedence
-            If multiple containers from the same merging group are in a configuration
+            If directive containers are in a given configuration file, their respective directives will be processed in the order that they appear in the file.
+              Exception
+                The only exception is the <Directory> container (from the first group).  This directive container is processed in the shortest directory path to the longest (regardless of the config file ordering)
+                  Ex: <Directory "/var/www/html"> will be processed before <Directory "/var/www/html/pics">
+
+                Q: A config file with the following directive container order...
+
+                  <Directory "/var/www/html/admin">
+                    Require all denied
+                  </Directory>
+
+                  <Directory "/var/www/html/admin">
+                    Require all granted
+                  </Directory>
+
+                  Which access permission will win?
+                  Will the admin directory be unconditionally blocked from access?  Or, will it be unconditionally allowed access
+
+                A: Unconditionally allowed
+
+                Configs inclued via the 'Include' directive
+                  The contents of these "injected" files will be treated as if they were "injected" at the place of the 'Include' directive.
+
+            Other considerations
+              Directives
+
+
+
+
+
+
+
 
 
 
