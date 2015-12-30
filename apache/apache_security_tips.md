@@ -70,15 +70,29 @@ Security Tips In Apache
 
         The order of merging is:
 
-        1) <Directory> (except regular expressions) and .htaccess done simultaneously (with .htaccess, if allowed, overriding <Directory>)
+          1) <Directory> and .htaccess done simultaneously
+            .htaccess
+              If you have direct access to the server config file, it's advised not to use .htaccess for performance reasons
 
-        2) <DirectoryMatch> (and <Directory "~">)
-        
-        3) <Files> and <FilesMatch> done simultaneously
-        
-        4) <Location> and <LocationMatch> done simultaneously
-        
-        5) <If>
+              If .htaccess is allowed, it will override <Directory>
+
+
+          2) <DirectoryMatch> (and <Directory "~">)
+            DirectoryMatch is the regular expression version of Directory
+          
+          3) <Files> and <FilesMatch> done simultaneously
+          
+          4) <Location> and <LocationMatch> done simultaneously
+          
+          5) <If EXPRESSION>
+              Contains directives that apply only is a condition if the specified EXPRESSION evaluates to true
+
+            Each number above refers to a "merging group"
+
+          General Notes about order of precedence
+            If multiple containers from the same merging group are in a configuration
+
+
 
 
 
