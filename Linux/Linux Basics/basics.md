@@ -1,7 +1,39 @@
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
+Unix processes
+    
 
+The Bourne Shell
+    /bin/sh
+
+    The Bourne shell was developed at Bell Labs for early versions of Unix.  Every Unix system needs the Bourne shell in order to function correctly.
+
+terminal
+    Simply a window with access to the shell
+
+bash
+    /bin/sh
+
+    "Bourne-again" shell
+
+    An enhanced version of the Bourne shell that is used in Linux.
+
+    Is the default shell on most Linux distros
+
+shell
+    A program that runs commands
+        Ex: the commands that you enter
+
+    chsh
+        command to change shells
+
+    Also serves as a small programming environment
+
+    shell scripts
+        text files that contain a sequence of unique commands
+
+    There are many different types of shells, however most inherit their features from the Bourne shell
 
 Helpful commands
     File System

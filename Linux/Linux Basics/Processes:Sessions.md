@@ -1,4 +1,10 @@
 Processes/Sessions
+  
+  Processes
+    Use I/O streams to read/write data.
+
+    Processes read data from input streams and write data to output streams
+      These streams can be very flexible as the source of an input stream can be a file, device, terminal, output stream of another process.
 
 	A process group is a collection of related processes which can all be signalled at once.
 
