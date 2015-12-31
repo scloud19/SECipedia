@@ -71,7 +71,11 @@ Security Tips In Apache
       order of precedence
         http://httpd.apache.org/docs/2.4/sections.html#merging
 
+        Answers the question
+          Which directives win?
+
         The order of merging is:
+
 
           1) <Directory> and .htaccess done simultaneously
             .htaccess
@@ -126,6 +130,62 @@ Security Tips In Apache
               <Proxy>
                 If a request is being served by the mod_proxy module, then the <Proxy> container will take the place of the <Directory> container in the order of precedence.
 
+            Merging example:
+              T: Display this in a quiz format and then show answers
+
+            Order of merging.
+
+
+            <DirectoryMatch "^/www/(.+/)?[0-9]{3}">
+                5
+            </DirectoryMatch>
+
+              <Location "/">
+                  7
+              </Location>
+
+              <Files "index.html">
+                  6
+              </Files>
+
+              <Directory "/a/b">
+                  3
+              </Directory>
+
+              <VirtualHost *>
+              <Directory "/1/2">
+                  4
+              </Directory>
+              </VirtualHost>
+
+              .htaccess file
+              <Directory "/1/2">
+                  1
+              </Directory>
+
+              .htaccess file
+              <Directory "/1/2/3">
+                   2
+              </Directory>
+
+            Example 2:
+              <Location "/">
+                  Require all granted
+              </Location>
+
+              
+              <Directory "/">
+                  <RequireAll>
+                      Require all granted
+                      Require not host tor_network_domain.com
+                  </RequireAll>
+              </Directory>
+
+              Q: Given our merging order, will a bad guy who's using the TOR network be allowed to visit our root directory?
+
+              A: YES
+
+            
             Module considerations
               Relative to httpd.conf placement, later directive containers override earlier ones (in general).  However, it is left up to the module to decide how the merging of directives is done (i.e., what the final product is)
                 In other words, it isn't clear cut what the behavior is.
@@ -168,7 +228,8 @@ Security Tips In Apache
                       Obviously this is very ambiguous.  For any directives that you are merging (and their directive containers), it is vital to check the documentation for any caveats.
                         T: Each directive and directive container has it's own section in the docs (go to website and show.)
 
-                    
+
+
 
 
 

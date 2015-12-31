@@ -1,3 +1,5 @@
+Also see apache_authentication_author.md
+
 Access Control
   In a typical scenario, we can seperate this into 3 sections in our website
 
@@ -96,4 +98,4 @@ Access Control
           Which can be placed /etc/httpd/conf
           DO NOT PLACE IN DOCUMENTROOT!
 
-        C
+  
