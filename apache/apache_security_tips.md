@@ -130,28 +130,49 @@ Security Tips In Apache
               Relative to httpd.conf placement, later directive containers override earlier ones (in general).  However, it is left up to the module to decide how the merging of directives is done (i.e., what the final product is)
                 In other words, it isn't clear cut what the behavior is.
 
-                For example: Lets say that we have two identical directive containers (with differing directives place inside) in a given config file
+                For example: Lets say that we have two identical directive containers (with similar directives placed inside) in a given config file
 
                 Ex with <Directory> directive containers.
                   T: Show the <Directory>'s module in the docs.
 
-                  Caveat: For the following example, I'm not saying that this is how the merging behavior occurs for the core module (which is <Directory>'s module).  I'm just giving an example of the TYPE of unintended consequences that can occur (and you need to provision for)
-
-
                   # Container A
-                  # We deny all access and disallow .htaccess 
-                  # placement which could subvert our permissions
-
+            
                   <Directory "/a/b">
-                    Require all denied
-                    AllowOverride None
+                    Options Indexes FollowSymLinks
                   <Directory>
 
                   
                   # Container B
                   <Directory "/a/b">
-                    Require all granted
+                    Options Includes
                   <Directory>
+
+                  In this example the finalized container would be:
+                  
+                  <Directory "/a/b">
+                    Options Includes
+                  <Directory>
+
+                    In other words, Indexes, and FollowSymLinks aren't merged; they are completely overridden.
+
+
+                    In general you need to be careful of the following behavior when dealing with the merging behavior of modules.
+                      Later directive containers (Container B) will override earlier ones (Container A), however:
+                        
+                        Only some of the directives from the containers will be merged.
+
+                        All of the directives will be merged
+
+                        All of the module's configuration is completely replaced with the defaults. Additionally, the directives from Container B are present.
+
+                      Obviously this is very ambiguous.  For any directives that you are merging (and their directive containers), it is vital to check the documentation for any caveats.
+                        T: Each directive and directive container has it's own section in the docs (go to website and show.)
+
+                    
+
+
+
+
 
 
 
