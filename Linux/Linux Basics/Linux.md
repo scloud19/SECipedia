@@ -37,6 +37,22 @@ ls
 			* Executable
 	--color 
 		Colorize the output
+cp
+	copies files
+	
+	Ex: cp file1 file2
+		file1 is copied to file2
+
+	Ex: cp file1 file2 file3 dir
+		Copies all of the files to the directory(dir)
+
+mv
+	Moves/renames a file
+
+	mv file1 file2
+
+	mv file1 file2 DIR
+		Moves all files to DIRectory
 
 cd
 	without any arguments changes you to $HOME

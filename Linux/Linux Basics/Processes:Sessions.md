@@ -4,7 +4,34 @@ Processes/Sessions
     Use I/O streams to read/write data.
 
     Processes read data from input streams and write data to output streams
-      These streams can be very flexible as the source of an input stream can be a file, device, terminal, output stream of another process.
+
+  Streams
+
+    Standard Input (stdin)
+      Streams can be very flexible as the source of an input stream can be a file, device, terminal, output stream of another process.
+
+      For most commands, if you don't specify an input file, it will read from stdin (thus it will interact like cat does-as seen below)
+
+    Standard Output (stdout)
+      Kernel gives each process a standard output stream
+        This is where the process writes its output
+
+      Some commands send output only to stdout (thus you see it on your screen... in most cases), but some commands can send items directly to files.
+
+    Standard Error 
+      Another stream
+
+    Control-D
+      Stops the current standard input entry (EOF is sent)
+
+      This isn't the same as Control-C, which terminates the program (regardless of input/output)
+
+    $ cat
+      If you don't specify a filename, cat implements an interactive behavior because of streams.
+
+      Because you didn't specify an input filename, cat read from the standard input stream provided by the kernel rather than a stream connected to a file.
+        In this example, the standard input was connected to the terminal
+
 
 	A process group is a collection of related processes which can all be signalled at once.
 
