@@ -1,5 +1,8 @@
 T: Give credit in the beginning to the apache docs.  I meticulously went through those docs to come up with this tutorial.  Tried to simplify things.
 
+In t
+
+
 TODO: Merge this with apache_access_control.md
 
 Authentication
@@ -75,13 +78,30 @@ When implementing authentication and authorization you usually need to choose at
 
               Remember that I spoke about how modules from the 3 groupings need to be utilized (for most scenarios).
 
-    2) Authentication provider
-      mod_authn_anon
-      mod_authn_dbd
-      mod_authn_dbm
-      mod_authn_file
-      mod_authnz_ldap
-      mod_authn_socache
+    2) Authentication provider module grouping
+        When logging in an individual, his/her credentials are validated against a provider.  
+
+        A prov
+        Modules inside of grouping (aka providers)
+          mod_authn_anon
+          mod_authn_dbd
+          mod_authn_dbm
+          mod_authn_file
+          mod_authnz_ldap
+          mod_authn_socache
+
+        These modules can be implemented by these directives
+          AuthBasicProvider
+            For a basic authentication scheme
+
+          AuthDigestProvider provider-name [provider-name1]
+            For a digest authentication scheme
+            * Not recommended to do digest authentication
+
+            You can specify multiple providers, which will be checked for a 
+          In-depth
+            AuthBasicProvider
+              Sets the authentication provider/s for a given location (i.e., url)
 
     3) Authorization
       mod_authnz_ldap
