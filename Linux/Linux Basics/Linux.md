@@ -1,10 +1,26 @@
 Notes:
 SC = Similar command
 
+
+
+
 Basic Linux Commands
+
+
+chsh
+	Change shell
+
+passwd
+	change your password
 
 sort
 	quickly puts the lines of a text file in alphabetic order
+
+	-n 
+		if the lines start with numbers and you want to list numerically
+
+	-r
+		reverse the order of the sort
 
 touch
 	creates a file

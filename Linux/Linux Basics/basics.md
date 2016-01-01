@@ -1,6 +1,36 @@
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
+shell variables
+    A temporary variable that is stored in the shell.
+
+    Can control the way that the shell behaves
+        Ex: The bash shell reads the PS1 variable before displaying the prompt
+
+    Variable assignment in the shell
+        AM_I_DA_MAN=Yes!
+            To access the variable you need to prepend '$'
+
+    environment variables (ENV variable)
+        vs. shell variables
+            environment variables are like a shell variable, but it's not specific to the shell
+
+            The main difference between the two is that the OS passes all of your shell's environment variables to programs that the shell runs, whereas shell variables can't be access in the commands that you run.
+
+        To assign an ENV variable utilize export
+            Ex: Create a shell variable and also make it an ENV variable
+                AM_I_DA_MAN=YES!
+                export AM_I_DA_MAN
+
+        All processes on Unix systems have environment variable storage
+
+        Many CLI programs make use of env variables.  For ex: you can feed less's flags into an ENV variable so you don't have to specify it every time.
+            In the man pages, you will see a section named ENVIRONMENT which delineates these types of situations.
+
+
+dot files
+    config files that start with "."
+
 Absolute paths
     Start with "/"
         Ex: /var/www/
@@ -8,6 +38,8 @@ Absolute paths
 
 Globbing
     The shells ability to match simple patterns to file and directory names
+
+    Wont match dot files unless you explicitly enter ".*"
 
     Glob characters (there are more than just *,?)
         *
