@@ -2,18 +2,44 @@ Notes:
 SC = Similar command
 
 Basic Linux Commands
+
+sort
+	quickly puts the lines of a text file in alphabetic order
+
 touch
 	creates a file
 		If this is already present, updates the timestamp
 
+diff -u file1 file2
+	Find the differences between 2 text files
+
+file filename
+	Have the system guess what kind of file FILENAME is.
+
 grep
 	Prints the lines from a file or input stream that match an expression.
+
+	egrep (grep -E) is a more powerful version of grep
+
+	grep understands regExs
 
 	Ex: Print the lines in /etc/passwd that contain the text root
 		$ grep root /etc/passwd
 
 	Ex: Find all lines that contain "root" in /etc/
 		$ grep root /etc/*
+
+		Very helpful because it lists what file the match was found in
+
+		Important switches
+			-i
+				case-insensitive matches
+
+			-v
+				Prints all lines that DON'T match the search expression
+
+			
+
 
 Displaying contents of files
 	cat FILE - display the contents of a file
@@ -22,9 +48,14 @@ Displaying contents of files
 		enter - advance 1 line
 		q - leave file
 			commands are based on vi
-	head FILE - output the top portion of a file
-		-n NUMBER_OF_LINES (applies for tail too)
-	tail FILE - output the ending of file
+	head FILE - output the top portion of a file/stream
+		-8 shows 8 lines (applies for tail too)
+			Can change this number to whatever you want
+
+		+9
+			Print all lines starting at line 9
+	
+	tail FILE - output the ending of file/stream
 		-f FILENAME
 			displays data being written in real time
 ls
@@ -68,8 +99,10 @@ cd
 	without any arguments changes you to $HOME
 	cd -
 		Changes to previous directory
-pwd - present working directory
-cat - Concatencates and displays files
+pwd - print working directory
+	-P
+		Sometimes sym links can obfuscate the full pwd.  If so, add this flag
+cat - Concatenates and displays files
 echo
 	Very helpful for finding expansions of shell globs (i.e., *) and variable $HOME, etc.
 
@@ -92,6 +125,9 @@ rm -rf DIR_NAME - Recursively removes dir and files in it
 
 find [path..] [expression]
 	Recursively finds files in path that match the expression 
+
+	path..
+		is the directory to start searching from
 
 	find options
 		You can utilize multiple options at once

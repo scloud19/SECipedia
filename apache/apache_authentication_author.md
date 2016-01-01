@@ -1,6 +1,6 @@
 T: Give credit in the beginning to the apache docs.  I meticulously went through those docs to come up with this tutorial.  Tried to simplify things.
 
-In t
+In the end, I figured that apache authentication is way too convoluted vs other options (oauth, openID, etc.) I'd recommend implementing these services instead of trying to do a web authentication scheme from apache.  I did my notes up to STOPPED_HERE
 
 
 TODO: Merge this with apache_access_control.md
@@ -101,6 +101,7 @@ When implementing authentication and authorization you usually need to choose at
             You can specify multiple providers, which will be checked for a 
           In-depth
             AuthBasicProvider
+            STOPPED_HERE
               Sets the authentication provider/s for a given location (i.e., url)
 
     3) Authorization

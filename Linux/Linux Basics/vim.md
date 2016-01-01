@@ -28,3 +28,17 @@ Always in 1 of 3 modes
 		:set nonu - Turn off line numbering
 
 		:help [subcommand] - Get help
+
+		/word
+			to search
+
+			n
+				To find the next match
+
+		?/word
+			search backwards
+
+		spacebar
+			scroll down a page
+		b
+			skip back one page

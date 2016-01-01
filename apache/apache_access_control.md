@@ -1,5 +1,8 @@
 Also see apache_authentication_author.md
 
+In the end, I figured that apache authentication is way too convoluted vs other options (oauth, openID, etc.) I'd recommend implementing these services instead of trying to do a web authentication scheme from apache.  I did my notes up to STOPPED_HERE
+
+
 Access Control
   In a typical scenario, we can seperate this into 3 sections in our website
 
