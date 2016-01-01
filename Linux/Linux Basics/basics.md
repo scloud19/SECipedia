@@ -1,8 +1,37 @@
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
-Unix processes
-    
+Absolute paths
+    Start with "/"
+        Ex: /var/www/
+        Any path that doesn't start with "/" (as seen above) is a relative path
+
+Globbing
+    The shells ability to match simple patterns to file and directory names
+
+    Glob characters (there are more than just *,?)
+        *
+
+        ?
+            Gives a "wildcard" for only 1 character
+            Ex: zac?
+                Matches zach, zack (and more...)
+
+            Ex: Find all three letter files/directories in the current directory.
+                echo ???
+
+    The shell matches arguments containing globs to filenames, then will substitute the filenames, and finally will run the new command (with appropriate args)
+        The substitution process is called expansion.
+            If you don't want expansion to be performed on a glob, just surround it in single quotes
+                Ex: echo '*'
+
+        Important takeaway: The shell performs expansions before running the command.
+
+    Ex: *securingthestack*
+        Expands all file names that contain securingthestack inside the name.
+
+
+
 
 The Bourne Shell
     /bin/sh

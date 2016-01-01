@@ -6,6 +6,15 @@ touch
 	creates a file
 		If this is already present, updates the timestamp
 
+grep
+	Prints the lines from a file or input stream that match an expression.
+
+	Ex: Print the lines in /etc/passwd that contain the text root
+		$ grep root /etc/passwd
+
+	Ex: Find all lines that contain "root" in /etc/
+		$ grep root /etc/*
+
 Displaying contents of files
 	cat FILE - display the contents of a file
 	less FILE - browse through a textfile
@@ -54,6 +63,7 @@ mv
 	mv file1 file2 DIR
 		Moves all files to DIRectory
 
+
 cd
 	without any arguments changes you to $HOME
 	cd -
@@ -61,6 +71,10 @@ cd
 pwd - present working directory
 cat - Concatencates and displays files
 echo
+	Very helpful for finding expansions of shell globs (i.e., *) and variable $HOME, etc.
+
+	echo *
+		prints a list of files in the CWD
 man
 exit - Exits the shell or your current session
 clear
