@@ -2,7 +2,7 @@ Questions: What is the difference between session and transport.  They seem to h
 
 OSI Model:
     Application:
-        Where our end users interact
+        Where our end users interact with the network.
         Makes sure our remote communication partner is available and makes sure that there's an agreement (between the two) on:
             Data integrity
             Privacy
@@ -11,18 +11,23 @@ OSI Model:
         "How should this data be presented?"
             This isn't the layer that shows the data on the screen (that's the application layer.)
         You can think of this layer as a formatting layer.
+            Ex: If you opened up a PDF in a non-PDF app, all you see is jumbled text.
+                This is a presentation layer issue
         Encryption
     Session
         Manager of the overall data transfer process.
         Is in charge of the creation, maintenance, and teardown of the communication channel the two parties are using.
     Transport
-        Establish an end-to-end connection between two parties.
-        Usually invoves UDP (User Datagram Protocol) or TCP (Transmission Control Protocol)
+        Establish a logical end-to-end connection between two parties (however it does much more).
+        Usually involves UDP (User Datagram Protocol) or TCP (Transmission Control Protocol)
     Network
-        "What paths exist from point A to point B?"
-        "Of those parths, what is the best way?"
+        Deals with 2 primary questions:
+            "What paths exist from point A to point B?"
+            "Of those paths, what is the best way?"
         The IP addresses that we are familiar with (ex: 172.1.3.1) are used at this layer
+            In other words, routing is done at this layer.
     Data Link
+        The primary device that we'll interact with at this layer is a switch.
         Switches run at this layer as well as
             Ethernet
             HDLC (High Data Link Control)
@@ -32,23 +37,29 @@ OSI Model:
             Layer 2 address (Data Link is the second layer)
             Hardware address
             Burned-in address (BIA)
+                Address is burned into your NIC (Network Interface Card).
+                    However, can't we change this?
             Physical address
                 Remember this DOESN'T mean that the MAC address exists on the physical layer
+
+        General Terms: Error detection vs. Error correction
+        Remember, Error detection is different than Error Correction.  Just because you’re detecting something doesn’t mean that you’re correcting it.
+
+        The data link layer performs error detection via the Frame Check Sequence (FCS)
+            Steps for the FCS:
+                1)Sender runs a mathematical formula against the contents of the frame
+
+                2) The sender places the result of that value into the FCS field of the frame, and then sends it
+
+                3) The receiver of the frame runs the same algorithm against the contents of the frames.  If the resulting value matches that in the FCS field, the frame is fine.  If that resulting value doesn't match, that frame is considered corrupt and is then discarded.
+
+                However, why don't we have error recovery?
+                    It's impossible to reverse on the receiving end.
     Physical
 
-    Error detection vs. Error correction
-    Remember, Error detection is different than Error Correction.  Just because you’re detecting something doesn’t mean that you’re correcting it.
+    As a network admin, most of your work is in the physical, data link and network layers.
 
-The data link layer performs error detection via the Frame Check Sequence (FCS)
-    Steps for the FCS:
-        1)Sender runs a mathematical formula against the contents of the frame
 
-        2) The sender places the result of that value into the FCS field of the frame, and then sends it
-
-        3) The receiver of the frame runs the same algorithm against the contents of the frames.  If the resulting value matches that in the FCS field, the frame is fine.  If that resulting value doesn't match, that frame is considered corrupt and is then discarded.
-
-        Why no error recovery?
-            It's impossible to reverse on the recieveing end.
 
 Physical Layer
     Send data with binary (1,0's which symbolizes electrical currents being turned off and on)
