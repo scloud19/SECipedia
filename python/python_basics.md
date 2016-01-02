@@ -91,8 +91,47 @@ Flow Control Statements
     else:
       print('Dude, get zach please!')
 
-  while
+  for
+    Ex:
+
+    print('Count this, homie!')
+    for i in range(5):
+        print("Da number is " + str(i))
+
+
+    range(5) will set i to 0,1,2,3,4
     
+  while
+
+    Ex:
+
+    num = 0
+    while num < 5:
+      print(num)
+      num = num + 1
+      # cant do num++
+
+  Looping keywords
+    break
+
+      Ex:
+
+      name = ''    
+      while True:
+        print("What's your name, foo?")
+        name = input()
+        if name = 'zach':
+          break
+
+      print('Dang bruh, it has been a while')
+
+
+    continue
+      execution stops and returns to the top of the loop to reevaluate the condition
+
+
+
+
 
 Blocks
   Are sometimes called clauses
