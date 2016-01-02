@@ -34,3 +34,6 @@ CLI Keystrokes
     CTRL-Y
         Paste erased text
             From commands such as CTRL-U, CTRL-K
+
+    CTRL-D
+        Forward "DELETE"

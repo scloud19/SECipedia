@@ -18,6 +18,13 @@ Processes/Sessions
 
       Some commands send output only to stdout (thus you see it on your screen... in most cases), but some commands can send items directly to files.
 
+      $ COMMAND > file
+        Redirects stdout from terminal into a file
+        
+        >
+          redirection character
+
+
     Standard Error 
       Another stream
 

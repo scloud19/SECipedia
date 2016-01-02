@@ -6,6 +6,12 @@ SC = Similar command
 
 Basic Linux Commands
 
+tr
+	Do a transformation
+
+	Ex:
+		head /etc/passwd | tr a-z A-Z
+			invert casing
 
 chsh
 	Change shell
