@@ -1,5 +1,28 @@
+Shortcuts
+    CLI shortcuts are in the linux shortcuts DIR.
+
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
+
+man
+    -k
+        Search man pages by keyword.
+        Helps if you don't really know the name of the command that you want
+
+        Ex: man -k tcp
+            OUTPUT: tcp(4) Internet Transmission Protocol
+
+            Output contains the manual page name, the manual section, and a quick description
+
+    Manual Sections
+        1- User commands
+        2- System calls
+        3- Higher-level Unix programming library docs
+        4- Device interface and driver information
+        5- File descriptions (system config. files)
+        6- Games
+
+
 
 Command Path (aka "path")
     A list of system directories that the shell searches when trying to run a command (ex: ls)
@@ -15,17 +38,6 @@ Command Path (aka "path")
         Ex: In your current shell session, add a directory to the beginning of the path
             PATH=dir:$PATH
 
-CLI Keystrokes
-    CTRL-B
-        Move "back"
-        Move the cursor left
-
-    CTRL-F
-        Move cursor "Forward"
-        Move to the right
-        
-    CTRL-P
-        
 
 
 
