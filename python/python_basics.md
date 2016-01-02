@@ -56,9 +56,53 @@ Type casting
       If enter 8
       > '9'
 
-Flow Control Statement
-  if 'zach' == 'zach':
-    print('Yo man!')
+Truthy/Falsey
+  bool(VALUE)
+    To test truthy/falsey
 
-    # If it's true, it runs the indented code
-      if not, it runs the unindented code
+
+  Strings
+    Falsy
+      ""
+    All other values are truthy
+
+  Ints/Floats
+    Falsey
+      0,0.0 (respectively)
+
+    All other values are truthy
+
+
+Flow Control Statements
+  if
+    if 'zach' == 'zach':
+      print('Yo man!')
+
+      # If it's true, it runs the indented code (inside the block)
+        if not, it runs the unindented code (outside the block)
+
+    Ex: if/else...
+
+    name = 'zach'
+    if name == 'zach':
+      print('Yo Zach!')
+    elif name == 'john'
+      print('Yo John, I told you to scram!')
+    else:
+      print('Dude, get zach please!')
+
+  while
+    
+
+Blocks
+  Are sometimes called clauses
+
+  Only start after a colon
+    Ex:
+    if True == True:
+      print('Yo man!')
+
+  All of the code that is within the same level of indentation
+
+  Blocks begin when there's a new level  of increased indentation
+  Blocks end when the indentation returns to its previous level
