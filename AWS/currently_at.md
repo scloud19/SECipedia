@@ -1,5 +1,5 @@
 guru website
-  same lectures between architect and developer courses
+  same sections between architect and developer courses
     2,6,13
 
   for architect course

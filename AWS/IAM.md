@@ -1,3 +1,5 @@
+DE = Dev Exam
+
 Need to revisit for exam: Active Directory Integration
 
 Need to revisit for my own learning
@@ -7,6 +9,21 @@ Need to revisit for my own learning
         http://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
 
 IAM
+    Synopsis
+        Allows you to manage users and their level of access to the AWS Console
+
+        Allows centralized control of an AWS account
+
+        Integrates with existing activate directory accounts allowing single sign on (DE)
+
+        Allows multifactor authentication
+
+        Gives temporary access for users/devices and services where necessary
+            Ex: Logging in to your application with Facebook, etc.
+
+        You can set up your own password rotation policy
+
+
     Strategies
         Outside access
             Create 2 security groups.  1 for public access/1 for private.
@@ -57,7 +74,7 @@ IAM
     To initially set up everything in the main IAM console, you need to make sure that all of the security "checkmarks" are finished for the Security Status dialog
 
     Allows you to manage users and their level of access to the AWS Console
-        Granular level of control: User/Group/Roles
+        Granular level of control: Can set access via User/Group/Roles
             Group: A collection of users under one set of permissions
                 Ex: We set up a Group Called developers and give them a policy name of "power user access", which is like a permissions template.
                     See more about this template below.
@@ -77,11 +94,7 @@ IAM
                 Now, any Ec2 instance that we utilize we can assign it the aforementioned role that we created
 
                 Can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
-    Centalised control of your AWS account
-    Integrates with existing active directory account allow for single sign on
-    Multifactor Authentication
-    Allows for temporary access for users/devices and services
-    Can provision a custom password rotation policy
+
 
     Don't sign in with the root account for main activity
 
