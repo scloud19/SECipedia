@@ -1,83 +1,94 @@
 Questions: What is the difference between session and transport.  They seem to have some overlap.
 
 OSI Model:
-    Application:
-        Where our end users interact with the network.
-        Makes sure our remote communication partner is available and makes sure that there's an agreement (between the two) on:
-            Data integrity
-            Privacy
-            Error recovery
-    Presentation
-        "How should this data be presented?"
-            This isn't the layer that shows the data on the screen (that's the application layer.)
-        You can think of this layer as a formatting layer.
-            Ex: If you opened up a PDF in a non-PDF app, all you see is jumbled text.
-                This is a presentation layer issue
-        Encryption
-    Session
-        Manager of the overall data transfer process.
-        Is in charge of the creation, maintenance, and teardown of the communication channel the two parties are using.
-    Transport
-        Establish a logical end-to-end connection between two parties (however it does much more).
-        Usually involves UDP (User Datagram Protocol) or TCP (Transmission Control Protocol)
-    Network
-        Deals with 2 primary questions:
-            "What paths exist from point A to point B?"
-            "Of those paths, what is the best way?"
-        The IP addresses that we are familiar with (ex: 172.1.3.1) are used at this layer
-            In other words, routing is done at this layer.
-    Data Link
-        The primary device that we'll interact with at this layer is a switch.
-        Switches run at this layer as well as
-            Ethernet
-            HDLC (High Data Link Control)
-            PPP (Point-to-Point Protocol)
-            Frame Relay
-        The MAC address runs at this layer and it's AKA:
-            Layer 2 address (Data Link is the second layer)
-            Hardware address
-            Burned-in address (BIA)
-                Address is burned into your NIC (Network Interface Card).
-                    However, can't we change this?
-            Physical address
-                Remember this DOESN'T mean that the MAC address exists on the physical layer
+    Layers:
+        Application:
+            Where our end users interact with the network.
+            Makes sure our remote communication partner is available and makes sure that there's an agreement (between the two) on:
+                Data integrity
+                Privacy
+                Error recovery
+        Presentation
+            "How should this data be presented?"
+                This isn't the layer that shows the data on the screen (that's the application layer.)
+            You can think of this layer as a formatting layer.
+                Ex: If you opened up a PDF in a non-PDF app, all you see is jumbled text.
+                    This is a presentation layer issue
+            Encryption
+        Session
+            Manager of the overall data transfer process.
+            Is in charge of the creation, maintenance, and teardown of the communication channel the two parties are using.
+        Transport
+            Establish a logical end-to-end connection between two parties (however it does much more).
+            Usually involves UDP (User Datagram Protocol) or TCP (Transmission Control Protocol)
+        Network
+            Deals with 2 primary questions:
+                "What paths exist from point A to point B?"
+                "Of those paths, what is the best way?"
+            The IP addresses that we are familiar with (ex: 172.1.3.1) are used at this layer
+                In other words, routing is done at this layer.
+        Data Link
+            The primary device that we'll interact with at this layer is a switch.
+            Switches run at this layer as well as
+                Ethernet
+                HDLC (High Data Link Control)
+                PPP (Point-to-Point Protocol)
+                Frame Relay
+            The MAC address runs at this layer and it's AKA:
+                Layer 2 address (Data Link is the second layer)
+                Hardware address
+                Burned-in address (BIA)
+                    Address is burned into your NIC (Network Interface Card).
+                        However, can't we change this?
+                Physical address
+                    Remember this DOESN'T mean that the MAC address exists on the physical layer
 
-        General Terms: Error detection vs. Error correction
-        Remember, Error detection is different than Error Correction.  Just because you’re detecting something doesn’t mean that you’re correcting it.
+            General Terms: Error detection vs. Error correction
+            Remember, Error detection is different than Error Correction.  Just because you’re detecting something doesn’t mean that you’re correcting it.
 
-        The data link layer performs error detection via the Frame Check Sequence (FCS)
-            Steps for the FCS:
-                1)Sender runs a mathematical formula against the contents of the frame
+            The data link layer performs error detection via the Frame Check Sequence (FCS)
+                Steps for the FCS:
+                    1)Sender runs a mathematical formula against the contents of the frame
 
-                2) The sender places the result of that value into the FCS field of the frame, and then sends it
+                    2) The sender places the result of that value into the FCS field of the frame, and then sends it
 
-                3) The receiver of the frame runs the same algorithm against the contents of the frames.  If the resulting value matches that in the FCS field, the frame is fine.  If that resulting value doesn't match, that frame is considered corrupt and is then discarded.
+                    3) The receiver of the frame runs the same algorithm against the contents of the frames.  If the resulting value matches that in the FCS field, the frame is fine.  If that resulting value doesn't match, that frame is considered corrupt and is then discarded.
 
-                However, why don't we have error recovery?
-                    It's impossible to reverse on the receiving end.
-    Physical Layer
-        Is about sending data with binary (1,0's which symbolizes electrical currents being turned off and on)
+                    However, why don't we have error recovery?
+                        It's impossible to reverse on the receiving end.
+        Physical Layer
+            Is about sending data with binary (1,0's which symbolizes electrical currents being turned off and on)
 
-        Includes anything to do with physical cable or the standards in use OR the electrical current, etc.
+            Includes anything to do with physical cable or the standards in use OR the electrical current, etc.
 
-        Overall Data transmission process (but easier to think of is the "data chopping process")
-            Once the end user sends some data, that data goes through all seven layers of the OSI model.
-                At the transport layer, the data starts to be segmented into smaller units, and each layer below the Transport Layer will break the units up into even smaller units.
-                    At the end, the data will be transformed into a stream of 1,0s that can successfully be transmitted by the Physical Layer
+            Overall Data transmission process (but easier to think of is the "data chopping process")
+                Once the end user sends some data, that data goes through all seven layers of the OSI model.
+                    At the transport layer, the data starts to be segmented into smaller units, and each layer below the Transport Layer will break the units up into even smaller units.
+                        At the end, the data will be transformed into a stream of 1,0s that can successfully be transmitted by the Physical Layer
 
-        So if the physical layer needs binary, how does that happen?
-            The transport layer begins taking the data and segmenting it into smaller units.  Every layer below this layer will continue this process until the binary at the physical layer is created.
+            So if the physical layer needs binary, how does that happen?
+                The transport layer begins taking the data and segmenting it into smaller units.  Every layer below this layer will continue this process until the binary at the physical layer is created.
 
-    As a network admin, most of your work is in the physical, data link and network layers.
+        As a network admin, most of your work is in the physical, data link and network layers.
 
     Terminology of the "data" at different layers
-        At the Application, Presentation, and Session layers, data is simply referred to as "data."
+        Application, Presentation, and Session layers
+            data is simply referred to as "data."
             The "breakdown" of data hasn't started
-        At the Transport Layer, this data segmentation begins and the data is placed into "segments"
-        More data classifications:
-            Network Layer: "Packets"
-            Data Link Layer: "Frames"
-            Physical Layer: "Bits" aka binary
+        
+        Transport Layer
+            data segmentation begins and the data is placed into "segments"
+        
+        Network Layer
+            "Packets"
+
+        Data Link Layer
+            "Frames"
+
+        Physical Layer
+            "Bits" aka binary
+
+    Headers (Currently at 6:00; Lect 5)
         Each layer creates a layer specific header that will be removed by the layer on the other end of the session.
             The only exception is the Data Layer that adds a header and a trailer.  This trailer is removed on the other side of the session by the corresponding Data Layer
         An example of this is the data starting off at the Application level of the User... "bubbling down" to the Physical Layer.. and then "Bubbling up" to the server on the other end.

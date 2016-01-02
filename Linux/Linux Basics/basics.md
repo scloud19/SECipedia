@@ -1,6 +1,38 @@
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
+Command Path (aka "path")
+    A list of system directories that the shell searches when trying to run a command (ex: ls)
+
+    Ex: If multiple "ls" binaries are found
+        Shell runs the first matching program
+
+    PATH
+        Environment variable that contains the command path
+
+        The different parts of the command path are delimited by a colon
+
+        Ex: In your current shell session, add a directory to the beginning of the path
+            PATH=dir:$PATH
+
+CLI Keystrokes
+    CTRL-B
+        Move "back"
+        Move the cursor left
+
+    CTRL-F
+        Move cursor "Forward"
+        Move to the right
+        
+    CTRL-P
+        
+
+
+
+
+
+
+
 shell variables
     A temporary variable that is stored in the shell.
 
