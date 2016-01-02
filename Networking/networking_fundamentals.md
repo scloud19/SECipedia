@@ -55,36 +55,39 @@ OSI Model:
 
                 However, why don't we have error recovery?
                     It's impossible to reverse on the receiving end.
-    Physical
+    Physical Layer
+        Is about sending data with binary (1,0's which symbolizes electrical currents being turned off and on)
+
+        Includes anything to do with physical cable or the standards in use OR the electrical current, etc.
+
+        Overall Data transmission process (but easier to think of is the "data chopping process")
+            Once the end user sends some data, that data goes through all seven layers of the OSI model.
+                At the transport layer, the data starts to be segmented into smaller units, and each layer below the Transport Layer will break the units up into even smaller units.
+                    At the end, the data will be transformed into a stream of 1,0s that can successfully be transmitted by the Physical Layer
+
+        So if the physical layer needs binary, how does that happen?
+            The transport layer begins taking the data and segmenting it into smaller units.  Every layer below this layer will continue this process until the binary at the physical layer is created.
 
     As a network admin, most of your work is in the physical, data link and network layers.
 
-
-
-Physical Layer
-    Send data with binary (1,0's which symbolizes electrical currents being turned off and on)
-
-Data transmission process
-    So if the physical layer needs binary, how does that happen?
-        The transport layer begins taking the data and segmenting it into smaller units.  Every layer below this layer will continue this process until the binary at the physical layer is created.
-
-    At the Application, Presentation, and Session layers, data is simply referred to as "data."
-        The "breakdown" of data hasn't started
-    At the Transport Layer, this data segmentation begins and the data is placed into "segments"
-    More data classifications:
-        Network Layer: "Packets"
-        Data Link Layer: "Frames"
-        Physical Layer: "Bits" aka binary
-    Each layer creates a layer specific header that will be removed by the layer on the other end of the session.
-        The only exception is the Data Layer that adds a header and a trailer.  This trailer is removed on the other side of the session by the corresponding Data Layer
-    An example of this is the data starting off at the Application level of the User... "bubbling down" to the Physical Layer.. and then "Bubbling up" to the server on the other end.
-    The combination of data and a layer-specific header is a Protocol Data Unit (PDU) and there's a PDU for all layers
-        Ex: L6 PDU (for Layer 6)
-    Same layer interaction vs adjacent layer interaction
-        Same Layer interaction:
-            Ex: An OSI layer on one end of the session removing the header placed on it by the same layer at the other end of the session
-        Adjacent-layer interaction: The interaction between layers of the OSI model on the same host.
-            Ex: The application layer can have interactions with the presentation layer.  The presentation layer can have adjavent-layer interaction with both ther Application and Session layers (the ones directly above and below it), and so both.
+    Terminology of the "data" at different layers
+        At the Application, Presentation, and Session layers, data is simply referred to as "data."
+            The "breakdown" of data hasn't started
+        At the Transport Layer, this data segmentation begins and the data is placed into "segments"
+        More data classifications:
+            Network Layer: "Packets"
+            Data Link Layer: "Frames"
+            Physical Layer: "Bits" aka binary
+        Each layer creates a layer specific header that will be removed by the layer on the other end of the session.
+            The only exception is the Data Layer that adds a header and a trailer.  This trailer is removed on the other side of the session by the corresponding Data Layer
+        An example of this is the data starting off at the Application level of the User... "bubbling down" to the Physical Layer.. and then "Bubbling up" to the server on the other end.
+        The combination of data and a layer-specific header is a Protocol Data Unit (PDU) and there's a PDU for all layers
+            Ex: L6 PDU (for Layer 6)
+        Same layer interaction vs adjacent layer interaction
+            Same Layer interaction:
+                Ex: An OSI layer on one end of the session removing the header placed on it by the same layer at the other end of the session
+            Adjacent-layer interaction: The interaction between layers of the OSI model on the same host.
+                Ex: The application layer can have interactions with the presentation layer.  The presentation layer can have adjavent-layer interaction with both ther Application and Session layers (the ones directly above and below it), and so both.
 
 TCP / IP Networking Model
     Application
