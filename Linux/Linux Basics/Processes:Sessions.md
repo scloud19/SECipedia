@@ -20,9 +20,27 @@ Processes/Sessions
 
       $ COMMAND > file
         Redirects stdout from terminal into a file
+
+        file
+          Shell will create the file if it doesn't already exist.
+
+          If the file does exist, the shell will erase the original.
+            To turn this off in bash
+              $ set -C
         
         >
           redirection character
+            >> is also a redirection character
+
+      $ COMMAND >> file
+        Appends the output to a file instead of overwriting it
+
+        This is very helpful if you're executing multiple commands and want to aggregate logging, etc.
+
+      Piping ( command | command )
+        To send the standard output of a command to the standard input of another        
+
+        
 
 
     Standard Error 
