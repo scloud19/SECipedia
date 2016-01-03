@@ -13,6 +13,20 @@ Relational (Online Transaction Processing-OLTP)
 					Look at VPC.md
 
 	Relational Database Service (RDS)
+		Monitoring
+			Options
+				Cloudwatch
+					Monitors the performance and health of a DB instance
+					Performance charts are shown in the RDS console.
+
+					You can also subscribe to Amazon RDS events to be notified when certain events occur: Changes to a DB instance, etc.
+
+
+
+		AWS provides SDKs for their RDS services
+			You can utilizes these SDKs instead of the RDS's SOAP and Query APIs.
+				These SDKs provide basic functions that aren't in the SOAP and Query APIs, including:  Request authentication, request retries, and error handling.
+
 		RDS manages backups, software patching, automatic failure detection, and recovery.
 
 		This is a managed service, in other words, you're not allowed shell access to DB instances.  You're restricted to certain system procedures and tables that require advanced privileges.
@@ -46,7 +60,13 @@ Relational (Online Transaction Processing-OLTP)
 		DB Parameter Group
 			Each DB engine has a set of parameters that control the behavior of the db
 
-			
+				You manage the configuration of a DB engine by using this parameter group.
+
+			A DB parameter group contains engine configurations values that can be applied to one or more DB instances of the same instance type.
+
+			AWS applied a default DB parameter group if you don't specify a DB parameter group when you create a DB instance.
+
+
 
 		Storage Capacity
 			For each DB instance, you can select from 5 GB to 6 TB of associated storage capacity.
