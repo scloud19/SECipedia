@@ -1,5 +1,13 @@
+NAT
+  If you're building a NAT (ex. interface from a public subnet to a private)
+    Make sure that you have some type of redundancy.  Otherwise, if the NAT goes down, you're toast.
+
 VPC
   Launch everything into a VPC (including RDS services, etc.)
+
+  Use a different subnet for staging/dev/prod
+
+  When creating a subnet, MAKE SURE to take into account future node considerations and AWS subnets (and their CIDR blocks) can't be changed.
 
 RDS
   If using a mySQL db, should the client use Amazons MySQL compatible Aurora DB engine? What are the costs/benefits?
@@ -7,7 +15,6 @@ RDS
   What are the memory and processor requirements?
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
-    
 
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.
   You can also leverage spot instances in a similar vein.
