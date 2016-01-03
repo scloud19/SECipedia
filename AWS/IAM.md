@@ -75,8 +75,14 @@ IAM
 
     Allows you to manage users and their level of access to the AWS Console
         Granular level of control: Can set access via User/Group/Roles
+
+            User: End users (people)
+
             Group: A collection of users under one set of permissions
                 Ex: We set up a Group Called developers and give them a policy name of "power user access", which is like a permissions template.
+
+                Ex:  We can also say this set of users has access to this s3 bucket, and another has access to a different s3 bucket.
+                
                     See more about this template below.
                     Policy templates
                         Admin: Full access to AWS services and resources

@@ -5,6 +5,8 @@ guru website
   for architect course
     havent looked at whitepapers
 
+    dev course
+      lecture 11-3:00
 
 
 

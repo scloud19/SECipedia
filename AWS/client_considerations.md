@@ -1,3 +1,9 @@
+VPC
+  Launch everything into a VPC (including RDS services, etc.)
+
+RDS
+  If using a mySQL db, should the client use Amazons MySQL compatible Aurora DB engine? What are the costs/benefits?
+
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.
   You can also leverage spot instances in a similar vein.
 

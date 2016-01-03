@@ -1,3 +1,5 @@
+
+
 Bad practice to have databases open to the public.
 	Open them up to a private VPC and create security groups and roles based on that
 		Make sure to create your own security group for the DB
@@ -11,8 +13,43 @@ Relational (Online Transaction Processing-OLTP)
 					Look at VPC.md
 
 	Relational Database Service (RDS)
+		RDS manages backups, software patching, automatic failure detection, and recovery.
+
+		This is a managed service, in other words, you're not allowed shell access to DB instances.  You're restricted to certain system procedures and tables that require advanced privileges.
+			If you REALLY want this shell access, you can always host a database on an EC2 instance.
+
+			Although you can't SSH into the instance, you are allowed to use practically any other app that you'd normally use (think MySQL workbench, etc.)
+
+		You get high availability with a primary instance and a synchronous secondary instance that you can failover to when problems occur.  You can use a MySQL read replicas to increase read scaling.
+
+		You can run your DB instances in a VPC for extra control.
+
+		Security Groups
+			RDS uses DB security groups, VPC security groups, and EC2 security groups.
+
+				DB security group
+					controls access to a DB that's not in a VPC
+
+				VPC security group
+					Controls access to a DB instance inside a VPC
+
+				EC2 Security Group
+					Controls access to an EC2 instance and can be used with a DB instance.
+
+
+
+
+
 		Has the ability to add a managed memcached or redis-compatible in-memory cache
 		to speed up your database access
+
+		DB Parameter Group
+			Each DB engine has a set of parameters that control the behavior of the db
+
+			
+
+		Storage Capacity
+			For each DB instance, you can select from 5 GB to 6 TB of associated storage capacity.
 
 		MySQL
 			You can resize your instance (cpu/HD) on the fly.
@@ -37,11 +74,15 @@ Relational (Online Transaction Processing-OLTP)
 		Maximum backup window (time to keep a backup snapshot) 35 days
 
 		Multi-AZ deployment
-		AWS will maintain a synchronous standby replica in a different AZ than the DB instance.  This will automatically fail over to the standby if needed
+			Runs a DB instance in several AZ's.
+
+			AWS automatically provisions and maintains a synchronous standby replica to provide data redundancy, failover support, eliminate I/O freezes, and minimize latency spikes during system backups.
+
 			Make sure to utilize the ENDPOINT DNS name when doing this type of deployment.  If a SQL server goes down, AWS will automatically remap the DNS into an instance in a new AZ.
 
 
 			Only MySQL can be utilized for read replicas
+		
 		MySql
 
 		Sql Server
