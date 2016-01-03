@@ -93,13 +93,19 @@ IAM
 
                     We then create a user and assign them the group "developers".  
             Roles: Similar to a group, but you can assign both users and AWS resources (like EC2).  This allows you to centralize your account management so you don't store credentials on EC2, etc.  (This is a best practice)
+                Ex: Say you want to access an S3 bucket from Ec2.
+                    You can either store the s3 creds locally on the EC2 (not recommended) and then connect to s3 via the API, etc.
+
+                    Or, you can assign your EC2 instance a role that has a policy tha allows for connecting to S3.
+
                 The Role ARN is the role's unique name in aws
                 There's AWS Service Roles, Role for Cross-Account Access (accessing via other AWS accounts), Role for Identity Provider Access (logging in with facebook,etc)
+
                 Ex: For example we can give our EC2 instances an "Amazon EC2" role which allows EC2 Instances to call AWS services on our behalf.
                     Then for a given role, we can attach up to 2 policies.  We will attach "AmazonS3FullAccess" as a policy.
                 Now, any Ec2 instance that we utilize we can assign it the aforementioned role that we created
 
-                Can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
+                Exam: Roles can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
 
 
     Don't sign in with the root account for main activity
