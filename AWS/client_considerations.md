@@ -4,6 +4,11 @@ VPC
 RDS
   If using a mySQL db, should the client use Amazons MySQL compatible Aurora DB engine? What are the costs/benefits?
 
+  What are the memory and processor requirements?
+    Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
+
+    
+
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.
   You can also leverage spot instances in a similar vein.
 
