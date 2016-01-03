@@ -5,6 +5,35 @@ Processes/Sessions
 
     Processes read data from input streams and write data to output streams
 
+    Each process on the system has a PID (process ID)
+
+    ps -aux
+      -> 
+        USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+        root         1  0.0  0.2  19612  2624 ?        Ss    2015   0:02 /sbin/init
+
+        Common fields
+          TTY
+            The terminal device where the process is running.
+          STAT
+            The process status.  I.e., what is the process doing and where its memory resides.
+
+            S
+              The process is sleeping
+            R
+              The process is running
+
+            ps(1) gives a description for all of the symbols.
+
+          TIME
+            The amount of CPU time in minutes and seconds that the process has used.
+          COMMAND
+            Is obvious but be aware that a process can change this field from its original value
+          
+
+
+
+
   Streams
 
     Standard Input (stdin)
@@ -142,3 +171,4 @@ Processes/Sessions
 
 	e.g. if you run some_app from the shell, the shell creates a new process group for it, and makes that the foreground process group of the session. (some_app might create some child processes; by default they will be part of the same process group.) If you then press ^Z, some_app's process group is signalled to stop it; and the shell's process group is switched to be the foreground process group again. Then e.g.bg %1 would start some_app's process group again, but keep it running in the background.
 		http://stackoverflow.com/questions/6548823/use-and-meaning-of-session-and-process-group-in-unix
+

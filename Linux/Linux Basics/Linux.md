@@ -4,8 +4,73 @@ SC = Similar command
 
 
 
-Basic Linux Commands
+Basic Linux Commands/variables/etc
+$$
+	A shell variable that holds the current shell's PID
 
+kill pid
+	terminates a process by sending it a signal
+		A signal is a message to a process from the kernel.
+
+		When you run kill, you're asking the kernel to send a signal to another process
+
+		Signals
+			There are many types of signals in linux.
+
+			kill -SIG_NAME pid
+				To send a signal to a process.
+					This doesn't have to do will 'killing' the process (see below.)
+
+
+			TERM (default signal)
+				Terminate the process
+
+			STOP
+				Will freeze the process
+
+				This process will remain in memory, ready to pick up where it left off.
+
+			CONT
+				To continue running a STOPed process
+
+				Ex: kill -CONT pid
+
+
+
+
+ps aux
+  -> 
+    USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+    root         1  0.0  0.2  19612  2624 ?        Ss    2015   0:02 /sbin/init
+
+    Common fields
+      TTY
+        The terminal device where the process is running.
+      STAT
+        The process status.  I.e., what is the process doing and where its memory resides.
+
+        S
+          The process is sleeping
+        R
+          The process is running
+
+        ps(1) gives a description for all of the symbols.
+
+      TIME
+        The amount of CPU time in minutes and seconds that the process has used.
+      COMMAND
+        Is obvious but be aware that a process can change this field from its original value
+  Switches (run them without the '-')
+  	x
+  		show all of your running processes
+  	ax
+  		show all processes on the system (not just yours)
+  	u
+  		Include more detailed information
+  	w
+  		show the fill command names, not just what fits on a line
+
+  To get detailed information on a process, pass its PID to ps
 tr
 	Do a transformation
 
