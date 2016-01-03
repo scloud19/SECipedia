@@ -12,6 +12,17 @@ Processes/Sessions
 
       For most commands, if you don't specify an input file, it will read from stdin (thus it will interact like cat does-as seen below)
 
+      stdin redirection
+
+        <
+          Channels a file to a program's stdin
+
+          Ex: cat < /etc/passwd
+
+          This isn't very common because most unix commands accept filenames as args
+            Ex: cat /etc/passwd
+
+
     Standard Output (stdout)
       Kernel gives each process a standard output stream
         This is where the process writes its output
@@ -42,9 +53,74 @@ Processes/Sessions
 
         
 
+    Stream IDs
+      1
+        stdout (the default)
+      2
+        stderr
 
-    Standard Error 
-      Another stream
+    Standard Error(stderr)
+      Output stream for diagnostics and debugging.
+
+      When you see an error on the console; its from stderr
+
+      Error messages
+        ls /not_a_directory
+          -> ls: /not_a_directory: No such file or directory
+
+        3 components to error messages
+          ls
+            The program name, but this isn't always shown.  So if you're writing shell scripts, watch out.
+
+          /not_a_directory
+            The file name.
+
+          No such file or directory
+            The error.
+
+        In general; always address the first error message.  Usually there's a chain reaction that's based on the first problem.
+
+
+
+
+
+      Ex: redirect stderr to file 'err' and stdout to file 'out'
+        ls /yoyo > out 2> err
+
+        2>
+          2 is the stderr stream Id in the redirection
+
+      >&
+        Redirect stderr and stdout to the same place
+
+        Ex: send stderr and stdout to file 'all_output_streams'
+          ls /yoyo > all_output_streams 2>&1
+
+      Common error messages
+        Not a directory, Is a directory
+          Occurs when you try to use a file as a directory or a directory as a file.
+          Ex:
+            touch yo
+            touch yo/man
+            -> touch: a/b: Not a directory
+
+        Operation not permitted
+          Can occur when you try to kill a process that you don't own.
+
+        Segmentation fault
+          Segmentation fault
+            the programmer who wrote the program messed up.  The program tried to access a part of memory that it was not allowed to touch, and the OS killed the process.
+
+        Bus error
+          Similar idea to the segmentation fault.  
+
+          Means that the program tried to access some memory in a way that it shouldnt.
+
+          Segmentation fault/Bus error
+            If you're getting one of these errors, you might be giving a program some input that it wasn't expecting.
+
+
+
 
     Control-D
       Stops the current standard input entry (EOF is sent)
