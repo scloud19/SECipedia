@@ -7,28 +7,6 @@ Processes/Sessions
 
     Each process on the system has a PID (process ID)
 
-    ps -aux
-      -> 
-        USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-        root         1  0.0  0.2  19612  2624 ?        Ss    2015   0:02 /sbin/init
-
-        Common fields
-          TTY
-            The terminal device where the process is running.
-          STAT
-            The process status.  I.e., what is the process doing and where its memory resides.
-
-            S
-              The process is sleeping
-            R
-              The process is running
-
-            ps(1) gives a description for all of the symbols.
-
-          TIME
-            The amount of CPU time in minutes and seconds that the process has used.
-          COMMAND
-            Is obvious but be aware that a process can change this field from its original value
           
 
 
