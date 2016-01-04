@@ -19,6 +19,13 @@ RDS
   What are the memory and processor requirements?
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
+  Aurora
+    Very important implications for failover
+      Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
+
+      Check out this for other important implications on why Aurora is the best
+        https://aws.amazon.com/rds/aurora/faqs/
+
 
 
 
