@@ -2,6 +2,10 @@ Local ENV considerations
   Ex: For testing purposes, you need to connect to DB instance via MySQL workbench.  However, you are behind a firewall.
     In these situations, you need to make sure that certain ports aren't blocked on the firewall.  For example, once you set up a DB instance, you can't change its port.
 
+IAM
+  Create a virtual MFA device for each user.
+  When setting up users, assign them into certain groups (admins/devs/DBAs/etc)
+
 NAT
   If you're building a NAT (ex. interface from a public subnet to a private)
     Make sure that you have some type of redundancy.  Otherwise, if the NAT goes down, you're toast.

@@ -73,6 +73,8 @@ Background Processes
     Sometimes these background processes can write to your current TTY's stdout/stderr; so if you see something unexpected, this is why.
       To compensate for this, you should redirect the stdout/stderr to a file.
 
+      In bash, you can also use CRTL-L to redraw the screen
+
 
 Processes/Sessions
   

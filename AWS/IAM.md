@@ -17,6 +17,8 @@ IAM
         Integrates with existing activate directory accounts allowing single sign on (DE)
 
         Allows multifactor authentication
+            When signing in, you provide 2 means of verifying yourself
+                Ex: So in addition to supplying a username/pass, you have to supply something else
 
         Gives temporary access for users/devices and services where necessary
             Ex: Logging in to your application with Facebook, etc.
@@ -59,6 +61,7 @@ IAM
                 The resource that's affected by the action.
 
                 Need to utilize the Amazon Resource Name (arn)
+                    E: ARN = Amazon Resource Name
 
                 If the API action doesn't support ARNs, use * to specify that all resources can be affected by the action
 
@@ -83,13 +86,6 @@ IAM
 
                 Ex:  We can also say this set of users has access to this s3 bucket, and another has access to a different s3 bucket.
                 
-                    See more about this template below.
-                    Policy templates
-                        Admin: Full access to AWS services and resources
-                        Power User Access: Admin but no user/group management
-                        Read Only
-                        You can only assign 2 policys to a role
-                        * We don't have to use a template
 
                     We then create a user and assign them the group "developers".  
             Roles: Similar to a group, but you can assign both users and AWS resources (like EC2).  This allows you to centralize your account management so you don't store credentials on EC2, etc.  (This is a best practice)
@@ -98,8 +94,21 @@ IAM
 
                     Or, you can assign your EC2 instance a role that has a policy tha allows for connecting to S3.
 
+                Policys
+                    Include a Policy Document
+                        A JSON document that sets up to the policy.
+
+
+
                 The Role ARN is the role's unique name in aws
-                There's AWS Service Roles, Role for Cross-Account Access (accessing via other AWS accounts), Role for Identity Provider Access (logging in with facebook,etc)
+
+                Different types of Roles
+                    Service Roles
+
+                    Cross-Account Access (accessing via other AWS accounts)
+
+                    Identity Provider Access (logging in with facebook,etc)
+                        Also see Web Identity Federation
 
                 Ex: For example we can give our EC2 instances an "Amazon EC2" role which allows EC2 Instances to call AWS services on our behalf.
                     Then for a given role, we can attach up to 2 policies.  We will attach "AmazonS3FullAccess" as a policy.
@@ -107,13 +116,32 @@ IAM
 
                 Exam: Roles can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
 
+                Roles and their policy templates
+                    You can also utilize the policy templates with Groups
+                    Policy template examples
+                        Admin: Full access to AWS services and resources
+
+                        Power User Access: Admin but no user/group management
+
+                        Read Only
+
+                        There are others :D
+
+                        You can only assign 2 policys to a role
+                        * We don't have to use a template
 
     Don't sign in with the root account for main activity
 
     When you create a user, it will only give you the Access Key ID (username) and Secret Access Key (password) once
         This pair will allow for access to the AWS CLI, API calls to the AWS portal, and using SDKs, etc.
 
+        If someone looses their key, you don't have to delete/recreate the user (although you can)
+            Simply select the user in the IAM console, User Actions tab, Manage Access Keys.
+
+            You can delete their existing key and then create a new one
+
     To give access to the AWS console, you create that in IAM as well
+        Select the user, User Actions tab, Manage Password
 
 
     Scenario:
@@ -121,4 +149,42 @@ IAM
             Create an s3 role in IAM
             Launch an EC2 and select that role
             ssh into box with key/pair in EC2 setup
+
+    When setting up an account for the first time
+        In the IAM console you'll see various items that you need to complete.  The following is notes on those items
+            Steps
+                Activate MFA on your root account
+                    Virtual MFA device
+                        To use this, you must first install an AWS MFA-compatible application on the user's smartphone, PC, or other device.
+
+                    Hardware MFA device
+
+    Web Identity Federation
+        Logging in via LinkedIn, amazon.com, etc.
+
+        To see how to set it up, Google this string:
+            Web Identity Federation with Mobile Apps
+
+        Also useful to Google:
+            "AWS Web Identity Federation Playground"
+            This will help explain the "how it works" section below.
+
+        How does this work?
+            We verify our identity with Facebook
+
+            Facebook gives us an access token
+
+            We exchange that access token for a temporary security credentials on AWS by making a AssumeRoleWithWebIdentity request.
+
+            We make the request and get
+                Secret Access Key
+                Access Key ID
+                Session Token
+
+            We'll have the permissions that were set up in the access policy 
+
+
+
+
+
          
