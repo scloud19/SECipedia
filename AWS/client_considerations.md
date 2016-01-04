@@ -1,3 +1,7 @@
+Local ENV considerations
+  Ex: For testing purposes, you need to connect to DB instance via MySQL workbench.  However, you are behind a firewall.
+    In these situations, you need to make sure that certain ports aren't blocked on the firewall.  For example, once you set up a DB instance, you can't change its port.
+
 NAT
   If you're building a NAT (ex. interface from a public subnet to a private)
     Make sure that you have some type of redundancy.  Otherwise, if the NAT goes down, you're toast.
@@ -14,6 +18,8 @@ RDS
 
   What are the memory and processor requirements?
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
+
+
 
 
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.
@@ -33,7 +39,7 @@ For different ENVs, projects, etc. make sure to create tags and then aggregate t
   Helps for keeping track of various departments, etc.
 
 EBS
-  Snapshots
+  Snapshots (and general storage considerations)
     After creating a volume, you can create a snapshot for backup purposes
     
     Another use case: You can create your whole dev/QA ENV on magnetic storage, and when you are ready to transition QA over to PROD, you can take a snapshot of the volume and then create a volume from the snapshot (and set the storage type to SSD for example)
@@ -70,6 +76,9 @@ AMIs
 Regions
   Legal considerations
     Look at what regions you're launching into and their legal considerations.
+
+  Latency 
+    Make sure that the region you choose is close to your customers (and other portions of the application) Ex: Have your DBs in the same region as your app servers, etc.
         
 
 CloudWatch

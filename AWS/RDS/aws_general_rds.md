@@ -13,6 +13,21 @@ Relational (Online Transaction Processing-OLTP)
 					Look at VPC.md
 
 	Relational Database Service (RDS)
+		Storage
+			Magnetic
+				aka Standard Storage
+				
+				Ideal for applications with light or burst I/O requirements
+
+				Cost effective, but slower than SSD
+
+			General Purpose (SSD)
+				aka gp2
+
+			Provisioned IOPS (input/output operations per second)
+				Designed for I/O intensive workloads (e.g. database loads)
+					These types of loads are sensitive to storage performance and consistency in random access I/O throughput.
+
 		Monitoring
 			Options
 				Cloudwatch
@@ -35,19 +50,28 @@ Relational (Online Transaction Processing-OLTP)
 			Although you can't SSH into the instance, you are allowed to use practically any other app that you'd normally use (think MySQL workbench, etc.)
 
 		You get high availability with a primary instance and a synchronous secondary instance that you can failover to when problems occur.  You can use a MySQL read replicas to increase read scaling.
+			For tests ENVs, this isn't necessary
 
 		You can run your DB instances in a VPC for extra control.
 
 		Security Groups
+			If you're attaching the RDS to an EC2 instance, use the EC2 instances security group (as the identifier) when connecting to the RDS's security group.
+				This will allow access from any entity in the EC2's security group.
+				
 			RDS uses DB security groups, VPC security groups, and EC2 security groups.
 
-				DB security group
+				DB security group (dont use this)
 					controls access to a DB that's not in a VPC
 
 				VPC security group
+					In the real world, this is the option that you want.
+
 					Controls access to a DB instance inside a VPC
 
-				EC2 Security Group
+					Think of this level of access as occuring at the instance level
+
+
+				EC2 Security Group (dont use this)
 					Controls access to an EC2 instance and can be used with a DB instance.
 
 

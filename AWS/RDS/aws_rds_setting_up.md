@@ -4,6 +4,7 @@
   a) Create an IAM user
 
   b) Add the user to an IAM group and assign the IAM user to an IAM group with admin permissions.
+    Whatever the account is, you need to make sure that it has the ability (through the correct policy)to perform RDS actions.
 
   Once this is complete, you can access AWS using a special URL and creds for the IAM user.
     http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html
@@ -17,4 +18,4 @@
 
     c) Must specify a DB subnet group that defines which subnets in that VPC can be used by the DB instance.
 
-  Currently here and at "Do you need failover support?" at http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html
+
