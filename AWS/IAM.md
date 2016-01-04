@@ -1,6 +1,8 @@
+
+
 DE = Dev Exam
 
-Need to revisit for exam: Active Directory Integration
+Need to revisit for exam: Active Directory Integration lecture for all courses
 
 Need to revisit for my own learning
     Do this after learning about IAM
@@ -114,7 +116,10 @@ IAM
                     Then for a given role, we can attach up to 2 policies.  We will attach "AmazonS3FullAccess" as a policy.
                 Now, any Ec2 instance that we utilize we can assign it the aforementioned role that we created
 
-                Exam: Roles can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
+                Exam: You can't change the IAM role on a running EC2 instance.  You also can't associate an IAM role with an already running instance.  You can only one IAM role with an ec2 instance.
+
+
+                oles can't be assigned to an EC2 instance after that instance has been created. You cannot change them either.  Although, you can change the permissions of a role that has already been assigned to an Ec2 instance.
 
                 Roles and their policy templates
                     You can also utilize the policy templates with Groups
@@ -182,7 +187,17 @@ IAM
                 Session Token
 
             We'll have the permissions that were set up in the access policy 
+                Ex: If you're given s3 list bucket privs, you can get an XML document back that lists the documents in the bucket
 
+
+    Exam Tips
+        SAML
+            Secure Assertive Markup Language
+                What is used if you're trying to authenticate with Active Directory from AWS
+
+        You always Authenticate against the identity provider first (e.g. facebook/active directory) BEFORE you can access a given AWS resource.
+            Once authenticated, you obtain your temporary security credentials.
+                With these creds, you make an API call that includes "AssumeRoleWithWebIdentity"
 
 
 

@@ -6,7 +6,7 @@ guru website
     havent looked at whitepapers
 
     dev course
-      lecture 11-6:00
+      lecture 16-START
 
 
 
