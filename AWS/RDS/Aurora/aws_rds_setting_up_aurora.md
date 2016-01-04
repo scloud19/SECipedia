@@ -42,4 +42,8 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
             A given Aurora replica, in a given AZ, reads from the data that's stored in its AZ.  
 
+
+        Currently At:
+          Aurora Endpoints: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
+
   

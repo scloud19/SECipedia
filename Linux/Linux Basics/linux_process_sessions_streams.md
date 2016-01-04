@@ -1,3 +1,79 @@
+Job Control
+  kill pid
+    terminates a process by sending it a signal
+      A signal is a message to a process from the kernel.
+
+      When you run kill, you're asking the kernel to send a signal to another process
+
+      Signals
+        There are many types of signals in linux.
+
+        If warranted, linux gives a process the ability to clean up after itself BEFORE the process terminates.
+          Exception: The KILL signal
+
+        kill -SIG_NAME pid
+        kill -SIG_NUM pid
+          To send a signal to a process.
+            This doesn't have to do will 'killing' the process (see below.)
+
+
+        TERM (default signal)
+          Terminate the process
+
+        STOP
+          Will freeze the process
+
+          This process will remain in memory, ready to pick up where it left off.
+
+        CONT
+          To continue running a STOPed process
+
+          Ex: kill -CONT pid
+
+        INT
+          Terminates the process
+
+          When you use Ctrl-C in the current terminal, this is the same as
+            kill -INT CURRENT_PROCESS_PID
+
+        KILL
+          Doesn't allow the process to be cleaned up.
+          Only use this as a last resort.
+
+          OS will terminate the process that forcibly removes it from RAM.
+
+          AKA
+            Kill -9 PID
+
+          Job Control Signals
+            TSTP
+              Similar to STOP
+
+              Ctrl-Z
+                To make the foreground process to a background process
+
+                fg
+                  Bring background process to foreground
+            jobs
+              To see all suspended processes, etc.
+
+Background Processes
+  command args &
+    Execute command and put it in the background
+
+    Ex: nano &
+      -> [2] 4250
+
+      The shell will respond with the job number and the PID
+        Ex: To move the aforementioned command to the fg
+          fg 2
+
+    These processes will continue to run, even after you log out.
+
+    Sometimes these background processes can write to your current TTY's stdout/stderr; so if you see something unexpected, this is why.
+      To compensate for this, you should redirect the stdout/stderr to a file.
+
+
 Processes/Sessions
   
   Processes

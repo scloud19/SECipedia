@@ -8,33 +8,7 @@ Basic Linux Commands/variables/etc
 $$
 	A shell variable that holds the current shell's PID
 
-kill pid
-	terminates a process by sending it a signal
-		A signal is a message to a process from the kernel.
-
-		When you run kill, you're asking the kernel to send a signal to another process
-
-		Signals
-			There are many types of signals in linux.
-
-			kill -SIG_NAME pid
-				To send a signal to a process.
-					This doesn't have to do will 'killing' the process (see below.)
-
-
-			TERM (default signal)
-				Terminate the process
-
-			STOP
-				Will freeze the process
-
-				This process will remain in memory, ready to pick up where it left off.
-
-			CONT
-				To continue running a STOPed process
-
-				Ex: kill -CONT pid
-
+					CONT
 
 
 
