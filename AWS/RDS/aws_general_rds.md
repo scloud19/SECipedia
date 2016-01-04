@@ -1,4 +1,5 @@
-
+This is for general considerations when setting up
+	In addition, please see aws_rds_setting_up_aurora.md
 
 Bad practice to have databases open to the public.
 	Open them up to a private VPC and create security groups and roles based on that
@@ -57,7 +58,7 @@ Relational (Online Transaction Processing-OLTP)
 		Security Groups
 			If you're attaching the RDS to an EC2 instance, use the EC2 instances security group (as the identifier) when connecting to the RDS's security group.
 				This will allow access from any entity in the EC2's security group.
-				
+
 			RDS uses DB security groups, VPC security groups, and EC2 security groups.
 
 				DB security group (dont use this)
@@ -134,28 +135,8 @@ Relational (Online Transaction Processing-OLTP)
 		Postgres
 		Oracle
 			You can bring your own liceneses or you can use Amazon's licenses
-		Aurora
-			AWS's proprietary DB that's mySQL compatable.
-			Up to 5x better performance than mySQL at a price point one tenth
-			that of a commercial database
-
-			Scaling
-				Start with 10Gb and scales in 10Gb increments to 64Tb
-				Compute resources can scale up to 32vCPUs and 244Gb of Memory
-
-			Availability
-				2 copies of your data is contained in each AZ, with a minimum
-				of 3 AZ (6 copies of data)
-					This is great from a redundancy perspective but you can
-					also to reads from this nodes as well
-
-				Aurora is designed to transparently handle the loss of up to 2
-				copies of data without affecting database write availability and
-				up to three copies without affecting read availability.
-
-			Aurora storage is also self-healing. Data blocks and disks are continuously
-			scanned for errors and repaired automatically.
-
+		
+		
 		Setting up an RDS instance
 			Create a security group
 	NoSQL
