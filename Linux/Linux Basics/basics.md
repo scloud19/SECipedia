@@ -311,6 +311,15 @@ Linux File System
             $ - Normal User
             # - Root
 
+        Symbolic Links
+            A file that points to another file or directory
+
+            In ls -la the first permission bit will be an "l"
+                Think "link".
+
+            Chained symbolic links
+                sym links that point to other sym links
+
         Shell Shortcuts
             ~ - Home directory of respective user
                 Ex: ~jason = /home/json

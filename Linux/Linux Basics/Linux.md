@@ -25,6 +25,9 @@ CTRL-R
 groups
 	See what group/s you're in
 
+ln -s target linkname
+	linkname - The name of the symlink
+
 
 ps aux
   -> 

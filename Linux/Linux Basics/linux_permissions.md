@@ -33,7 +33,7 @@ Permissions
     r allows file names in the dir to be read
     w allows entries to be modified within the dir
       You can edit files from within the dir
-    x Allows access to contents and metadata for entries (last modification time, etc)
+    x Allows execution/reading "inside" the contents/reading metadata for entries (last modification time, etc)
 
       Directory permissions
         Permissions on a directory can effect the files in the directory
@@ -52,7 +52,7 @@ Permissions
           Ex on some systems: passwd
             This program needs to change the /etc/passwd file
 
-    CURRENTLY AT
+    
 
     You can apply the permissions to certain categories
     Sym/ Def
@@ -63,15 +63,18 @@ Permissions
 
     Groups
       Every user is in at least one group
+      
       groups
         command displays a user's group
 
       When you create a file, the files belong to your primary group (first group)
       
-      chgrp GROUPNAE FILE
+      chgrp GROUPNAME FILE
         changes the group of a file
 
-    chmod _MODE_ _FILE_ - change mode command
+    chmod _MODE_ _FILE_
+      change mode command
+      
       ex: chmod g+wx,u+r z.data
         seperate groups by comma
 
@@ -81,7 +84,7 @@ Permissions
       Mode:
       ugoa - user category (user,group,other, all)
       +-= - Add, subtract, or set permissions
-        = or "set permission" sets the permissions to exactly what you specifiy
+        = or "set permission" sets the permissions to exactly what you specify
       rwx - Read, Write, Execute
 
       You can utilize numeric mode as well
@@ -100,16 +103,23 @@ Permissions
           UGO order
             user, group, other
           Ex: chmod 750
+            When setting permissions this way, this is called an absolute change because it sets all of the permissions at once.
 
         Most commonly used permissions
 
         Symbolic  Octal
-        -rwx------  700
-        -rwxr-xr-x  755
-        -rw-rw-rw-  664
-        -rw-rw----  660
-        -rw-r--r--  644
-          
+          Common file permission modes
+            -rw-r--r--  644
+            -rw-------  600
+          Common directory/program permission modes
+            -rwxr-xr-x  755
+            -rwx------  700
+          Common directory permission modes
+            -rwx--x--x  711
+          Others
+            -rw-rw-rw-  664
+            -rw-rw----  660
+            
         File Creation Mask
           File creation mask determines default permissions
             this is usually set by the sysadmin
@@ -118,13 +128,20 @@ Permissions
                   setuid
                   setgid
                   sticky
+
+              When using umask, you need to put your command in your shell's startup file
               umask [-S] OCT_MODES
                 -S symbolic mode
                   umask -S
                     You can see current umask displayed symbolically
-                This is the opposite of chmod.
+                This is the opposite of chmod
                   chmod's 7 would be rwx
                   in umask this is --- (no privs)
+
+                Common umasks
+                  022 - You want everyone to be able to see all of the files/directories that you create
+                  077 - if you want want anyone to see your files.
+
                 Finding umask's OCT_MODES (estimation)
                   If a MODE is negative then you can't use this technique
                     Ex: Base Permission   666
