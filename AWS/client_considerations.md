@@ -37,6 +37,11 @@ RDS
     Route write queries to the cluster DNS name (which always points to the primary) and distribute read only queries to the Read Replica nodes in the cluster.
       In regards to the read replica nodes; what occurs during failover of that unique node? Since we are routing the traffic to that individual node, does this get rerouted to another unique read replica?
 
+      If the client can use the following SQL statements, these are performance gains in Aurora
+        Aurora accelerates parallel inserts sorted by primary key and applies to LOAD DATA, INSERT INTO ... SELECT ... statements.
+
+    When onboarding a DBA, dont give them the master password.  Make a user from them in IAM with a database admin policy.  These individuals can then go into MySQL and create accounts through the database, etc.
+      Also, to through aws_rds_general_aurora.md/Security and bring up any relevant points that they need to know
 
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.
   You can also leverage spot instances in a similar vein.

@@ -66,7 +66,7 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
             There's automatic detection of failures in the disk volumes that make up the cluster volume.
               When a segment of a disk volume fails, this segment is automatically repaired
-            
+          
 
           Utilizes SSD drives
 

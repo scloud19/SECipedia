@@ -1,4 +1,62 @@
 Aurora
+  Security
+    Securing Aurora with SSL
+      CURRENTLY AT.
+
+      Securing Aurora Data with SSL:http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
+
+    MySQL Level permissions
+      In addition to IAM RDS policies, you can do permissions inside Aurora (as you could for any MySQL db).
+        Thus you can utilize commands such as:
+          CREATE USER, RENAME USER, GRANT, REVOKE, SET PASSWORD, etc.
+
+      Master User
+        When you create an Amazon Aurora DB instance, the master user has the following default privs:
+          alter
+          alter routine
+          create
+          create routine
+          create temporary tables
+          create user
+          create view
+          delete
+          drop
+          event
+          execute
+          grant option
+          index
+          insert
+          lock tables
+          process
+          references
+          replication slave
+          select
+          show databases
+          show view
+          trigger
+          update
+
+      
+      rdsadmin user
+        Is used via AWS for admin purposes.  You can't change items related to this account.
+
+      DB cluster management
+        kill, kill_query commands have been restricted on AWS.
+          Instead, utilize rds_kill, rds_kill_query to terminate user sessions or queries on DB instances.
+
+
+
+
+  Performance Enhancements
+    Fast Insert
+      Accelerates parallel inserts sorted by primary key and applies to LOAD DATA, INSERT INTO ... SELECT ... statements.
+
+      Accomplishes the performance gain by caching the position of the cursor.
+
+      Can see metrics with fast inserts via
+        SQL Statement: show global status like 'Aurora_fast_insert%'; 
+
+
   Reliability
     "Survivable" Cache Warming
       Aurora "warms" the buffer pool cache when a database starts up after it has been shut down or restarted after a failure.
