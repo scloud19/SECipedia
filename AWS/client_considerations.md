@@ -30,7 +30,12 @@ RDS
       Check out this for other important implications on why Aurora is the best
         https://aws.amazon.com/rds/aurora/faqs/
 
+      HUGE PRO: DB automatically grows as the amount of data in your DB increases
+
     Make sure to connect to the cluster DNS (which always has "cluster" in the DNS name).  This DNS will always point to the primary.
+
+    Route write queries to the cluster DNS name (which always points to the primary) and distribute read only queries to the Read Replica nodes in the cluster.
+      In regards to the read replica nodes; what occurs during failover of that unique node? Since we are routing the traffic to that individual node, does this get rerouted to another unique read replica?
 
 
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.

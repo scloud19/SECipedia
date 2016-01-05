@@ -18,6 +18,7 @@ Read the aws_rds_setting_up.md before doing anything in here.
       There's one for the primary instance and each Replica
 
       If certain clients are do only read operations, you can have them connect to the replica's unique endpoint to spread the read load.
+        These read operations are the READ only queries.
 
       Don't contain "cluster" in the endpoint dns.
         Ex: *.123456789012.us-east-1.rds.amazonaws.com:3306
@@ -52,17 +53,33 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
               You can have have multiple replicas in one AZ.
 
-            
+
 
 
 
         An Aurora Cluster volume
           A cluster volume manages the data for the aurora instances. 
+            The volume is seen as one volume
+
+          Storage Auto-Repair
+            Aurora maintains multiple copies of your data in three AZs
+
+            There's automatic detection of failures in the disk volumes that make up the cluster volume.
+              When a segment of a disk volume fails, this segment is automatically repaired
+            
+
+          Utilizes SSD drives
+
+          A cluster volume consists of copies of the data across multiple AZs in a single region.
+            This data is automatically replicated across the AZs; thus it's highly durable.
+
+          Automatically grows as the amount of data in your DB increases. 
 
           A virtual database storage volume that spans multiple AZs
             Each AZ has a copy of the cluster data.
 
             A given Aurora replica, in a given AZ, reads from the data that's stored in its AZ.  
+
 
 
 

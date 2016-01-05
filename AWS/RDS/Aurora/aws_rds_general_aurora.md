@@ -1,4 +1,9 @@
 Aurora
+  Reliability
+    "Survivable" Cache Warming
+      Aurora "warms" the buffer pool cache when a database starts up after it has been shut down or restarted after a failure.
+        In other words, Aurora preloads the buffer pool with the pages for known common queries that are stored in an in-memory page cache.
+  
   Failover
     Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
 
@@ -7,9 +12,13 @@ Aurora
       
     During a failover, Aurora continues to serve requests, with minimal interruption of service, to the cluster endpoint from any available instances as it replaces the failed instance.
       Ex: An Aurora Cluster that has a primary, and 2 replicas; each in their own AZ.
-                If the primary's AZ goes down, a replica will be promoted to primary and the DNS will be rerouted to that primary.
+        If the primary's AZ goes down, a replica will be promoted to primary and the DNS will be rerouted to that primary.
 
   AWS's proprietary DB that's mySQL compatible.  It is meant to be a drop-in replacement for MYSql.
+
+  Pricing
+    Storage
+      You only pay for what you use.
 
   Up to 5x better performance than mySQL at a price point one tenth
   that of a commercial database
