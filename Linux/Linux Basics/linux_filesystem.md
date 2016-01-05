@@ -1,4 +1,49 @@
 Linux File System
+    Compression
+        gzip
+            aka GNU Zip
+            will make a *.gz file
+
+            Doesn't allow you to do an archive (aka pack multiple files/directories into one entity)
+
+        gunzip
+            to uncompress a .gz file
+
+        Making a tarball
+            tar cvf achive.tar file1 file2 directory1 ...
+                allows you to archive files/directories
+
+                tar switches (in general)
+                    c - create mode
+                    v - verbose diagnostic output
+                    f - file option. The next argument on the CLI after the this switch must be the archive filename to create.  You must use this option at all times.
+                    x - extract (unpack) mode
+                    t - table of contents mode
+                        Can peek inside tarball before extraction
+                    p - preserve permissions while unpacking
+                        This will override your umask and get the exact permissions specified in the archive
+
+                To use stdin/stdout, enter a dash(-) in the place of the filename
+
+        Unpacking the tar ball
+            Before you unpack, it's a good idea to peek into the .tar file to see what's inside (i.e., invoke table-of-contents mode).
+                tar tfvp archive.tar
+
+                Given the file paths in the TOC, you can specify to only unpack certain files/directories in the tarball by entering their names as the last arguments to the command (above).
+
+                Also, by looking at the TOC, you can make sure that the tarball isn't placing files in weird places.  
+                    Make sure that the files are housed within the directory (not at random places all over)
+
+            Ex: unpack tarball
+                If needed, create a directory for the tarball and then extract (it can create a mess out of your PWD if extracted into it.)
+
+            tar xvf archive.tar
+
+                switches
+                    x - extract (unpack) mode
+
+
+
 
     inode
         A data structure used to represent a filesystem object (which can include a file/directory)
