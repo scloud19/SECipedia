@@ -28,6 +28,13 @@ groups
 ln -s target linkname
 	linkname - The name of the symlink
 
+ln
+	Creates a hard link, which gives an additional read filename to a single file (unlike sym links)
+
+	The hard link points directly to the file data instead of to another filename as a symbolic link does.
+
+	See: linux_basics.md/Difference between hard links and sym links
+
 
 ps aux
   -> 
