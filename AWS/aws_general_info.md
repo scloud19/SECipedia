@@ -10,3 +10,4 @@ Regions and AZ's
     Each AZ is isolated from failures in other AZs.
 
     The intra-region AZs have low-latency network connectivity to each other.
+

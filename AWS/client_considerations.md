@@ -30,7 +30,7 @@ RDS
       Check out this for other important implications on why Aurora is the best
         https://aws.amazon.com/rds/aurora/faqs/
 
-
+    Make sure to connect to the cluster DNS (which always has "cluster" in the DNS name).  This DNS will always point to the primary.
 
 
 Utilize ec2 reserved instances for a base (cost efficiency) and then utilize on demand servers to scale.

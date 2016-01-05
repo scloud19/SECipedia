@@ -1,9 +1,13 @@
 Aurora
-  Very important implications for failover
+  Failover
     Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
 
     Check out this for other important implications on why Aurora is the best
       https://aws.amazon.com/rds/aurora/faqs/
+      
+    During a failover, Aurora continues to serve requests, with minimal interruption of service, to the cluster endpoint from any available instances as it replaces the failed instance.
+      Ex: An Aurora Cluster that has a primary, and 2 replicas; each in their own AZ.
+                If the primary's AZ goes down, a replica will be promoted to primary and the DNS will be rerouted to that primary.
 
   AWS's proprietary DB that's mySQL compatible.  It is meant to be a drop-in replacement for MYSql.
 
