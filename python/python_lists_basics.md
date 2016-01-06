@@ -9,7 +9,25 @@ List
       In general, you can use negative indexes
 
   slice
-    Has two index inside of it
+    Can have two indexes inside of it.
+      ex: list[1:4]
+
+      The first index is shown in the resulting sliced list
+        The second index isn't shown, everything up to (but not including) the second index is sliced.
+
+    Ex: dude = [1,2,3]
+      dude[:1]
+        Starting value:
+          defaults to the beginning of the list
+            -> [1]
+
+      dude[0:]
+        Ending value
+          Defaults to the end of the list
+            The end value IS included in the slice.
+
+
+
     Ex:
       dude = ['man', 'theman', 'foo', 'g']
 
