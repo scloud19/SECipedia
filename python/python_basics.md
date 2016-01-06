@@ -95,6 +95,23 @@ Functions
       dudeman(id=3, num=5)
       dudeman(**{'id': 3, 'imag': 5})
 
+  Multiple Assignment
+
+    Ex1: Putting each greetings' item in its own variable
+      
+      greetings = ['yo', 'whatup', 'holla!']
+
+      greeting1, greeting2, greeting3 = greetings
+
+      print(greeting1)
+        -> 'yo'
+
+    Ex2: Gets the same results at Ex1 
+      greeting1, greeting2, greeting3 = 'yo', 'whatup', 'holla'      
+
+
+
+
 
   Function Scope
     Remember, the scope is just an area of the source code, but additionally it is a container of variables (i.e., global variable scope)
@@ -172,6 +189,9 @@ Flow Control Statements
 
     range(5) will set i to 0,1,2,3,4
     
+    In the for loop above, you could simply replace range(5) with [0,1,2,3,4] and it would do the same exact thing.
+
+
   while
 
     Ex:
@@ -202,6 +222,15 @@ Flow Control Statements
 
   Looping functions
     range
+      returns a datatype called the range object
+
+      Ex: range(4)
+        -> range(0,4)
+
+        A range object is a list like object
+          Python sees range(0,4) to be similar to [0,1,2,3]
+
+          list like objects in python are technically called sequences
 
       for i in range(5)
         On every iteration, i will increment from 0-4
@@ -213,6 +242,12 @@ Flow Control Statements
           is called the "step argument"
 
           If negative, it will count downwards 
+
+    common looping patterns
+      greetings = ['yo', 'sup', 'whatup']
+      
+      for i in range(len(greetings)):
+        print('Index ' + str(i) + ' in greetings is: ' + greetings[i])
 
 
 
