@@ -9,7 +9,7 @@ guru website
     havent looked at whitepapers
 
     dev course
-      S3 section start -START
+      http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateInstance.html
 
 
 

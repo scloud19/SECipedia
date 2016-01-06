@@ -24,7 +24,9 @@ RDS
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
   Aurora
-    
+    Differences between AWS RDS Aurora and RDS for MySQL
+  See the end table in http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
+  
     Very important implications for failover
       Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
 
