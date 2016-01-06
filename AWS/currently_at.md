@@ -6,7 +6,7 @@ guru website
     havent looked at whitepapers
 
     dev course
-      lecture 16-START
+      S3 section start -START
 
 
 
