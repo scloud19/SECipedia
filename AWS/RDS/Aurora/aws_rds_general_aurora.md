@@ -1,9 +1,29 @@
+Differences between AWS RDS Aurora and RDS for MySQL
+  Read scaling
+
+
 Aurora
   Security
     Securing Aurora with SSL
-      CURRENTLY AT.
+      If secured via SSL, the public key is held at
+      http://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+      
+      Aurora clusters support SSL connections from applications using the same process and public key as the RDS MySQL DB instances.
 
-      Securing Aurora Data with SSL:http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
+      RDS creates an SSL cert and installs the cert on the DB instance when the instance is provisioned.
+
+      The SSL cert includes the DB instance endpoint as the Common Name (CN)
+        This helps to guard against spoofing attacks
+
+      To encrypt connections using the default mysql client, launch the mysql client using the --ssl-ca parameter to reference the public key, for example:
+        mysql -h mycluster-primary.c9akciq32.rds-us-east-1.amazonaws.com --ssl-ca=[full path]rds-combined-ca-bundle.pem --ssl-verify-server-cert
+
+      You can use the GRANT statement to require SSL connections for specific users accounts. For example, you can use the following statement to require SSL connections on the user account encrypted_user:
+        GRANT USAGE ON *.* TO 'encrypted_user'@'%' REQUIRE SSL
+
+      More information for SSL connections in MySQL
+        http://dev.mysql.com/doc/refman/5.6/en/secure-connections.html
+
 
     MySQL Level permissions
       In addition to IAM RDS policies, you can do permissions inside Aurora (as you could for any MySQL db).

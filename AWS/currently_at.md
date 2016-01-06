@@ -2,6 +2,9 @@ guru website
   same sections between architect and developer courses
     2,6,13
 
+  very similar
+    3,5,8
+
   for architect course
     havent looked at whitepapers
 
