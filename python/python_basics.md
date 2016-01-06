@@ -109,8 +109,23 @@ Functions
     Ex2: Gets the same results at Ex1 
       greeting1, greeting2, greeting3 = 'yo', 'whatup', 'holla'      
 
+    Ex3: Swapping variables
+      a = 'a'
+      b = 'b'
+      a, b = b, a
 
+  Augmented Assignment Operators
 
+    increment_me += 1 
+
+    Additional operators
+      variable -= 1
+
+      variable *= 1
+        aka variable = variable * 1
+      
+      variable /= 1
+      variable %= 1
 
 
   Function Scope
@@ -180,6 +195,8 @@ Flow Control Statements
       print('Dude, get zach please!')
 
   for
+    For loops iterate over the values in a list
+      range is list like 
     Ex:
 
     print('Count this, homie!')
@@ -230,7 +247,7 @@ Flow Control Statements
         A range object is a list like object
           Python sees range(0,4) to be similar to [0,1,2,3]
 
-          list like objects in python are technically called sequences
+          list like objects in python are referred to as sequences
 
       for i in range(5)
         On every iteration, i will increment from 0-4
