@@ -9,6 +9,8 @@ guru website
     havent looked at whitepapers
 
     dev course
+
+    For Docs
       http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateInstance.html
 
 

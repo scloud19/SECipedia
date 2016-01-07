@@ -1,5 +1,20 @@
 Linux File System
     Compression
+        bzip2
+            *.bz2 files
+
+            Compacts files a little more than gzip (but it is a little slower)
+
+        bunzip2
+            Decompress .bz2 files
+
+            switches for bzip2 utilities (compressing/decompressing) are close enough to gzip/gunzip that you don't need to learn anything new.
+
+        xz
+            decompression CLI: unxz
+
+            arguments are similar to those of gzip.
+
         gzip
             aka GNU Zip
             will make a *.gz file
@@ -7,7 +22,13 @@ Linux File System
             Doesn't allow you to do an archive (aka pack multiple files/directories into one entity)
 
         gunzip
-            to uncompress a .gz file
+            to uncompress a .gz/.Z file
+
+            switches
+                -d
+                    decompresses
+                -c
+                    sends the result to STDOUT
 
         Making a tarball
             tar cvf achive.tar file1 file2 directory1 ...
@@ -26,6 +47,35 @@ Linux File System
                 To use stdin/stdout, enter a dash(-) in the place of the filename
 
         Unpacking the tar ball
+            file.tar.gz
+                is the same format as file.tgz
+
+                This file is an archive (and it's compressed).  When working with files of this nature, move from right to left.  Thus, you must utilize gunzip before you can unpack the archive
+
+                Ex: gunzip file.tar.gz
+                    Then proceed with the unpacking instructions below
+
+                    Although this is a little early, you can do both steps via
+                        zcat file.tar.gz | tar xvf -
+
+                        zcat is the same as gunzip -dc
+
+                    To be even more efficient, you can do:
+                        tar zxvf file.tar.gz
+
+                            -z
+                                automatically invoke gzip/gunzip on the archive
+                                    this can be utilized for both extracting an archive (-x OR -t) OR creating one (-c)
+
+                            -j
+                                Same exact idea as -z, but for bzip2/bunzip2
+
+                            This shows the table of contents for the tarball
+
+
+
+
+
             Before you unpack, it's a good idea to peek into the .tar file to see what's inside (i.e., invoke table-of-contents mode).
                 tar tfvp archive.tar
 
@@ -56,22 +106,41 @@ Linux File System
     Proper to refer to "folders" as directories
     Like a tree
         / - Starts at "root"
-        /bin - Binaries and other executable programs
-        /etc - System configuration files
+        /dev - Contains device files.
+        /bin - Binaries and other executable programs.
+            Most of the basic unix commands.  Most of the programs in /bin are in binary format, having been created by a C compiler.  But some are shell scripts in modern systems.
+        /etc - System configuration files.
+            Contains the user password, boot, device, networking, and other setup files.
+            Ex: /etc/X11
+                Contains graphics card and window system configs.
         /home - Home directories 
             Ex: /home/zachroof
                 Personal files for a user (i.e. music files)
         /opt - Optional or third party software
             Ex: Google Earth
-        /tmp - Temporary space, typically cleared on reboot
-        /usr - User related programs, libraries, and docs
+            Many systems dont use /opt
+        /lib - An abbreviation for library.  Contains library files containing code that executables can use.
+            2 types of libraries: static/shared
+                /lib should only contain shared libraries, but other lib directories (i.e. /usr/lib) contain both varieties as well as other auxiliary files. 
+        /tmp - Temporary space, typically cleared on reboot.  Any user may read to/write from /tmp, but the user may not have permission to access another user's files there.  Many binaries use this directory as a workspace.
+
+        /usr - User related programs, libraries, and docs.  This includes the bulk of the Linux system.  Many of the directory names in /usr are the same as those in the root directory (see directly below) and they hold the same type of files.  Most of the user-space programs and data reside.
+
             Ex: /usr/bin
                 Executables for a specific user
 
+                /usr/share/
+                    Contains files that should work on other kinds of unix machines.
+                        In the past, networks of machines would share this dir, but this is becoming rare with advances in disk storage on computers.  Also, maintaining this directory can be very difficult.
+
+                        You can find in share: /man,/info 
+                /usr/man
+                    Contains manual pages
                 /usr/lib
                 /usr/sbin
                 /usr/local
                     Locally installed software that is not part of the base operating system
+                        Its structure should follow / and /usr
                     ex: /usr/local/crashplan/bin
                     /usr/local/crashplan/etc
                     /usr/local/crashplan/lib
@@ -101,20 +170,31 @@ Linux File System
                     Most of the time, applications that are not part of the base OS can bed installed in
                         /usr/local
                         /opt
+                    
+                    /usr/include
+                        Contains header files used by the C compiler
+                    /usr/info
+                        GNU info manuals
 
 
-        /var - Variable data
+
+        /var - Variable data, where programs record runtime information.  This includes system logging, user tracking, caches, and other files that system programs create and manage are here.
             Ex: Log files (/var/log)
+
+            There's also a /var/tmp directory, but the system doesn't wipe it on boot.
         /cdrom - A mount point for cds
-        /media - Some distros mount removable media here
+        /boot - Contains kernel boot loader files.  These files pertain only to the first stage of the linux startup procedure.  This directory doesn't include information pertaining to service startups.
+
+        /media - Some distros mount removable media here.  This can be a base attachment point for removable media such as flash drives. 
         /mnt - Used to mount external file systems
-        /proc - Provides info about running processes
+        /proc - Provides system statistics through a       browsable directory-and-file interface.
+             Provides info about running processes and kernel parameters
         /root - Home directory for the root account 
-        /sbin - System administration binaries
+        /sbin - System administration binaries.  Regular users usually do not have /sbin in their PATH.  For many of this items, you need to be running as root.  Remember: System Binaries = /sbin
         /srv - Contains data which is served by the system
             Ex: /srv/www
                 Web server files
-        /sys - Used to display and sometimes configure the devices known to the kernel
+        /sys - Used to display and sometimes configure the devices known to the kernel.  This is very similar in nature to /proc  It also provides a system interface.
 
         Shell Prompts
             $ - Normal User

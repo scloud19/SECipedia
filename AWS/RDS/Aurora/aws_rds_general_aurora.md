@@ -1,5 +1,4 @@
-Differences between AWS RDS Aurora and RDS for MySQL
-  Read scaling
+
 
 
 Aurora
