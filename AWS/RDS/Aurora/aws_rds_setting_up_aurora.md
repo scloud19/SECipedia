@@ -53,6 +53,10 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
               You can have have multiple replicas in one AZ.
 
+              Aurora also supports replication with an external MySQL database, or an RDS MySQL DB instance.  When using Aurora, the RDS MySQL DB instance must be in the same region.
+
+
+
 
 
 
@@ -101,23 +105,37 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
         Remember that all instances in the DB cluster use the same port.
 
-      When interacting with the RDS creation wizard, you'll come across some of the following important options
-        DB Instance Class: Selects the instance class for EACH instance in the DB cluster.
+      Creating a cluster primary using the console
+        When interacting with the RDS creation wizard, you'll come across some of the following important options
+          DB Instance Class: Selects the instance class for the PRIMARY.
 
-        Multi-AZ Deployment: Has to do with creating Aurora Replicas in other AZs for failover support.
+          Multi-AZ Deployment: Has to do with creating Aurora Replicas in other AZs for failover support.
 
-        DB Instance Identifier:  Is a name for the primary instance in the DB cluster.  This name will be used in the endpoint address for the primary instance of the cluster.
+          DB Instance Identifier:  Is a name for the primary instance in the DB cluster.  This name will be used in the endpoint address for the primary instance of the cluster.
 
-        DB Cluster Identifier:  This will be used in the cluster endpoint address.
+          DB Cluster Identifier:  This will be used in the cluster endpoint address.
 
-        Master Username:  Will create a user that has the following SQL privs:
-          create, drop, references, event, alter, delete, index, insert, select, update, create temporary tables, lock tables, trigger, create view, show view, alter routine, create routine, execute, create user, process, show databases, grant option.
+          Master Username:  Will create a user that has the following SQL privs:
+            create, drop, references, event, alter, delete, index, insert, select, update, create temporary tables, lock tables, trigger, create view, show view, alter routine, create routine, execute, create user, process, show databases, grant option.
 
-      Availability Zone: If you WANT to specify a particular AZ for launching into.
+        Availability Zone: If you WANT to specify a particular AZ for launching into.
 
-      Enable Encryption: Enables encryption at rest for the DB cluster.
+        Enable Encryption: Enables encryption at rest for the DB cluster.
 
-      Enable Enhanced Monitoring: Gives you statistics for the operating system that your DB cluster runs on.
+        Enable Enhanced Monitoring: Gives you statistics for the operating system that your DB cluster runs on.
+
+        Granularity:  Only available if enhanced monitoring is set to yes.
+          The number specified for granularity, in an interval, in seconds for metric collection.
+
+
+      Adding Read Replicas to the cluster
+        You can add up to 15 Aurora Replicas by using the Create Aurora Replica wizard
+
+        Select the primary instance for your cluster in the console -> Instance Actions -> Create Aurora Replica
+
+        Notable settings in the creation wizard
+          Availability Zone
+            This list includes only those AZs that are mapped by the DB subnet group was specified earlier in the VPC creation.
 
 
 

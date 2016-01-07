@@ -11,7 +11,7 @@ guru website
     dev course
 
     For Docs
-      http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateInstance.html
+      Beginning: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Connect.html
 
 
 

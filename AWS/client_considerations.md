@@ -1,3 +1,8 @@
+Naming of resources
+  When giving resources unique names, do so intelligently.
+    Ex: Add it any metadata that you can (region name, AZ, etc.)
+
+
 Local ENV considerations
   Ex: For testing purposes, you need to connect to DB instance via MySQL workbench.  However, you are behind a firewall.
     In these situations, you need to make sure that certain ports aren't blocked on the firewall.  For example, once you set up a DB instance, you can't change its port.
