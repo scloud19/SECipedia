@@ -80,7 +80,14 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
             A given Aurora replica, in a given AZ, reads from the data that's stored in its AZ.  
 
+  Building the cluster
+    To build the cluster, you need a VPC with at least two subnets in at least 2 AZ's.  This will distribute your Aurora instances into these AZ's.
+      As an aside, the cluster volume will always span three AZ's.
 
+      Before the cluster created, you need to have an appropriate VPC.  If you're utilizing a VPC that you created yourself (i.e., not the one that Aurora automatically builds for you), read:
+         http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateVPC.html
 
+         Basically, 3 items need to get done
+          Create/Utilize a VPC with atleast 2 subnets in 2 AZs.
+          Specify a VPC security group
 
-  
