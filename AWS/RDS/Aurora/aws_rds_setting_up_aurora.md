@@ -81,13 +81,48 @@ Read the aws_rds_setting_up.md before doing anything in here.
             A given Aurora replica, in a given AZ, reads from the data that's stored in its AZ.  
 
   Building the cluster
-    To build the cluster, you need a VPC with at least two subnets in at least 2 AZ's.  This will distribute your Aurora instances into these AZ's.
-      As an aside, the cluster volume will always span three AZ's.
 
-      Before the cluster created, you need to have an appropriate VPC.  If you're utilizing a VPC that you created yourself (i.e., not the one that Aurora automatically builds for you), read:
-         http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateVPC.html
+    Prereqs
+      To build the cluster, you need a VPC with at least two subnets in at least 2 AZ's.  This will distribute your Aurora instances into these AZ's.
+        As an aside, the cluster volume will always span three AZ's.
 
-         Basically, 3 items need to get done
-          Create/Utilize a VPC with atleast 2 subnets in 2 AZs.
-          Specify a VPC security group
+        Before the cluster created, you need to have an appropriate VPC.  If you're utilizing a VPC that you created yourself (i.e., not the one that Aurora automatically builds for you), read:
+           http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.CreateVPC.html
+
+           Basically, 3 items need to get done
+            Create/Utilize a VPC with atleast 2 subnets in 2 AZs.
+
+            Specify a VPC security group that authorizes connections to the cluster.
+
+            Create an RDS DB subnet group that defines at least two subnets in the VPC that can be used by the Aurora DB cluster
+
+      Additional considerations
+        Make sure that IAM has provisioned the appropriate policies that grant permissions required for RDS operations.
+
+        Remember that all instances in the DB cluster use the same port.
+
+      When interacting with the RDS creation wizard, you'll come across some of the following important options
+        DB Instance Class: Selects the instance class for EACH instance in the DB cluster.
+
+        Multi-AZ Deployment: Has to do with creating Aurora Replicas in other AZs for failover support.
+
+        DB Instance Identifier:  Is a name for the primary instance in the DB cluster.  This name will be used in the endpoint address for the primary instance of the cluster.
+
+        DB Cluster Identifier:  This will be used in the cluster endpoint address.
+
+        Master Username:  Will create a user that has the following SQL privs:
+          create, drop, references, event, alter, delete, index, insert, select, update, create temporary tables, lock tables, trigger, create view, show view, alter routine, create routine, execute, create user, process, show databases, grant option.
+
+      Availability Zone: If you WANT to specify a particular AZ for launching into.
+
+      Enable Encryption: Enables encryption at rest for the DB cluster.
+
+      Enable Enhanced Monitoring: Gives you statistics for the operating system that your DB cluster runs on.
+
+
+
+
+
+
+
 
