@@ -6,6 +6,9 @@ Allowed SQL statements
 
 
 Aurora
+  Monitoring
+    There are CloudWatch metrics available, and addition tables in the Sql DB (ex: mysql.ro_replica_status)
+
   Security
     Securing Aurora with SSL
       If secured via SSL, the public key is held at

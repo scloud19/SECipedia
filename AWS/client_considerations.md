@@ -30,7 +30,16 @@ RDS
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
   Aurora
+    Q: What are IOs in Amazon Aurora and how are they calculated?
 
+      IOs are input/output operations performed by the Aurora database engine against its SSD-based virtualized storage layer. Every database page read operation counts as one IO. The Aurora database engine issues reads against the storage layer in order to fetch database pages not present in the buffer cache. Each database page is 16KB.
+
+      Aurora was designed to eliminate unnecessary IO operations in order to reduce costs and to ensure resources are available for serving read/write traffic. Write IOs are only consumed when pushing transaction log records to the storage layer for the purpose of making writes durable. Write IOs are counted in 4KB units. For example, a transaction log record that is 1024 bytes will count as one IO operation. However, concurrent write operations whose transaction log is less than 4KB can be batched together by the Aurora database engine in order to optimize I/O consumption. Unlike traditional database engines Amazon Aurora never pushes modified database pages to the storage layer, resulting in further IO consumption savings.
+
+      You can see how many IOs your Aurora instance is consuming by going to the AWS Console. To find your IO consumption, go to the RDS section of the console, look at your list of instances, select your Aurora instances, then look for the “Billed read operations” and “Billed write operations” metrics in the monitoring section.
+      
+    For high availability scenarios, AWS recommends that you create on or more ARs (of the same DB instance class as the primary), in different AZs for your DB cluster.
+      Also, monitor the ReplicaLag metric in CloudWatch (see additional info in my aurora_replication notes.)
 
     If migrating data into Aurora, see the migrating_data doc in the Aurora directory (in my notes)
 
