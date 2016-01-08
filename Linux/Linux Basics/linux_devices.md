@@ -13,6 +13,12 @@ Finding the name of a device
       Each line consists of a number and name.  The number is the 'major device number'.
         See "Major/minor device numbers" in linux_devices.md
 
+        If you can guess the from the name, look in /dev for the character/block devices with the corresponding major number.
+
+    Only the udevd option is completely reliable.  If udev isn't available, then try the other methods but remember that the kernel might not have a device file for your hardware.
+
+
+
 
 udev system
   Enbables user-space programs the ability to automatically configure and use new devices.
@@ -120,7 +126,16 @@ dd
 
             You can utilize count 
 
+  /dev/sd*
+    Most hard disks
 
+    The "sd" portion of the name stands for SCSI disk
+      Small Computer System Interface (SCSI) was originally developed as a hardware and protocol standard for communication between devices (such as disks) and computers
+        While the SCSI hardware isn't used in modern computers, the SCSI protocol is nearly everywhere due to its adaptability.  
+          Ex: USB storage devices use the SCSI protocol.
+
+    Ex: /dev/sda, /dev/sdb are the hard disks
+      /dev/sda1 and /dev/sda2 represent partitions on the /dev/sda disk
 
 
 
