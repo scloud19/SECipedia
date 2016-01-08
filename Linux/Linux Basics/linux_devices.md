@@ -1,3 +1,19 @@
+Finding the name of a device
+  mount
+    Shows currently mounted disks
+
+  Query udevd using udevadmin
+  Look the the device in /sys
+
+  dmesg
+    Prints the last few kernel messages.  You can try and guess the name because the output might contain a description of the devices on your system.
+
+  cat /proc/devices
+    Lists the block and character devices for which your system currently has drivers.
+      Each line consists of a number and name.  The number is the 'major device number'.
+        See "Major/minor device numbers" in linux_devices.md
+
+
 udev system
   Enbables user-space programs the ability to automatically configure and use new devices.
 

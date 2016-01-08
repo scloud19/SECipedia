@@ -12,8 +12,8 @@ guru website
       Beg lecture 33
 
     For Docs
-      Beginning: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Connect.html
-
+      Replication Between Aurora and MySQL or Between Aurora and Another Aurora DB Cluster: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Replication.html
+        search CURRENTLY AT as well.
 
 
 
