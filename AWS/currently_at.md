@@ -9,6 +9,7 @@ guru website
     havent looked at whitepapers
 
     dev course
+      Beg lecture 33
 
     For Docs
       Beginning: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Connect.html
