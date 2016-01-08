@@ -66,6 +66,11 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
               Aurora also supports replication with an external MySQL database, or an RDS MySQL DB instance.  When using Aurora, the RDS MySQL DB instance must be in the same region.
 
+              vs MySQL read replicas
+                In Aurora, the cluster volume is shared among all instances in the cluster, thus no additional work is required to replicate a copy of the data for each Replica.
+
+                However, in MySQL read replicas, they must replay, on a single thread, all write operations from the master DB instance to their local data store.  This will affect MySQL read replicas ability to support large volumes of read traffic.
+
 
 
 
@@ -74,7 +79,9 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
         An Aurora Cluster volume
           A cluster volume manages the data for the aurora instances. 
-            The volume is seen as one volume
+            The volume is seen as one volume by both the primary and all of the replicas
+              Thus, all replicas return the same data for query results with minimal lag
+                Data is replicated from the primary to a replica in under 100ms (usually this is much lower)
 
           Storage Auto-Repair
             Aurora maintains multiple copies of your data in three AZs

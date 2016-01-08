@@ -30,6 +30,8 @@ RDS
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
   Aurora
+
+
     If migrating data into Aurora, see the migrating_data doc in the Aurora directory (in my notes)
 
     Differences between AWS RDS Aurora and RDS for MySQL
@@ -38,10 +40,22 @@ RDS
     Very important implications for failover
       Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
 
+    General Pros of Aurora vs MySQL
+
       Check out this for other important implications on why Aurora is the best
         https://aws.amazon.com/rds/aurora/faqs/
 
+
+      Data is replicated from the primary to a replica in under 100ms (usually this is much lower)
+
       HUGE PRO: DB automatically grows as the amount of data in your DB increases
+
+      Aurora replicas vs MySQL read replicas
+        In Aurora, the cluster volume is shared among all instances in the cluster, thus no additional work is required to replicate a copy of the data for each Replica.
+
+        However, in MySQL read replicas, they must replay, on a single thread, all write operations from the master DB instance to their local data store.  This will affect MySQL read replicas ability to support large volumes of read traffic.
+
+
 
     Make sure to connect to the cluster DNS (which always has "cluster" in the DNS name).  This DNS will always point to the primary.
 

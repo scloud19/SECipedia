@@ -1,3 +1,5 @@
+AR = Aurora Replica
+
 Allowed SQL statements
   As of 1/8/2015, you can execute any SQL command that is compatible with MySQL version 5.6
     There are small caveats (as you'll see in other areas of these notes)
@@ -85,6 +87,11 @@ Aurora
   
   Failover
     Amazon Aurora Replicas can act as a failover target with NO data loss, where MySQL replicas can act as a failover target, but there's potentially minutes of data loss.
+
+    You can use ARs as failover targets (if the primary fails, an AR is promoted to the primary)
+      During this process, the AR is promoted to the primary instance with only a brief interruption during which read/write requests made to the primary instance fail with an exception.
+        If the cluster does not include an ARs, then the primary is recreated during the failure event.
+          Although, promoting an AR to primary is much faster than recreating the primary.
 
     Check out this for other important implications on why Aurora is the best
       https://aws.amazon.com/rds/aurora/faqs/
