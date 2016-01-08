@@ -6,6 +6,15 @@ Read the aws_rds_setting_up.md before doing anything in here.
 
   As of 1/4/2016- All VPC and EC2 resources that you use in your Amazon Aurora DB cluster must reside in US East (N.Virginia), Us West (Oregon), EU (Ireland), Asia Pacific (Tokyo)
 
+  Connecting to the cluster
+    You can connect to an Aurora DB instance using the same tools that you use to connect to a MySQL database; including using the same public key for SSL connections.
+
+    An Aurora DB cluster can only be created in an Amazon VPC
+      Traditionally, to connect to an Aurora DB cluster from AWS instances that are not in the VPC; you'd need to use the public endpoint address of the cluster.
+        Now, you can communicate with an EC2 instance that is not in a VPC and an Aurora DB cluster by using ClassicLink.
+
+
+
   Endpoints in the cluster
     Cluster endpoint
       Ex: *.cluster-123456789012.us-east-1.rds.amazonaws.com:3306
@@ -13,6 +22,8 @@ Read the aws_rds_setting_up.md before doing anything in here.
         This connects you to the primary instance for the DB cluster.
           The difference between this endpoint and the primary's unique endpoint (see below), is that the cluster endpoint will always point to the primary in failover situations.
         You can perform both read/write operations to this endpoint
+
+
 
     Unique endpoints
       There's one for the primary instance and each Replica

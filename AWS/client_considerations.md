@@ -25,10 +25,13 @@ VPC
 RDS
   If using a mySQL db, should the client use Amazons MySQL compatible Aurora DB engine? What are the costs/benefits?
 
+
   What are the memory and processor requirements?
     Use this to inform: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
 
   Aurora
+    If migrating data into Aurora, see the migrating_data doc in the Aurora directory (in my notes)
+
     Differences between AWS RDS Aurora and RDS for MySQL
   See the end table in http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html
   

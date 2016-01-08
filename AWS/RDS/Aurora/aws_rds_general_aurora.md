@@ -1,4 +1,6 @@
-
+Allowed SQL statements
+  As of 1/8/2015, you can execute any SQL command that is compatible with MySQL version 5.6
+    There are small caveats (as you'll see in other areas of these notes)
 
 
 Aurora
