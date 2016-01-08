@@ -40,6 +40,8 @@ device files (aka device nodes)
   Important: The kernel assigns devices in the this directory in the order in which they are found, thus, a device may have a different name between reboots.
     For an alternative solution, see sysfs (below) Also see sysfs and the differences between /dev (below)
 
+    Additionally, you can look into using the disks Universally Unique Identifier (UUID)
+
   ls -la and devices
     For a device, the first character of a files mode will be either b,c,p,s
       b-block device
@@ -126,6 +128,30 @@ dd
 
             You can utilize count 
 
+  /dev/sr*
+    CD and DVD drives
+
+    Linux recognizes most optical storage drives as the SCSI devices and it will be identified in /dev/sr*
+      However, if the drive implements an older interface, it might show up as a PATA device (and be placed in /dev/hd*)
+
+    For the write/rewrite capabilities of optical devices, you'll need to use the "generic" SCSI devices such as /dev/sgo
+
+  /dev/tty* CURRENTLY_AT
+    ALSO READ https://en.wikipedia.org/wiki/BIOS
+
+  /dev/hd*
+    PATA hard disks (older standard for the connection between the hard disk and the computer.)
+
+
+    If you find a SATA drive (the industry's successor to PATA) listed in here, that means that it's running in a compatibility mode (which has consequences for performance.)
+      If this is occurring, check the BIOS settings and see if you can switch the SATA device into its native mode.
+
+
+
+
+
+  
+
   /dev/sd*
     Most hard disks
 
@@ -133,6 +159,15 @@ dd
       Small Computer System Interface (SCSI) was originally developed as a hardware and protocol standard for communication between devices (such as disks) and computers
         While the SCSI hardware isn't used in modern computers, the SCSI protocol is nearly everywhere due to its adaptability.  
           Ex: USB storage devices use the SCSI protocol.
+            Additionally, ther kernel still uses SCSI command at a certain point when communicating to SATA devices.
+
+
+    lsscsi
+      Lists the SCSI devices on your system.  This tool walks the device paths in sysfs.
+
+      Output:
+        [0:0:0:0] disk ... ... ... /dev/sda
+          The first set of numbers identifies the address of the device on the system.  The second grouping describes what kind of device it is.  And the last grouping shows the mapping to /dev/
 
     Ex: /dev/sda, /dev/sdb are the hard disks
       /dev/sda1 and /dev/sda2 represent partitions on the /dev/sda disk
