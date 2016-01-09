@@ -54,7 +54,7 @@ Hashes (all of this assumes that the hash is done CORRECTLY)
 
   Digital Signatures
     See digital_signatures.png
-    
+
     Combines the general ideas of asymmetric-key encryption and Hashes
 
     These signatures give us confidence that the file that we've received is really from who we think it's from, and then it hasn't been changed since it was "signed"
@@ -73,6 +73,52 @@ Hashes (all of this assumes that the hash is done CORRECTLY)
 
         Key Assumptions:
           The public key that we've utilized is actually the true public key of the site.
+
+  Secure Sockets Layer (SSL)
+    Frequently refers to Transport Layer Security (TLS) and the Secure Sockets Layer (SSL).  Although, SSL actually has been usurped by TLS in 1999.
+
+    Where digital signatures are utilized
+
+    SSL Handshake
+      Verifies the server's identity and negotiates a symmetric session key
+        This session key will be used to encrypt all of the data between the browser and the server
+
+    SSL relies on Digital Certificates to help verify a server's identity
+      Digital Certificate (DC)
+        Comes from a third-party Certificate Authority (CA)
+
+        Confirms that a site's domain name and it's public key really do belong together
+
+
+        W = A unique website
+        Ex: How a W gets a digital certificate
+          1) The CA creates a public/private key pair
+            In principle, this only occurs once
+          2) The W creates a public/private key pair.
+          3) The W creates a certificate request to the CA.
+            This request consists of:
+              The W's private key
+              The W's URL and other data
+          4) The CA verifies the identity of W
+            Usually done through "domain validation"
+              Sending an email containing an authentication token/link, to an email address that is "known" to be administratively responsible for the domain.
+                Aka: Whois lookup, or email accounts on the domain that "should" belong to administrative authorities
+                  Aka: admin@example.com, and othes
+
+                  On one occasion, search researchers showed that attackers could obtain certificates for webmail sites because a CA was willing to accept an email address like "ssladmin@example.com" that was actually created by an attacker.
+          5) The CA constructs the certificate
+
+            Important portions of the CA
+              The issuer's identity (CA)
+              The CA's signature (aka private key)
+              The W's domain name and public key
+              An expiration date
+
+
+
+
+
+
 
 
 
