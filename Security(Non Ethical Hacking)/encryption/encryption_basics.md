@@ -91,7 +91,7 @@ Hashes (all of this assumes that the hash is done CORRECTLY)
 
 
         W = A unique website
-        Ex: How a W gets a digital certificate
+        Ex: How a W gets a digital certificate (aka X509 Certificate)
           1) The CA creates a public/private key pair
             In principle, this only occurs once
           2) The W creates a public/private key pair.
@@ -106,13 +106,24 @@ Hashes (all of this assumes that the hash is done CORRECTLY)
                   Aka: admin@example.com, and othes
 
                   On one occasion, search researchers showed that attackers could obtain certificates for webmail sites because a CA was willing to accept an email address like "ssladmin@example.com" that was actually created by an attacker.
+          
           5) The CA constructs the certificate
 
             Important portions of the CA
               The issuer's identity (CA)
-              The CA's signature (aka private key)
+              The CA's digital signature
+                Which is produced with it's private key (as seen in the digital signature section above.)
               The W's domain name and public key
               An expiration date
+
+          6) The CA sends the certificate to W
+
+
+        Ex: How is this certificate used to establish an SSL connection?
+          1) Browser connects to the web server through SSL
+          2) Through SSL, the webserver will send its certificate to the browser.
+          3) The browser has a built in list of the public keys of known CA authorities.
+
 
 
 

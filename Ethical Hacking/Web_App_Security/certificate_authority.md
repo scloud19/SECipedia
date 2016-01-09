@@ -1,0 +1,6 @@
+Certificate Authority Domain Validation
+  Domain validation suffers from certain structural security limitations. In particular, it is always vulnerable to attacks that allow an adversary to observe the domain validation emails that CAs send. These can include attacks against the DNS, TCP, or BGP protocols (which lack the cryptographic protections of TLS/SSL), or the compromise of routers. Such attacks are possible either on the network near a CA, or near the victim domain itself.
+
+  Domain validation implementations have also sometimes been a source of security vulnerabilities. In one instance, security researchers showed that attackers could obtain certificates for webmail sites because a CA was willing to use an email address like ssladmin@domain.com for domain.com, but not all webmail systems had reserved the "ssladmin" username to prevent attackers from registering it.[15]
+
+  As there was no standard on a list of usernames eligible for domain validation, it has not been clear for webmail systems which usernames are to be blacklisted from signing up. A first formal standard has been created in the first release of the Baseline Requirements Document by CA/Browser Forum in 2011.
