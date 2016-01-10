@@ -120,10 +120,9 @@ Hashes (all of this assumes that the hash is done CORRECTLY)
 
 
         Ex: How is this certificate used to establish an SSL connection?
-          1) Browser connects to the web server through SSL
-          2) Through SSL, the webserver will send its certificate to the browser.
-          3) The browser has a built in list of the public keys of known CA authorities.
+          read through http://security.stackexchange.com/questions/7421/how-do-the-processes-for-digital-certificates-signatures-and-ssl-work
 
+          CURRENTLY AT: 10:19 PS (Enc and Decryption lect)
 
 
 

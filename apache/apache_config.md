@@ -1,6 +1,5 @@
 /etc/httpd/conf/httpd.conf
 
-
 Tips for viewing file without all of the comments
 grep -v "^#" /etc/httpd/conf/httpd.conf | less
 

@@ -1,9 +1,4 @@
-Notes for tutorial
-  in the beginning, say all of the versions of the binaries that I'm using... I.e. Apache 2.4 and what Amazon Linux, etc.
-
 Apache
-  For tutorial
-    Set UP Ec2 w/elastic IP and open up security group for port 80
   Install Apache on AWS Linux
     Put in bootup script
       You don't need to put sudo infront of these commands because the script is run as root
