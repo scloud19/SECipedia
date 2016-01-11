@@ -4,6 +4,7 @@ Injection
   (Start with example then talk about what injection is)
 
   Ex: mySQL injection
+    (Give a more granular example.  use the same logic, but add in a bad query string)
     Attacker -> Website -> Database
     
     1) Attacker forms an malicious HTTP request to the db
