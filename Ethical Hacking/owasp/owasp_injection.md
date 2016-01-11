@@ -9,13 +9,19 @@ Injection
     1) Attacker forms an malicious HTTP request to the db
       Anyone can make these requests
 
-      Ex: http://www.injectmebaby.com/blah?Id=1
+      Ex: http://www.injectmebaby.com/products?Id=1
         Can translate into the SQL string
-          SELECT * FROM blah WHERE ID = 1
-
+          SELECT * FROM products WHERE ID = 1
 
       The malicious part of the request might be inside the query string, etc.
-        (Give other examples)
+
+      So what's if we do this?
+        Ex: http://www.injectmebaby.com/users?Id=null or 1=1
+                Can translate into the SQL string
+                  SELECT * FROM users WHERE ID = null or 1=1
+                    (Explain this later and make sure this query string always does the sql injection by evaluating to true)
+
+
 
     2) Website does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
 
@@ -31,7 +37,23 @@ Injection
         (Time based attacks?)
 
     Attack mitigation
-      Realize 
+      Realize trusted/untrusted data
+        Ex from above:
+
+        http://www.injectmebaby.com/products?Id=1
+          
+          If a SQL statement that's being generated is.
+            SELECT * FROM products WHERE ID = 1
+
+            AND
+
+            Assuming that injectmebaby.com has no other domains/subdomains
+              Trusted: http://www.injectmebaby.com
+              
+              Untrusted: Anything after the .com
+
+            Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.injectmebaby.com/users which would produce
+              SELECT * FROM users
 
 
 
