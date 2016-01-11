@@ -4,11 +4,15 @@ Injection
   (Start with example then talk about what injection is)
 
   Ex: mySQL injection
-    (Give a more granular example.  use the same logic, but add in a bad query string)
     Attacker -> Website -> Database
     
     1) Attacker forms an malicious HTTP request to the db
       Anyone can make these requests
+
+      Ex: http://www.injectmebaby.com/blah?Id=1
+        Can translate into the SQL string
+          SELECT * FROM blah WHERE ID = 1
+
 
       The malicious part of the request might be inside the query string, etc.
         (Give other examples)
@@ -25,6 +29,9 @@ Injection
     Types of SQL injection: (give examples).
       Some techniques are so sophisticated that an attacker can glean information on how the attacks working by just looking at how LONG the server takes to respond to different injection attacks.
         (Time based attacks?)
+
+    Attack mitigation
+      Realize 
 
 
 
