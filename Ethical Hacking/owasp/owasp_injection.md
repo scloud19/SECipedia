@@ -49,62 +49,50 @@ Injection
       
   Ex: mySQL injection
     Ex: What the developer is expecting
-      http://www.injectmebaby.com/products?id=1,type=products
       
+      Ex: The request that the developer is expecting
+      http://www.snuggie4cats.com/products?id=1,type=products
+      
+      Ex: The code that the developer wrote, based on his/her expectation.  Do you see any weaknesses?
 
+      // Connect to db
+      Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
+
+      // Grab the params
+      String table = request.getParameter("type");
+      int id = Integer.parseInt(request.getParameter("id"));
+
+      
+      String query = "SELECT * FROM " + table + " WHERE ID = " + id;
+
+      // SELECT * FROM (TABLE) WHERE ID = (NUMBER)
+
+      // create our query 'holder'
+      Statement selectStatement = connection.createStatement();
+
+      selectStatement.executeQuery(query);
+
+        Probs: Concatenation, no data validation (min/max length, permitted characters)
+        
+      // Make sure that I have colons everywhere in code
+
+      (Later speak about how to use parameters and prepared statements http://javarevisited.blogspot.com/2012/03/why-use-preparedstatement-in-java-jdbc.html)
 
 
     Attacker -> Website -> Database
     
     1) Attacker forms an malicious HTTP request to the db
-      Anyone can make these requests
+        The malicious part of the request might be inside the query string, etc.
 
-        
-        And we have the vulnerable Java code (some items are left out for simplicity)
-          
-          // Connect to db
-          Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
+        Ex: Attack 
+          http://www.snuggie4cats.com/users?Id=null OR 'a'='a'
+            
+            Which can translate into the SQL string...
 
-          // Grab the params
-          String table = request.getParameter("type");
-          int id = Integer.parseInt(request.getParameter("id"));
-
-          // Do vulnerable SQL statement concatenation 
-          String query = "SELECT * FROM " + table + " WHERE ID = " + id;
-
-          // SELECT * FROM (TABLE) WHERE ID = (NUMBER)
-
-          // create our query 'holder'
-          Statement selectStatement = connection.createStatement()
-
-          (Later speak about how to use parameters and prepared statements http://javarevisited.blogspot.com/2012/03/why-use-preparedstatement-in-java-jdbc.html)
-
-          selectStatement.executeQuery(query)
-            Probs: Concating, no data validation (min/max length, permitted characters)
-
-
-
-
-
-
-
-
-
-        Can translate into the SQL string (Make code do this)
-          
-
-      The malicious part of the request might be inside the query string, etc.
-
-      So what's if we do this?
-        Ex: http://www.injectmebaby.com/users?Id=null OR 'a'='a'
-                Can translate into the SQL string
-                  SELECT * FROM users WHERE ID = null OR 'a'='a'
-                    The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will run:
-                      SELECT * FROM users;
-
-
-
-
+              SELECT * FROM users WHERE ID = null OR 'a'='a'
+                
+                The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will run:
+                  SELECT * FROM users;
 
     2) Website does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
 
@@ -125,26 +113,26 @@ Injection
       1) Realize trusted/untrusted data
         Ex from above:
 
-        http://www.injectmebaby.com/users?Id=1
+        http://www.snuggie4cats.com/users?Id=1
           
           If a SQL statement that's being generated is.
             SELECT * FROM users WHERE ID = 1
 
             AND
 
-            Assuming that injectmebaby.com has no other domains/subdomains
-              Trusted: http://www.injectmebaby.com
+            Assuming that snuggie4cats.com has no other domains/subdomains
+              Trusted: http://www.snuggie4cats.com
               
               Untrusted: Anything after the .com
 
-            Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.injectmebaby.com/users which given our current code, could produce:
+            Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.snuggie4cats.com/users which given our current code, could produce:
               SELECT * FROM users
 
               Even if it isn't immediately apparent that your code would construct a SQL statement like the following; you ALWAYS whitelist your table access for non-admins.
 
 
             We also need to whitelist the types of query strings that are allowed, i.e. (so there wont be 'Id=1 or 'a'='a'')
-              Ex: http://www.injectmebaby.com/products?Id=1 or 'a'='a'
+              Ex: http://www.snuggie4cats.com/products?Id=1 or 'a'='a'
 
               Brainstorm for whitelisting
                 Ex: Only accept integers that are positive and within the bounds of product ID range.
