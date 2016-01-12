@@ -1,25 +1,108 @@
 Injection
   The number one risk
+    We'll focus on mySQL injection (as it's a huge injection risk), however you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
 
-  (Start with example then talk about what injection is)
+    mySQL injection overview
+      Consists of insertion (aka "injection") of a SQL query via the input data that travels from the client to the server.
+        This payload is delivered by a simple HTTP request.
+        
+      Specifically, owasps definition:
+        SQL injection occurs when:
+          1) Data enters a program from an untrusted source
+          2) The data is used to dynamically construct a SQL query
 
+          We'll touch on these two areas more as we move throughout the lecture.
+
+      Difficulty
+        For Blackhat
+          Easy
+            Many automated tools.  (Give examples)
+              Just paste a website url
+
+        For sysadmin
+          Not difficult, but not easier either.  Need to probe logs for certain injection strings that can be highly creative.
+            Thus, for some injection patterns, you can't simply write your own regex to detect the pattern.
+
+      Common areas of occurrence
+        Everywhere, but especially common in PHP and ASP apps due to the prevalence of "older" programming interfaces that are still in use.
+          Ex: Wordpress has a high level of vulnerability
+
+
+      Example attack surface
+        1) Certain SQL statements (on certain databases) can access the server's CLI.
+
+          Ex: xp_cmdshell on Microsoft's SQL Server 2014
+
+            EXEC xp_cmdshell 'dir *.exe';
+            GO
+
+          This will return a listing of all files
+            Obviously, it can get much worse than this but the commands that are issued have the same privilege level as the server
+
+          This is turned off by default, but it wasn't always that way.  Thus there are vulnerable systems out there.
+
+        2) Reading sensitive data from the database (SSNs)
+        3) Modifying data in the database (account balances)
+        4) Executing administrative operations on the database (shutting it down)
+
+
+      
   Ex: mySQL injection
+    Ex: What the developer is expecting
+      http://www.injectmebaby.com/products?id=1,type=products
+      
+
+
+
     Attacker -> Website -> Database
     
     1) Attacker forms an malicious HTTP request to the db
       Anyone can make these requests
 
-      Ex: http://www.injectmebaby.com/products?Id=1
-        Can translate into the SQL string
-          SELECT * FROM products WHERE ID = 1
+        
+        And we have the vulnerable Java code (some items are left out for simplicity)
+          
+          // Connect to db
+          Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
+
+          // Grab the params
+          String table = request.getParameter("type");
+          int id = Integer.parseInt(request.getParameter("id"));
+
+          // Do vulnerable SQL statement concatenation 
+          String query = "SELECT * FROM " + table + " WHERE ID = " + id;
+
+          // SELECT * FROM (TABLE) WHERE ID = (NUMBER)
+
+          // create our query 'holder'
+          Statement selectStatement = connection.createStatement()
+
+          (Later speak about how to use parameters and prepared statements http://javarevisited.blogspot.com/2012/03/why-use-preparedstatement-in-java-jdbc.html)
+
+          selectStatement.executeQuery(query)
+            Probs: Concating, no data validation (min/max length, permitted characters)
+
+
+
+
+
+
+
+
+
+        Can translate into the SQL string (Make code do this)
+          
 
       The malicious part of the request might be inside the query string, etc.
 
       So what's if we do this?
-        Ex: http://www.injectmebaby.com/users?Id=null or 1=1
+        Ex: http://www.injectmebaby.com/users?Id=null OR 'a'='a'
                 Can translate into the SQL string
-                  SELECT * FROM users WHERE ID = null or 1=1
-                    (Explain this later and make sure this query string always does the sql injection by evaluating to true)
+                  SELECT * FROM users WHERE ID = null OR 'a'='a'
+                    The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will run:
+                      SELECT * FROM users;
+
+
 
 
 
@@ -37,13 +120,15 @@ Injection
         (Time based attacks?)
 
     Attack mitigation
-      Realize trusted/untrusted data
+      These are some of the most common, remember this is NOT an exhaustive list
+
+      1) Realize trusted/untrusted data
         Ex from above:
 
-        http://www.injectmebaby.com/products?Id=1
+        http://www.injectmebaby.com/users?Id=1
           
           If a SQL statement that's being generated is.
-            SELECT * FROM products WHERE ID = 1
+            SELECT * FROM users WHERE ID = 1
 
             AND
 
@@ -52,28 +137,26 @@ Injection
               
               Untrusted: Anything after the .com
 
-            Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.injectmebaby.com/users which would produce
+            Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.injectmebaby.com/users which given our current code, could produce:
               SELECT * FROM users
 
+              Even if it isn't immediately apparent that your code would construct a SQL statement like the following; you ALWAYS whitelist your table access for non-admins.
 
 
-  Isn't always SQL Injection
-    Give examples of other types of injections (ldap, etc.)
-      (Go to top ten cheat sheet)
+            We also need to whitelist the types of query strings that are allowed, i.e. (so there wont be 'Id=1 or 'a'='a'')
+              Ex: http://www.injectmebaby.com/products?Id=1 or 'a'='a'
 
-    Although sql injection is very common because of the popularity of mySQL databases in the typical web stack
-    
-  Difficulty
-    For Blackhat
-      Easy
-        Many automated tools.  (Give examples)
-          Just paste a website url
+              Brainstorm for whitelisting
+                Ex: Only accept integers that are positive and within the bounds of product ID range.
 
-    For sysadmin
-      Not difficult, but not easier either.  Need to probe logs for certain injection strings that can be highly creative.
-        Thus, for some injection patterns, you can't simply write your own regex to detect the pattern.
+                So, in other words, what is the most restrictive way that we can lock down a query.
 
-  Impact
-    Severe
-      As many injections can target the database (sql injection)
-        (Has a lot of PII) 
+                If this whitelisting was to occur, the attack query would fail right off of the bat because it isn't a integer
+
+                Caveat:  All query strings are delivered to the server as a string.  You need to run a check that this string ONLY contains integers.  It would be helpful to make sure that whatever library you're utilizing doesn't do this type conversion in a way that is unexpected.
+
+        2) Parameters
+          Is about separating the sql query from the untrusted data.
+
+
+
