@@ -13,6 +13,11 @@ Injection
 
           We'll touch on these two areas more as we move throughout the lecture.
 
+      It can get very interesting/creative
+        Time based attacks
+          Some techniques are so sophisticated that an attacker can glean information on how the injection attacks are working by just looking at how LONG the server takes to respond to different injections.
+          
+
       Difficulty
         For Blackhat
           Easy
@@ -72,7 +77,11 @@ Injection
 
       selectStatement.executeQuery(query);
 
-        Probs: Concatenation, no data validation (min/max length, permitted characters)
+
+        What problems do you see with this?
+          Probs: Concatenation, no whitelisting of params.
+
+        Additional questions to wonder: A attacker could modify the request to access different tables.  Do we have sensitive tables that should be locked down from non-admins (principle of least privilege).
         
       // Make sure that I have colons everywhere in code
 
@@ -80,7 +89,8 @@ Injection
 
 
     Attacker -> Website -> Database
-    
+      Give overarching explanation first and then go into specifics below
+
     1) Attacker forms an malicious HTTP request to the db
         The malicious part of the request might be inside the query string, etc.
 
@@ -94,18 +104,19 @@ Injection
                 The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will run:
                   SELECT * FROM users;
 
+          How could we mitigate against this? We'll go over this later, but it is good to start questioning right off the bat.  
+            Write down your answers and then compare it my answers at the end.
+              This is the only way to really make it stick.
+
     2) Website does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
 
-      Although, the adulterated request's goal is to change the behavior of this step; so that the webserver's query to the database changes (and does an operation that it wasn't supposed to do)
-        Ex: Instead of querying the products in a table (which was allowed), change the query so it returns all of the information in the users table (ex: passwords, addresses, etc.)
+      In this example, it runs: 
+        SELECT * FROM users;
 
-    3) If this operation was successful, the query results are passed to the web server
 
-    4) Web server passes this information back to a user which in many cases, can even be shown in the user's browser
+    3) If this operation was successful, the query results are passed back to the web server
 
-    Types of SQL injection: (give examples).
-      Some techniques are so sophisticated that an attacker can glean information on how the attacks working by just looking at how LONG the server takes to respond to different injection attacks.
-        (Time based attacks?)
+    4) Web server passes this information back to a user; which in many cases, can be shown right in the browser's window.
 
     Attack mitigation
       These are some of the most common, remember this is NOT an exhaustive list
