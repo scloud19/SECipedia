@@ -44,50 +44,28 @@ Apache Configs Overview
       will load all of the .conf files in the conf.d directive
       Think of this as an 'include'
 
-  Containers
-    Use XML-style opening/closing tags
+  Apache bootstrap and associated privileges
 
-    Restrict the scope the of the directives they contain.  If the scope isn't being restricted, assume that a given directive is being applied to the complete server.
+    Ports less than 1024 in Linux (aka Privileged Ports) must be bound and used by root
+      Thus, when apache starts, the initial process starts as root.
 
-    Ex:
-      <Directory "/var/www"> 
-        AllowOverride None
-        Options None
-      </Directory>
+    After initialization, apache spawns a number of child processes that wait for connections.  These processes run with the User and Group identity as seen below.
 
-      These directives only are applied for the /var/www directory.
-
-      Other containers
-        Note: There are closely related directives that match on a regex instead of a string
+      Directive Name/User or Group name
+        User apache
+        Group apache
         
-      Other examples:
-        
-        <Location "/admin">
-          
-          # Matches against the path of a URL
-          # Ex: http://securingthestack.com/admin
-          
-        </Location
-          
-        <Files "*.gif">
+          The apache group and user account were added when the httpd package was installed
 
-         # Wildcard matching
-         # You can do RegEx as well
-        
-        </Files>
+      When serving files from apache, linux looks at the user and group identities and will allow/deny access to a given file.  Make sure that the apache user/group ONLY has access to the minimum amount of files that it needs.  There are hacks (aka directory traversal), where hackers try to "break out" of the directory that apache serves files; and they try to go to other parts of the server.
 
-
-        <VirtualHost *:80>
-          For any virtual host (with any IP) that uses port 80
   Common directives
     Listen 80
       the listening port
 
       By default, listens on all network interfaces, but this can be changed.
 
-      Apache Docs
-        Ex: To make the server accept connections on port 80 for one interface, and port 8000 on another, use
-
+      Ex: To make the server accept connections on port 80 for one interface, and port 8000 on another, use
         Listen 192.0.2.1:80
         Listen 192.0.2.5:8000
 
@@ -101,7 +79,52 @@ Apache Configs Overview
           Resolves to
             /var/www/html/isDaBomb.html
 
-    Multi-Process Settings
+    ServerRoot '/etc/httpd'
+      
+      Where the log files and configuration file are.
+      The files/directories that are referenced in the conf files will be relative to this directory.
+
+      You don't want this file to be in our DocumentRoot!  You'd be surprised
+
+    DirectoryIndex 'index.html'
+      What file apache will serve if a directory is requested
+
+  Containers
+    Use XML-style opening/closing tags
+
+    Restrict the scope the of the directives they contain.  If the scope isn't being restricted, assume that a given directive is being applied to the complete server.
+
+    Ex:
+      <Directory "/var/www"> 
+        AllowOverride None
+        Options None
+          # These directives only are applied for the /var/www directory.
+      </Directory>
+
+      <Location "/admin">
+        
+        # Matches against the path of a URL
+        # Ex: http://securingthestack.com/admin
+        
+      </Location
+        
+      <Files "*.gif">
+
+       # Wildcard matching
+       # You can do RegEx as well
+      
+      </Files>
+
+
+      <VirtualHost *:80>
+        
+        # For any virtual host (with any IP) that uses port 80
+
+      </VirtualHost>
+
+      
+
+    Multi-Process Settings (CAN I BLEND WITH WITH DOS?)
       To improve latency, apache maintains a pool of "spare" server processes.  Apache will spawn new processes if things get busy, and kill processes off if server load diminishes.
 
 
@@ -111,39 +134,22 @@ Apache Configs Overview
       
       <IfModule prefork.c>
         StartServers 8
-          Number of child server processes created on startup.  As the number of processes is dynamically controlled depending on the load, there is usually little reason to adjust this parameter.
+          # Number of child server processes created on startup.  As the number of processes is 
+          # dynamically controlled depending on the load, there is usually little reason to adjust this 
+          # parameter.
         MinSpareServers 5
-          Idle servers that can be added due to load
+          # Idle servers that can be added due to load
         MaxSpareServers 20
-         Idle servers that can be added due to load
+         # Idle servers that can be added due to load
         ServerLimit 256
 
         MaxClients 256
-          Maximum number of connections that will be processed simultaneously.  For additional requests that exceed this number, they will be queued.
-            Remember HTTP is stateless
+          # Maximum number of connections that will be processed simultaneously.  For additional 
+          # requests that exceed this number, they will be queued.
+          # Remember HTTP is stateless
       <IfModule>
 
-        Other directives
-          ServerRoot '/etc/httpd'
-            Where the log files and configuration file are.
-            The files/directories that are referenced in the conf files will be relative to this directory.
 
-          DirectoryIndex index.html
-            What file apache will serve if a directory is requested
-
-Apache bootstrap and associated privileges
-
-  For all privledged ports (ports less than 1024) must be bound and used by root
-    Thus, when apache starts, the initial process starts as root.
-
-    After the initialization, apache spawns a number of child processes that wait for connections.  These processes run with the User and Group identity as seen below.
-
-      Directive Name/ User or Group name
-      User apache
-      Group apache
-        The apache group and user account were added when the httpd package was installed
-
-      When serving files from apache, linux looks at the user and group identites and will allow/deny access to a given file
 
 
 Apache Authentication/Authorization
