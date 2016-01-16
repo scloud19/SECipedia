@@ -13,12 +13,10 @@ Apache Structure Overview
       Modules are the "powerhouses" that run various parts of apache.  Directives are used to configure these modules and are place in /etc/httpd/conf/httpd.conf
 
       Server binary contains these modules
-        core
-        prefork
-        http_core
-        mod_so
+        https://httpd.apache.org/docs/2.4/mod/
 
         If you build from source, you can customize which of these modules are included
+          I'd also look at these modules and see which ones you need/dont need.  This will help from a security perspective
 
       Although most of apache's features are loaded through "external" modules that are loaded dynamically
         /usr/lib64/httpd/modules
@@ -34,7 +32,7 @@ Apache Structure Overview
             Similarly, you can reference a module and see its associated directives.
 
 
-Apache Configs Overview (CURRENTLY AT)
+Apache Configs Overview
   Because we're going to be covering some security implications of these configs, I thought that I'd do a broad overview.
 
   Tips for viewing file without all of the comments
@@ -46,6 +44,41 @@ Apache Configs Overview (CURRENTLY AT)
       will load all of the .conf files in the conf.d directive
       Think of this as an 'include'
 
+  Containers
+    Use XML-style opening/closing tags
+
+    Restrict the scope the of the directives they contain.  If the scope isn't being restricted, assume that a given directive is being applied to the complete server.
+
+    Ex:
+      <Directory "/var/www"> 
+        AllowOverride None
+        Options None
+      </Directory>
+
+      These directives only are applied for the /var/www directory.
+
+      Other containers
+        Note: There are closely related directives that match on a regex instead of a string
+        
+      Other examples:
+        
+        <Location "/admin">
+          
+          # Matches against the path of a URL
+          # Ex: http://securingthestack.com/admin
+          
+        </Location
+          
+        <Files "*.gif">
+
+         # Wildcard matching
+         # You can do RegEx as well
+        
+        </Files>
+
+
+        <VirtualHost *:80>
+          For any virtual host (with any IP) that uses port 80
   Common directives
     Listen 80
       the listening port
@@ -62,47 +95,15 @@ Apache Configs Overview (CURRENTLY AT)
 
       The directory out of which you will serve your
       documents. By default, all requests are taken from this directory, but symbolic links and aliases may be used to point to other locations.
+        Think of potential security implications
 
         Ex: http://securingthestack.com/isDaBomb.html
           Resolves to
             /var/www/html/isDaBomb.html
 
-        Think of the potential security implications of symbolic links and how they can take you outside of the document root.
-
-
-    LoadModule directive
-      By default, apache loads a large number of modules.  What you should do, from a security perspective, is only load the modules you need.
-
     Multi-Process Settings
       To improve latency, apache maintains a pool of "spare" server processes.  Apache will spawn new processes if things get busy, and kill processes off if server load diminishes.
 
-      These directives (below) shouldn't need to be tweake
-
-        Container directives
-          Use XML-style opening/closing tags
-
-          Restrict the scope the of the directives they contain.
-
-          Ex:
-            <Directory "/var/www">
-              AllowOverride None
-              Options None
-            </Directory>
-
-            These directives only are applied for the /var/www directory.
-
-            Other containers
-              Note: There are closely related directives that match on a regex instead of a string
-              
-              <Location /admin>
-                Matches against the path of a URL
-                Ex: http://securingthestack.com/admin
-
-              <Files "*.gif">
-                Wildcard/RegEX matching
-
-              <VirtualHost *:80>
-                For any virtual host (with any IP) that uses port 80
 
       Directives:
         The following directive will only work if the 
