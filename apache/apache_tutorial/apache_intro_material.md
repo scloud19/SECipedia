@@ -190,40 +190,26 @@ Security Considerations/Tips In Apache
     Go back to this section in the apache notes and implement the Require all denied sections, but need to check that it works in my config files.  This will help against symlink attacks.
 
 
-    Default Access
-      If Apache can "see" a file/symlink in DocumentRoot directive, it's accessible publically (by default)
-        This holds true if the symlink directs to a directory outside of the DocumentRoot
+  Default Access
+    If Apache can "see" a file/symlink in DocumentRoot directive, it's accessible publically (by default)
+      This holds true if the symlink directs to a directory outside of the DocumentRoot
 
-        Ex:
-        sudo ln -s / /var/www/html/index.html
-          Now navigate to your domain in the browser
+      Ex:
+      sudo ln -s / /var/www/html/index.html
+        Now navigate to your domain in the browser
 
   UserDir Directive
     In httpd.conf make sure to disallow setting a user's directory to /
 
     UserDir disabled root
 
-  Logs
-    Inspect your logs for common vulnerability requests
-
-    Ex: Apache Tomcat Source.jsp malformed request information disclosure vulnerability.
-      /jsp/source.jsp?/jsp/ /jsp/source.jsp??
-
-      To find how many times this request occured, do:
-
-      grep -c "/jsp/source.jsp?/jsp/ /jsp/source.jsp??" LOG_FILE
-
-      Another useful item to search for:
-      grep "client denied" error_log | tail -n 10
-
-      Look at my chinese logs and try to pull out some patterns and some common grep strings.  Do a Google search for good grep patterns for apache.
 
     Order Of Precedence in Configuration Files 
-      If you have multiple containers that match a given directory/etc/etc. how are the corresponding directives applied?
-        This can have VERY important security considerations because certain containers directives can unexpectedly override others, which might leave HUGE security holes in your application.
+      If you have multiple containers that match a given directory (or other route). How are the corresponding directives applied?
+        This can have VERY important security considerations because certain container's directives can unexpectedly override others, which might leave HUGE security holes in your application.
 
-        In short: Try your best to NOT have multiple sections reference the same/similar namespace (ESPECIALLY if the contrasting sections directives provide different access controls)
-          Ex: One container's directive gives access to /, and another
+        In short: Try your best to NOT have multiple containers reference the same/similar namespace (ESPECIALLY if the contrasting section's directives provide different access controls)
+          Ex: One container's directive gives access to /, and another takes it away
 
       order of precedence
         http://httpd.apache.org/docs/2.4/sections.html#merging
@@ -231,31 +217,36 @@ Security Considerations/Tips In Apache
         Answers the question
           Which directives win?
 
-        The order of merging is:
-
+        The order of interpretation is:
+          Each number refers to an "interpretation" group.
 
           1) <Directory> and .htaccess done simultaneously
+            
             .htaccess
               If you have direct access to the server config file, it's advised not to use .htaccess for performance reasons
 
-              If .htaccess is allowed, it will override <Directory>
-
+              If .htaccess is allowed, it will override <Directory> in this st
 
           2) <DirectoryMatch> (and <Directory "~">)
             DirectoryMatch is the regular expression version of Directory
-          
+            ~ is the HOME directory
+
           3) <Files> and <FilesMatch> done simultaneously
-          
+
+            # Apply to matched file names
+
           4) <Location> and <LocationMatch> done simultaneously
-          
-          5) <If EXPRESSION>
-              Contains directives that apply only is a condition if the specified EXPRESSION evaluates to true
+            
+            # Matches against the path of a URL
+
+          5) <If CONDITION>
+              Contains directives that apply only if CONDITION evaluates to true
 
           General Notes about order of precedence
-            Nested sections are merged after non-nested sections of the 
+            Nested containers are merged after non-nested containers of the 
             same type.
 
-            If directive containers are in a given configuration file, their respective directives will be processed in the order that they appear in the file.
+            If containers are in a given configuration file, their respective directives will be processed in the order that they appear in the file.
               Exception
                 The only exception is the <Directory> container (from the first group).  This directive container is processed in the shortest directory path to the longest (regardless of the config file ordering)
                   Ex: <Directory "/var/www/html"> will be processed before <Directory "/var/www/html/pics">
@@ -387,6 +378,20 @@ Security Considerations/Tips In Apache
 
 
 
+  Logs
+    Inspect your logs for common vulnerability requests
+
+    Ex: Apache Tomcat Source.jsp malformed request information disclosure vulnerability.
+      /jsp/source.jsp?/jsp/ /jsp/source.jsp??
+
+      To find how many times this request occured, do:
+
+      grep -c "/jsp/source.jsp?/jsp/ /jsp/source.jsp??" LOG_FILE
+
+      Another useful item to search for:
+      grep "client denied" error_log | tail -n 10
+
+      Look at my chinese logs and try to pull out some patterns and some common grep strings.  Do a Google search for good grep patterns for apache.
 
 
 
