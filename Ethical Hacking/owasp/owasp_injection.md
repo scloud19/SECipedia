@@ -1,6 +1,6 @@
 Injection
   The number one risk
-    We'll focus on SQL injection (as it's a huge injection risk), however you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
+    We'll focus on SQL Injection (SQLi), as it's a huge injection risk.  However you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
 
     SQL injection example
       Instead of inputting a normal value in a url's query string, a malicious user inserts (aka "injects") a SQL query instead.
@@ -20,8 +20,11 @@ Injection
       Difficulty
         For Blackhat
           Easy
-            Many automated tools.  (Give examples)
-              Just paste a website url
+            Just paste a website url
+
+            Many automated tools.
+              Ex: SQL Map
+              
 
         For sysadmin
           Not difficult, but not easier either.  Need to probe logs for certain injection strings that can be highly creative.
@@ -32,8 +35,10 @@ Injection
           Ex: Wordpress has a high level of vulnerability
 
 
-      Example attack surface
-        1) Certain SQL statements (on certain databases) can access the server's CLI.
+      What can an attacker to with SQL
+        1) Running commands on the underlying host machine
+
+          Certain SQL statements (on certain databases) can access the server's CLI.
 
           Ex: xp_cmdshell on Microsoft's SQL Server 2014
 
@@ -41,17 +46,19 @@ Injection
             GO
 
           This will return a listing of all files
-            Obviously, it can get much worse than this but the commands that are issued have the same privilege level as the server
+            Obviously, it can get much worse than this.
+
+          The commands that are issued have the same privilege level as the server
 
           This is turned off by default, but it wasn't always that way.  Thus there are vulnerable systems out there.
 
-        2) Reading sensitive data from the database (SSNs)
-        3) Modifying data in the database (account balances)
+        2) Reading sensitive data from the database (Ex: SSNs)
+        3) Modifying data in the database (Ex: account balances)
         4) Executing administrative operations on the database (shutting it down)
 
 
       
-  Ex: SQL injection
+  Ex: SQLi
     Ex: What the the developer is expecting
 example
 Instead of inputting a normal value in a form field, url's query string user inserts www.snuggie4cats.s/products?id,type=products i
