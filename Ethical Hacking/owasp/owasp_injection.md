@@ -1,10 +1,9 @@
 Injection
   The number one risk
-    We'll focus on mySQL injection (as it's a huge injection risk), however you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
+    We'll focus on SQL injection (as it's a huge injection risk), however you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
 
-    mySQL injection overview
-      Consists of insertion (aka "injection") of a SQL query via the input data that travels from the client to the server.
-        This payload is delivered by a simple HTTP request.
+    SQL injection example
+      Instead of inputting a normal value in a url's query string, a malicious user inserts (aka "injects") a SQL query instead.
         
       Specifically, owasps definition:
         SQL injection occurs when:
@@ -15,8 +14,8 @@ Injection
 
       It can get very interesting/creative
         Time based attacks
-          Some techniques are so sophisticated that an attacker can glean information on how the injection attacks are working by just looking at how LONG the server takes to respond to different injections.
-          
+          In any scenario, error messages are an attacker's dream.  However, if they are turned off, attackers can get very creative.
+            Ex:  In this case, an attacker can inject certain SQL statements that if true, can pause the execution of the statement (Ex: WAITFOR DELAY '00:00:05';) and then utilize tools to see how long the database responds.  Based on the timing of the responses, an attacker can deduce information about the inner-workings of the database.
 
       Difficulty
         For Blackhat
@@ -52,12 +51,10 @@ Injection
 
 
       
-  Ex: mySQL injection
-    Ex: What the developer is expecting
-      
-      Ex: The request that the developer is expecting
-      http://www.snuggie4cats.com/products?id=1,type=products
-      
+  Ex: SQL injection
+    Ex: What the the developer is expecting
+example
+Instead of inputting a normal value in a form field, url's query string user inserts www.snuggie4cats.s/products?id,type=products i
       Ex: The code that the developer wrote, based on his/her expectation.  Do you see any weaknesses?
 
       // Connect to db
@@ -65,11 +62,10 @@ Injection
 
       // Grab the params
       String table = request.getParameter("type");
-      int id = Integer.parseInt(request.getParameter("id"));
-
-      
-      String query = "SELECT * FROM " + table + " WHERE ID = " + id;
-
+      int id = Integer.parseInt(
+          In any scenario, error messages are an attacker's dream.  However, if they are turned off, attackers can get very creative.
+          request.getParametr("id"));
+  I inject certain SQL () statements and then utilize tools to see how long the database responds.  Based on the timing of the responses, an attacker can deduce information about the inner-workings of the database.
       // SELECT * FROM (TABLE) WHERE ID = (NUMBER)
 
       // create our query 'holder'
