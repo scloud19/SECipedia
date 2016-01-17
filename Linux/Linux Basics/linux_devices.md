@@ -136,8 +136,16 @@ dd
 
     For the write/rewrite capabilities of optical devices, you'll need to use the "generic" SCSI devices such as /dev/sgo
 
-  /dev/tty* CURRENTLY_AT
+  /dev/tty*, /dev/pts/*
     ALSO READ https://en.wikipedia.org/wiki/BIOS
+
+    See: terminal in linux_basics.md
+
+    /dev/tty device
+      The controlling terminal of the current process
+
+    These are for terminal devices.
+
 
   /dev/hd*
     PATA hard disks (older standard for the connection between the hard disk and the computer.)

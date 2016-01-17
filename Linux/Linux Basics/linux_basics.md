@@ -4,6 +4,12 @@ Shortcuts
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
+Display Modes
+    Two primary modes (Text mode and X Window System Server)
+        X Window System Server
+            GUI
+    
+
 Difference between hard links and sym links
 
     Sym links
@@ -151,7 +157,15 @@ The Bourne Shell
     The Bourne shell was developed at Bell Labs for early versions of Unix.  Every Unix system needs the Bourne shell in order to function correctly.
 
 terminal
-    Simply a window with access to the shell
+    Ex: /dev/tty*, /dev/pts/*, /dev/tty
+    A device for moving characters between a user process and an I/O device, usually for text output to a terminal screen.
+
+    pseudoterminal devices
+        Emulated terminals that understand the I/O features of real terminals, but instead of talking to a real piece of hardware, the kernel persents the I/O interface to a piece of software.
+            Ex: shell terminal
+
+
+
 
 bash
     /bin/sh
