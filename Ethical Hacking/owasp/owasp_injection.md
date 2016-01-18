@@ -4,7 +4,7 @@ Injection
 
     SQL injection example
 
-      www.snuggie4cats.com/users?id=1
+      www.snuggie4cats.com/products?id=1
 
       Instead of inputting a normal value in a url's query string, a malicious user inserts (aka "injects") a SQL query instead.
         
@@ -46,19 +46,29 @@ Injection
           URL Structure: www.snuggie4cats.com/TABLE?id=NUMBER
           SQL Statement: SELECT * FROM TABLE WHERE ID = NUMBER
             (Color Code this)
+            In plain english: Select every entry in TABLE where the condition (ID = NUMBER) is true 
 
           More specifically:
-          URL Structure: www.snuggie4cats.com/users?id=1
-          SQL Statement: SELECT * FROM USERS WHERE ID = 1
+          URL Structure: www.snuggie4cats.com/products?id=1
+          SQL Statement: SELECT * FROM PRODUCTS WHERE ID = 1
+            (Color code this)
+
+            In plain english: Select every entry in the PRODUCTS table where the condition (ID = 1) is true
 
 
       1) Attacker forms an malicious HTTP request to the web server
           The malicious part of the request might be inside the query string, etc.
 
           Ex: Attack 
-          Normal: www.snuggie4cats.com/users?id=1
+          Normal: www.snuggie4cats.com/products?id=1
 
-          Exploit: www.snuggie4cats.com/users?id=1 OR 'a'='a'
+          Exploit: 
+            First, attacker will see if they can access a USER table
+              www.snuggie4cats.com/users?id=1
+
+            If successful, there are multiple ways that the attacker can exfiltrate the data.  I'll utilize a more complicated one for learning purposes.
+
+              www.snuggie4cats.com/users?id=1 OR 'a'='a'
               
               Which can translate into the SQL string...
                 SELECT * FROM USERS WHERE ID = 1 OR 'a'='a'
@@ -72,33 +82,40 @@ Injection
               Write down your answers and then compare it my answers at the end.
                 This is the only way to really make it stick.
 
-      2) Application logic does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
+      2) Once inside the server, the application logic takes the query string, and creates a SQL statement.  This statement is then run on the database
 
         In this example, it runs: 
           SELECT * FROM users;
 
 
-      3) If this operation was successful, the query results are passed back to the web server
+      3) If this operation was successful, the query results are passed back to the web server (which then passes the information back to the user.)
 
-      4) Web server passes this information back to a user; which in many cases, can be shown right in the browser's window.
-
-      Attack mitigation
+      Attack prevention
         These are some of the most common, remember this is NOT an exhaustive list
 
         1) Realize trusted/untrusted data
           Ex from above:
 
-          http://www.snuggie4cats.com/users?Id=1
+          http://www.snuggie4cats.com/TABLE?Id=NUMBER
             
-            If a SQL statement that's being generated is.
-              SELECT * FROM users WHERE ID = 1
+            If a SQL statement that's being generated is:
+              SELECT * FROM TABLE WHERE ID = NUMBER
 
-              AND
+              Untrusted: Anything after the .com
+                The route and the query string are being utilized in the SQL statement.
+                  Remember this, sometimes the focus is only on the query string.
 
-              Assuming that snuggie4cats.com has no other domains/subdomains
-                Trusted: http://www.snuggie4cats.com
-                
-                Untrusted: Anything after the .com
+              Trusted: http://www.snuggie4cats.com
+        
+        2) Whitelisting (permissions/untrusted inputs)
+          Expecting Ex: http://www.snuggie4cats.com/products?Id=1
+
+          Whitelisting permissions
+            In general, assign roles to all users on your system.
+              Ex: Admin
+
+            Questions:
+              For simplification, assign roles to users through What tables should an NON-ADMIN have access to?  
 
               Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.snuggie4cats.com/users which given our current code, could produce:
                 SELECT * FROM users
