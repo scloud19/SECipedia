@@ -40,26 +40,39 @@ Injection
         Give overarching explanation first and then go into specifics below
         Add in picture from: https://www.google.com/search?q=sql+injection&espv=2&biw=1107&bih=757&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiR-4S9rrPKAhUJLyYKHRTQBcEQ_AUICSgE
 
+        Assumptions (Vulnerable Code):
+          Will see why this is vulnerable towards the end
+
+          URL Structure: www.snuggie4cats.com/TABLE?id=NUMBER
+          SQL Statement: SELECT * FROM TABLE WHERE ID = NUMBER
+            (Color Code this)
+
+          More specifically:
+          URL Structure: www.snuggie4cats.com/users?id=1
+          SQL Statement: SELECT * FROM USERS WHERE ID = 1
+
+
       1) Attacker forms an malicious HTTP request to the web server
           The malicious part of the request might be inside the query string, etc.
 
           Ex: Attack 
           Normal: www.snuggie4cats.com/users?id=1
 
-          Exploit: www.snuggie4cats.com/users?id=null OR 'a'='a'
+          Exploit: www.snuggie4cats.com/users?id=1 OR 'a'='a'
               
               Which can translate into the SQL string...
-                SELECT * FROM USERS WHERE ID = null OR 'a'='a'
+                SELECT * FROM USERS WHERE ID = 1 OR 'a'='a'
                   
-                  B
                   The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will essentially run:
                     SELECT * FROM users;
+                      Visualize with https://rickbergfalk.github.io/sqlpad/
 
-            How could we mitigate against this? We'll go over this later, but it is good to start questioning right off the bat.  
+            How could we mitigate against this?
+              We'll go over this later, but it is good to start questioning right off the bat.
               Write down your answers and then compare it my answers at the end.
                 This is the only way to really make it stick.
 
-      2) Website does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
+      2) Application logic does a transformation on this HTTP request, and makes it a query to the database (to get relevant information associated with the request)
 
         In this example, it runs: 
           SELECT * FROM users;
