@@ -1,8 +1,11 @@
 Injection
   The number one risk
-    We'll focus on SQL Injection (SQLi), as it's a huge injection risk.  However you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
+    We'll focus on SQL Injection (SQLi), as it's a predominant injection risk.  However, you can abstract these concepts to other forms of technologies as well (ldap injection, server side include (SSI) injection, etc.)
 
     SQL injection example
+
+      www.snuggie4cats.com/users?id=1
+
       Instead of inputting a normal value in a url's query string, a malicious user inserts (aka "injects") a SQL query instead.
         
       Specifically, owasps definition:
@@ -20,11 +23,8 @@ Injection
       Difficulty
         For Blackhat
           Easy
-            Just paste a website url
-
-            Many automated tools.
+            Just paste a website url into an automated tool
               Ex: SQL Map
-              
 
         For sysadmin
           Not difficult, but not easier either.  Need to probe logs for certain injection strings that can be highly creative.
@@ -38,17 +38,20 @@ Injection
 
       Attacker -> Website -> Database
         Give overarching explanation first and then go into specifics below
+        Add in picture from: https://www.google.com/search?q=sql+injection&espv=2&biw=1107&bih=757&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiR-4S9rrPKAhUJLyYKHRTQBcEQ_AUICSgE
 
-      1) Attacker forms an malicious HTTP request to the db
+      1) Attacker forms an malicious HTTP request to the web server
           The malicious part of the request might be inside the query string, etc.
 
           Ex: Attack 
-            www.snuggie4cats.com/users?id=null OR 'a'='a'
+          Normal: www.snuggie4cats.com/users?id=1
+
+          Exploit: www.snuggie4cats.com/users?id=null OR 'a'='a'
               
               Which can translate into the SQL string...
-
                 SELECT * FROM USERS WHERE ID = null OR 'a'='a'
                   
+                  B
                   The addition of the "OR 'a'='a'" makes the WHERE clause always evaluate to true, so if this input isn't properly sanitized, this will essentially run:
                     SELECT * FROM users;
 

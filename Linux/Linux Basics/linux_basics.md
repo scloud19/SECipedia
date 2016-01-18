@@ -4,7 +4,7 @@ Shortcuts
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
-Display Modes
+Display Modes (CURRENTLY AT)
     Two primary modes (Text mode and X Window System Server)
         X Window System Server
             GUI
