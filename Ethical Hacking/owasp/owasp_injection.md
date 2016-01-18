@@ -112,31 +112,69 @@ Injection
 
           Whitelisting permissions
             In general, assign roles to all users on your system.
-              Ex: Admin
+              Ex: Admin Role, Regular User Role (REG_USER), etc.
 
             Questions:
-              For simplification, assign roles to users through What tables should an NON-ADMIN have access to?  
+              What tables should REG_USER have access to? Whitelist off of those tables.
+                Insecure Direct Object Reference Ex: http://www.snuggie4cats.com/users?Id=1
 
-              Thus, we need to whitelist the tables that can be queried from a non-admin; ex: so a user couldn't try to navigate to http://www.snuggie4cats.com/users which given our current code, could produce:
-                SELECT * FROM users
+          Whitelisting untrusted input
+            Ex: http://www.snuggie4cats.com/products?Id=1
 
-                Even if it isn't immediately apparent that your code would construct a SQL statement like the following; you ALWAYS whitelist your table access for non-admins.
+              Be the most granular while taking into account future business considerations.
+
+                Ex: The Id should be a integer between PRODUCT_ID_MIN and PRODUCT_ID_MAX.
+                  We create these CONSTANTS in our code.
 
 
-              We also need to whitelist the types of query strings that are allowed, i.e. (so there wont be 'Id=1 or 'a'='a'')
-                Ex: http://www.snuggie4cats.com/products?Id=1 or 'a'='a'
+        3) Parameters
+          Is about separating the sql query from the untrusted data.
 
-                Brainstorm for whitelisting
-                  Ex: Only accept integers that are positive and within the bounds of product ID range.
+          ADD WHITELISTING TO NON-Vulnerable CODE
 
-                  So, in other words, what is the most restrictive way that we can lock down a query.
 
-                  If this whitelisting was to occur, the attack query would fail right off of the bat because it isn't a integer
+          Two examples in Java: One is vulnerable through SQL injection, the second uses Prepared Statements to mitigate the SQL inject risk.
 
-                  Caveat:  All query strings are delivered to the server as a string.  You need to run a check that this string ONLY contains integers.  It would be helpful to make sure that whatever library you're utilizing doesn't do this type conversion in a way that is unexpected.
+          Ex: We will learn about parameters through a Java vulnerable code example.  Some code has been left out for simplicity.
 
-          2) Parameters
-            Is about separating the sql query from the untrusted data.
+          // Connect to db
+          Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
+
+          // Grab the param
+          int id = Integer.parseInt(request.getParameter("id"));
+
+          // Vulnerable
+          String query = "SELECT * FROM PRODUCTS WHERE ID = " + id;
+
+          // create our query 'holder'
+          Statement selectStatement = dbconnection.createStatement();
+
+          selectStatement.executeQuery(query);
+
+          Ex: Non-vulnerable code
+
+          // Connect to db
+          Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
+
+          // Grab the param
+          int id = Integer.parseInt(request.getParameter("id"));
+
+          // Vulnerable
+          String query = "SELECT * FROM PRODUCTS WHERE ID = " + id;
+          
+          // Non Vulnerable
+          String query = "SELECT * FROM PRODUCTS WHERE ID = ?"
+
+          // create our query 'holder'
+          PreparedStatement ps = dbconnection.prepareStatement(query);
+
+          // Set our bind variable
+          ps.setInt(1, id);
+
+          ps.executeQuery();
+
+          // Go into how Prepared statements work from Wikipediasure
+
 
 
 
@@ -169,23 +207,6 @@ Injection
       The route the developer is expecting
           www.snuggie4cats.com/search?id=4,category=products
       
-      Ex: The code that the developer wrote, based on his/her expectation.  Do you see any weaknesses? (Some code has been left out for simplicity)
-
-      // Connect to db
-      Connection dbconnection = DriverManager.getConnection(dbUrl,username, password);
-
-      // Grab the params
-      String table = request.getParameter("category");
-      int id = Integer.parseInt(request.getParameter("id"));
-
-      String query = "SELECT * FROM " + table + " WHERE ID = " + id;
-
-      // SELECT * FROM (TABLE) WHERE ID = (NUMBER)
-
-      // create our query 'holder'
-      Statement selectStatement = dbconnection.createStatement();
-
-      selectStatement.executeQuery(query);
 
 
       What problems do you see with this?
