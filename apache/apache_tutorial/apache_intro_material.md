@@ -85,7 +85,7 @@ Apache Configs Overview
           Resolves to
             /var/www/html/isDaBomb.html
 
-    ServerRoot '/etc/httpd'
+    ServerRoot "/etc/httpd"
       
       Where the log files and configuration file are.
       The files/directories that are referenced in the conf files will be relative to this directory.
@@ -129,7 +129,7 @@ Apache Configs Overview
       </VirtualHost>
 
       
-
+      FOR TUTORIAL SERIES (IM CURRENTLY AT HERE) :)
     Multi-Process Settings (CAN I BLEND WITH WITH DOS?)
       To improve latency, apache maintains a pool of "spare" server processes.  Apache will spawn new processes if things get busy, and kill processes off if server load diminishes.
 

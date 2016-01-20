@@ -82,6 +82,8 @@ Injection
               Write down your answers and then compare it my answers at the end.
                 This is the only way to really make it stick.
 
+      FOR MAKING TUTORIAL, CURRENTLY AT
+
       2) Once inside the server, the application logic takes the query string, and creates a SQL statement.  This statement is then run on the database
 
         In this example, it runs: 

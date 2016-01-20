@@ -4,10 +4,18 @@ Shortcuts
 General Notes:
 Remember that not all items listed in these notes are consistent across all linux distros.
 
-Display Modes (CURRENTLY AT)
+Display Modes
     Two primary modes (Text mode and X Window System Server)
         X Window System Server
-            GUI
+            Graphics mode, usually via a display manager.
+
+Virtual Consoles
+    Used to multiplex the display
+        Ex: /dev/tty1, /dev/tty2, etc.
+
+    Each virtual console may run in either text mode or graphics mode.
+
+
     
 
 Difference between hard links and sym links
