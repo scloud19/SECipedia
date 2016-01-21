@@ -6,9 +6,18 @@ lilo (LInux LOader)
   Both GRUB and lilo support dual boot installations
 
 GRUB
-  Direct loading
+  Supports both Direct Loading and Chain Loading
+
+  Direct loading boot method
     The boot method used by GRUB.  Its name comes from the fact that instructions are used to directly load the operating system.  (I.e. There's no "middle man" code between the boot-loader and the kernel.)
       CURRENTLY_AT (GRUB FEATURES: http://www.tldp.org/LDP/intro-linux/html/sect_04_02.html)
+  
+  Chain Loading Boot Method
+    Occurs in various proprietary OS's
+
+    In operating system boot manager programs, chain loading is used to pass control from the boot manager to a boot sector. The target boot sector is loaded in from disk, replacing the in-memory boot sector from which the boot manager itself was bootstrapped, and executed.
+
+    The MBR points to the first sector of the partition holding the operating system.  At this point, it finds all of the files necessary to boot the OS.
       
 
 Overall boot process
@@ -25,6 +34,10 @@ Overall boot process
       See hardware/disk.md
     MBR
       Contains instructions on how to load the GRUB (or LILO) boot-loader, using a pre-selected OS.
+
+      In some installation processes (Ex: Windows and DOS), the MBR is completely overwritten without incorporating any of the current MBR's configuration.  So, if you previously installed Linux; that portion of the MBR will be overridden.
+
+
   4) The MBR loads the boot-loader, which takes over the process (assuming the boot-loader is installed in the MBR)
     Aside:
       In the default Red Hat configuration, GRUB uses the settings in the MBR to display boot options in a menu.
