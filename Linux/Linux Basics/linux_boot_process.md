@@ -21,6 +21,7 @@ GRUB
       
 
 Overall boot process
+  Also see: https://en.wikipedia.org/wiki/Booting#BOOT-LOADER
   1) An x86 computer is booted, the processor looks at the end of the system memory for the BIOS (Basic Input/Output System) and runs it.
     BIOS
       Provides the lowest level interface to peripheral devices and controls the first step of the boot process.
@@ -44,5 +45,27 @@ Overall boot process
 
   5) Once GRUB has received the correct instructions to boot the operating system, either from its command line or config file, it finds the necessary boot file and hands off control to the OS.
 
+  6) Once the kernel is loaded, it executes /sbin/init
+    Init
+      When init starts, it becomes the parent of all processes that automatically start when you boot your system.
 
+      /etc/inittab
+        The first file that init looks at
 
+        Describes how the system should be set up in each run level and sets a default run level
+          Run Level
+            A configuration of processes
+
+            All *nix systems systems can be run in different process configurations, such as single user mode.
+
+            Ex: Run Level 1 (aka Single User Mode, Run Level S)
+              Only the sysadmin can connect to the system
+
+              Used to perform maintenance tasks without the risks of damaging the system or user data.
+
+              All user services will be disabled.
+
+            Ex: Reboot Run Level (Run Level 6)
+              Shuts down all running services and restarts the system.
+
+CURRENTLY AT (http://www.tldp.org/LDP/intro-linux/html/sect_04_02.html)  After having determined the default run level for your system
