@@ -48,4 +48,9 @@ Basics
     DOM Based XSS ("type-0 XSS")
       Occurance
         The attack payload is executed as a result of modifying the DOM "environment" in the victim's browser used by the original client side script, so that the client side code runs in an unexpected manor.
+          In other words, the page itself does not change, but the client side code contained in the page executes differently due to the modifications that have occurred in the DOM environment.
+            This is different than other XSS attacks (stored and reflected), in which the attack payload is placed in the response page (due to a server side flaw)
+
+            
+
 
