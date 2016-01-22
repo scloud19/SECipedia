@@ -46,11 +46,26 @@ Basics
         Email message, or some other web site.  Can input these attacks into tinyURL's, etc.
         
     DOM Based XSS ("type-0 XSS")
+      Exs:
+        /DOM_ATTACK_EXS/EX1.md
+          When I tried this attack, the browser naturally escaped the <> in the script tag, so it couldn't work.  However, there might be ways around this.
+
+          What's interesting about this example is how the parser echos out to the page when it finds unexpected inputs.
+
+          Mitigation
+            Since the attack was sent as a query string, it made a round trip to the server, and thus the attack COULD be mitigated at the server level.
+
+            Ex: url fragment
+              http://www.some.site/somefile.pdf#somename=javascript:attackers_script_here
+
+              Then that stays client side only, and is much more difficult to detect.  This can have huge implications for SPAs.
+
+
       Occurance
         The attack payload is executed as a result of modifying the DOM "environment" in the victim's browser used by the original client side script, so that the client side code runs in an unexpected manor.
           In other words, the page itself does not change, but the client side code contained in the page executes differently due to the modifications that have occurred in the DOM environment.
             This is different than other XSS attacks (stored and reflected), in which the attack payload is placed in the response page (due to a server side flaw)
 
-            
+
 
 
