@@ -7,4 +7,4 @@ Main idea
 
   The content of the headers determines how the content that follows is processed (either by the browser or the web server.)
   
-  Some headers are required, some are optional
+  Some headers are required, some are optionalh
