@@ -6,6 +6,7 @@ Definition
   Was initially defined only for external resources, but now includes schemes such as:
     file://
     chrome://
+    etc.
 
   Origin
     Consists of a hostname, scheme, and port.
