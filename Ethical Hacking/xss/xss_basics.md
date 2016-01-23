@@ -46,17 +46,34 @@ Basics
         Email message, or some other web site.  Can input these attacks into tinyURL's, etc.
         
     DOM Based XSS ("type-0 XSS")
+      With Reflected/Stored the attack is injected into the application during server-side processing of requests where untrusted input is dynamically added to HTML. For DOM XSS, the attack is injected into the application during runtime in the client directly.
+
+      Read: rendering_contexts.md
+
+      Reflected/Stored XSS are server-side injection issues whereas DOM based XSS is a client (browser) injection issue.
       Exs:
+        TODO: http://www.webappsec.org/projects/articles/071105.shtml
         /DOM_ATTACK_EXS/EX1.md
           When I tried this attack, the browser naturally escaped the <> in the script tag, so it couldn't work.  However, there might be ways around this.
 
           What's interesting about this example is how the parser echos out to the page when it finds unexpected inputs.
 
+          In the ex, the client side code makes document.location vulnerable.  However, there can be others
+            Ex: 
+              document.URL
+              document.URLUnencoded
+              document.location (and many of its properties)
+              document.referrer
+              window.location (and many of its properties)
+              etc.
+
           Mitigation
             Since the attack was sent as a query string, it made a round trip to the server, and thus the attack COULD be mitigated at the server level.
 
+            However, if that query string was changed to a URL fragment, as seen below, this is changed.  The code then stays client side.
+
             Ex: url fragment
-              http://www.some.site/somefile.pdf#somename=javascript:attackers_script_here
+              http://www.some.site/page.html#default=<script>alert(document.cookie)</script>
 
               Then that stays client side only, and is much more difficult to detect.  This can have huge implications for SPAs.
 
