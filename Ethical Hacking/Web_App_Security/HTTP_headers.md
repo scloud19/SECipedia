@@ -7,4 +7,28 @@ Main idea
 
   The content of the headers determines how the content that follows is processed (either by the browser or the web server.)
   
-  Some headers are required, some are optionalh
+  Some headers are required, some are optional
+
+
+Important Headers
+  X-Content-Type-Options: nosniff
+    In websites that allow uploads from untrusted users (which can be downloaded by other users)
+
+    In certain situations, a user could upload a text file, that would be "content sniffed" to a HTML content type and then rendered in the browser (if a user tried to open it up).  Thus, if this header was used with:
+      Content-Type: text/plain;
+
+      Newer Chrome/IE browsers would force the content to be rendered as text/plain
+
+
+  Strict-Transport-Security
+    This header instructs the browser that communication to the website must occur over a valid HTTPS tunnel.  
+
+    It will not be possible for the user to accept any HTTPS errors and then proceed over an insecure connection.
+      If this occurs, the browser will explain the error without allowing the user to continue browsing.
+
+    Note: If this is to occcur, i'd suggest just turning off HTTP at the server level.
+
+    X-Frame-Options
+      This header is used to prevent the page from being rendered in an iframe.
+        This header is utilized to help mitigate UI redressing attacks (Ex: Click Jacking)
+
