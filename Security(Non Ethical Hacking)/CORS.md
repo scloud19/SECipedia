@@ -6,6 +6,19 @@ General: A resource makes a cross-origin HTTP request when it requests a resourc
     For security reasons, browsers restrict cross-origin HTTP requests initiated from within scripts (and other areas, as you'll see below)
       To get around this; CORS gives web servers cross-domain access controls, which enable secure cross-domain data transfers.
 
+  Nutshell
+    CORS is a specification that provides a way for an origin to ignore the Same Origin Policy.  
+      In the most lenient configuration, a web application can allow a cross-origin XMLHttpRequest to access all of its resources (from any origin).
+        Ex of "wide open" configuration:
+          Will occur if these server-side HTTP headers are set:
+            Access-Control-Allow-Origin: *
+            Access-Control-Allow-Methods: POST, GET
+
+            If a browser sends a cross-origin XMLHttpRequest to a server that doesn't have these headers, no access will be given to the response content.
+
+      The HTTP headers inform the browser whether it is permitted access.
+
+
 
 CORS is used to enable cross-site HTTP requests for:
   XMLHttpRequest (Javascript way of initiating requests)

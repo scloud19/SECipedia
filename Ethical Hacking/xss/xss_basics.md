@@ -8,6 +8,7 @@ Basics
     2) The data is included in dynamic content that is sent to a web user without being validated for malicious content.
       This validation process needs to include proper encoding
 
+
   Attack Surface
     Attacker can access:
       Cookies
