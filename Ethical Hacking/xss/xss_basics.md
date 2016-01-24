@@ -32,7 +32,10 @@ Basics
     Stored XSS (aka Persistent or Type 1 XSS)
 
       Where the injected script is permanently stored on the target servers.
-        Ex: Storage in db, message forum, visitor log, comment field, etc.
+        Ex: Storage in db, message forum, visitor log, comment field, etc.  
+
+        Ex: Logging all user requests
+          If an admin is not properly sanitizing their web based logging system (and then looks at the logs in the browser), this can be a vector for attack.
 
         When the victim loads up the site, this stored script is executed by the browser
 
