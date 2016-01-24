@@ -8,7 +8,6 @@ Basics
     2) The data is included in dynamic content that is sent to a web user without being validated for malicious content.
       This validation process needs to include proper encoding
 
-
   Attack Surface
     Attacker can access:
       Cookies
@@ -45,6 +44,20 @@ Basics
 
       Delivery Ex:
         Email message, or some other web site.  Can input these attacks into tinyURL's, etc.
+
+      Payload Exs:
+        iFrames
+        Js script that renders content from hacker.com
+
+      Usually these forms of attacks incorporate an element of social engineering (as you must click on a link, etc.)
+        For this to easily occur, URL obfuscation is utilized
+          URL shorteners (tinyurl, etc.)
+          URL Redirectors
+          URL or ASCC encoded characters
+          Add irrelevant query parameters with the  payload at the end (so the user can't fully see the complete url)
+
+
+
         
     DOM Based XSS ("type-0 XSS")
       With Reflected/Stored the attack is injected into the application during server-side processing of requests where untrusted input is dynamically added to HTML. For DOM XSS, the attack is injected into the application during runtime in the client directly.

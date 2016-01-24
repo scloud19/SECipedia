@@ -2,6 +2,9 @@
   Every attack sequence starts by running instructions within the web browser.  Thus, the browser must execute instructions under your control.
     Exs: XSS, etc.
 
+  hooking
+    Starts with the execution of the initial code and then extends into retaining the communication channel.    
+
 2) Retaining
   Now that you've successfully attacked, how do you increase your control over the target?
 
