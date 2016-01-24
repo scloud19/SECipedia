@@ -52,9 +52,36 @@ Basics
       Usually these forms of attacks incorporate an element of social engineering (as you must click on a link, etc.)
         For this to easily occur, URL obfuscation is utilized
           URL shorteners (tinyurl, etc.)
-          URL Redirectors
-          URL or ASCC encoded characters
+          URL Redirectors from a legitimate website
+            This can be utilized with a URL shortener as well, for a "double redirect" attack.
+          URL or ASCII encoded characters
+          @
+            Anything to the right of this symbol is ignored in the URL string
           Add irrelevant query parameters with the  payload at the end (so the user can't fully see the complete url)
+          URL Encoding Tricks
+            These kind of tricks are used to Encode the URL or portions of the URL to disguise its true value using hex, dword, octal, URL encoding. Often combined with the @ which can also be disguised as well
+              Example: http://www.visa.com@%32%32%30%2E%36%38%2E%32%31%34%2E%32%31 %33, which translates into 220.68.214.213.
+
+          Image Map
+            Can create an image with an 'a' tag that looks like it's pointing to a legitimate domain, however; inside is a image map that points to hacker.com
+
+          Displaying a dotless host IP in various encoding
+            http://3486011863 instead of http://www.mozilla.org)
+
+            Octal (like 
+            http://00000000317.00000000310.00000000121.00000000327/)
+
+            Base 256 
+            notation (like http://4294967503.4294967496.4294967377.4294967511/).
+
+          URL as a button
+            The displayed URL is contained in the text description of a form button.
+              The button's styling matches that of the background of the page, so only the button's text shows.
+
+              In email clients, since this is a form button, the url doesn't show in the status bar.  
+                An attacker can utilize the "onhover" to forge the link displayed in the status bar.
+
+
 
 
 
