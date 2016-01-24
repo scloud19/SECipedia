@@ -1,5 +1,9 @@
 Transport Layer Security
 
+While SSL/TLS can be used to communicate with trusted organizations over the Internet (by protecting the messages with encryption), the same exact technology can also be used to communicate securely with attackers.
+  In other words, defenders now can't spot malicious data.
+
+
 When implementing websites, if a user tries to make any request over HTTP, always redirect to the HTTPS version of the site
   
 Man in the Middle Attack
