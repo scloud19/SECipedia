@@ -35,4 +35,6 @@
       (If you can't attack the browser)
     Plugins
     Web Applications
+    Networks
+    yy
 
