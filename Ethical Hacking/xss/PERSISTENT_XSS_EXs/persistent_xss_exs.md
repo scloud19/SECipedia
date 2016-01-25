@@ -73,3 +73,6 @@ function get_random_ip(){
 }
 
 setInterval("do_request()", 10000);
+----------------------------------------------------
+Sammy Worm
+http://samy.pl/popular/tech.html
