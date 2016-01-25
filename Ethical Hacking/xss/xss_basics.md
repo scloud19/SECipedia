@@ -27,7 +27,10 @@ Basics
 
 
   Types of XSS Attacks
-    Ex: Stored XSS, Reflected XSS, DOM Based XSS
+    Ex: Stored XSS, Reflected XSS, DOM Based XSS, Universal XSS
+
+    Universal XSS
+      Vulnerabilities in the browser/extensions itself are exploited (rather than vulnerabilities in other websites as is the case with traditional XSS attacks)
 
     Stored XSS (aka Persistent or Type 1 XSS)
 
@@ -127,6 +130,15 @@ Basics
           In other words, the page itself does not change, but the client side code contained in the page executes differently due to the modifications that have occurred in the DOM environment.
             This is different than other XSS attacks (stored and reflected), in which the attack payload is placed in the response page (due to a server side flaw)
 
+  Browser XSS Defenses
+    Browsers have protective methods in place to reduce the likelihood of an XSS payload executing within the target's browser.
+      Ex:
+        Chrome/Safari's XSS Auditor
+        Internet Explorer's XSS Filter
+        Firefox's NoScript extension
+
+    Getting around these defenses
+      
 
 
 
