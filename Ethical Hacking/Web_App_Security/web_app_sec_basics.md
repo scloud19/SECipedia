@@ -1,3 +1,11 @@
+Always whitelist incoming input to the most granular detail that you can (while still providing some level of flexibility.)
+  Ex: ' is used in many SQL injection attacks, but what about users with the last name O'Brian?
+    In this case, we sanitize
+      Sanitizing recognizes the need to sometimes accept data that can't be guaranteed to be safe.  Instead of rejecting it via white-listing, the app can sanitize it in different ways..
+        Ex: Removing (or encoding/escaping) potentially malicious characters in the data.
+          Ex: To mitigate XSS, HTML-encoding dangerous characters before these are embedded into the webpage (i.e. <>, etc.)
+
+
 Core Security Problem: Users can submit any arbitrary input to the web application.
   This is because the client is outside of the application's control; thus it must always be UNTRUSTED.
 
