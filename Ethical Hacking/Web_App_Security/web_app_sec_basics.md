@@ -12,6 +12,8 @@ Core Security Problem: Users can submit any arbitrary input to the web applicati
 
 
 Why do we have so many security problems?
+  Remember, every feature added is adding to the attack surface
+  
   No security awareness
   
   Custom Development
@@ -23,3 +25,15 @@ Why do we have so many security problems?
   Rapid reuse of third party modules
   Rapidly Evolving Threat Profile
   Resource and Time Constraints
+
+
+Changing the of the security parameter
+  For example, suppose that an attacker wants to “hack in” to a bank’s systems and steal money from users’ accounts. In the past, before the bank deployed a web application, the attacker might have needed to find a vulnerability
+  in a publicly reachable service, exploit this to gain a toehold on the bank’s DMZ, penetrate the firewall restricting access to its internal systems, map the network to find the mainframe computer, decipher the arcane protocol used to access it, and guess some credentials to log in. However, if the bank now deploys a vulnerable web application, the attacker may be able to achieve the same outcome simply by modifying an account number in a hidden field of an HTML form.
+
+  Now, the web browser can be used to attack a user on an internal network
+
+Basic trends in security
+  The shift in attention of attacks
+    From server-side to those that target application users.
+    As awareness of security threats increases, flaws in the server side are the first to be well understood and addressed, leaving the client as a key battleground.
