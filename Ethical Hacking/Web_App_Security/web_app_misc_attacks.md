@@ -37,4 +37,6 @@ When crafting input for an attack, think of the ways that the data can be potent
   Ex: If the application first removes ../ recursively and then removes ..\ recursively then the following input can be used to defeat the validation
       ....\/
 
+      If recurive sanitization occurs, when if one one problematic character leads to another.  There could be an recurive loop that crashes the server.
+
 

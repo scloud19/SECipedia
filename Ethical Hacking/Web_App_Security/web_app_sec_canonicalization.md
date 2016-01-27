@@ -16,3 +16,21 @@ Vulnerabilities
 
       Potential bypass
         %%2727
+
+    Note that sometimes the decoding doesn't always occur on the server.  
+      Ex: The html encoded iframe
+        <iframe src=j&#x61;vasc&#x72ipt&#x3a;alert&#x28;1&#x29; >
+          Equals
+            <iframe src=javascript:alert(1)>
+
+            Some browsers perform a HTML decode on the src parameter value.  So, these types of attacks can be on a persistent XSS variety, and their encoding will evade XSS filters (with the decode occurring on the client).
+
+
+    Converting from one character set to another
+      These types of vulnerabilities occur because some technologies perform more of a "best fit" mapping of characters based on graphical similarities.
+        Exs: « can be converted into <
+            Ÿ and Â == Y, A
+
+          These types of attacks can be leveraged to bypass initial filters (if they occur before a given conversion.)
+
+
