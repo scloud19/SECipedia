@@ -30,4 +30,11 @@ Tokenizing Flaws
 
     In some browsers, NULL bytes are simply ignored; so arbitrary null bytes can be inserted with blocked expressions to defeat certain blacklist-based filters.
 
-When crafting input for an attack, think of the ways that the data can be potentially transformed before any white list is met.
+When crafting input for an attack, think of the ways that the data can be potentially transformed before any white list/sanitizing is met.
+  Ex: Is recursive sanitizing in place?
+    If not: <scr<script>ipt> becomes <script>
+
+  Ex: If the application first removes ../ recursively and then removes ..\ recursively then the following input can be used to defeat the validation
+      ....\/
+
+
