@@ -29,3 +29,5 @@ Tokenizing Flaws
         As the NULL byte can act as a string delimiter (in certain contexts), it can be used to terminate a filename or a query to some back-end component.
 
     In some browsers, NULL bytes are simply ignored; so arbitrary null bytes can be inserted with blocked expressions to defeat certain blacklist-based filters.
+
+When crafting input for an attack, think of the ways that the data can be potentially transformed before any white list is met.
