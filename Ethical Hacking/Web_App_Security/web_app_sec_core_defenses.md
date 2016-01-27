@@ -43,6 +43,9 @@ Handling Attackers
     Some IDS/WAFs include these features in this section.
       But remember, these mitigate more generic attacks and aren't specific to application logic/business logic.
         In general, the most effective way to implement real-time alerting is to integrate the alerting functions with the applications input validations (and other controls.)
+          Ex: Check the contents of the cookie string, is it abnormal given your logic?
+            This validation should already be happening, thus do alerting functions based off of it.
+              This reduces false positives
 
     Reduce false positives by looking for
       Usage abnormalities
@@ -58,6 +61,16 @@ Handling Attackers
 
 
   Reacting to attacks
+      Due to the differences in web apps, most attackers need to probe multiple times for vulnerabilities.
+        Many input validation mechanisms will identify these requests as malicious and block the input.
+          The key is, assume that something is going to "slip by".  Thus, you need to do items to frustrate a "flagged" user
+            Exs to "by time":
+              Respond to attackers requests increasingly slowly
+              Terminate the attacker's session
+
+
+
+
 
 
 
