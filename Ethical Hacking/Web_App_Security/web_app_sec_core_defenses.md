@@ -67,11 +67,3 @@ Handling Attackers
             Exs to "by time":
               Respond to attackers requests increasingly slowly
               Terminate the attacker's session
-
-
-
-
-
-
-
-

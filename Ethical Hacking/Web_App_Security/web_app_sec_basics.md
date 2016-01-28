@@ -1,3 +1,7 @@
+Targeting an application
+  When targeting an application, an attacker is usually targeting the mechanisms that handle user input and user access.
+    These areas can lead to complete compromise of the applications
+
 Always whitelist incoming input to the most granular detail that you can (while still providing some level of flexibility.)
   Ex: ' is used in many SQL injection attacks, but what about users with the last name O'Brian?
     In this case, we sanitize

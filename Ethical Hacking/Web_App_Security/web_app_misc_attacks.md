@@ -39,4 +39,17 @@ When crafting input for an attack, think of the ways that the data can be potent
 
       If recurive sanitization occurs, when if one one problematic character leads to another.  There could be an recurive loop that crashes the server.
 
+In many apps, admin functions are implemented within the app itself (and is accessible through the same web interface as its core functionality)
+      Thus greatly opens up the attack surface.
+        Often times, apps don't implement effective access control of some of their admin functions.  Thus, can attacker may find a means of creating a new user account with powerful privs.
+
+        Admin functions usually involves displaying data that originated from ordinary users.  Any XSS flaws within that admin interface can be a huge point of concern.
+
+        Admin functionality is often subjected to less stringent security testing because its users are "trusted" or pen-testers are given access to only low-privileged accounts.
+
+
+
+
+
+
 
