@@ -17,4 +17,22 @@ HTTP Requests
     
     Additional Notes
       GET requests don't have a message body
-      The only HTTP versions in common use 
+
+      Referer: 
+        I.e., Where did the user come from?  If a user clicked a 
+        link, this header would be populated with the original 
+        site's url.  This header was misspelled in the original
+
+        (This was misspelled in the original Spec, and has maintained this spelling ever sense).
+
+      User-Agent:
+        For legacy reasons, most browsers include the Mozilla prefix.
+          This was the User-Agent string used by the once dominant Netscape browser, and other browsers wanted to assert that they were compatible with this standard.
+            Ex: The example payload is from IE
+
+
+      The only HTTP versions in common use on the Inernet are 1.0 and 1.1
+        Most browsers use version 1.1 by default.
+
+        Differences in 1.0 and 1.1
+          While there are differences between the two versions, the main difference when attacking web apps is that in version 1.1 the Host request header is mandatory.

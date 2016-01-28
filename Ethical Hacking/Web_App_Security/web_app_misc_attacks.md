@@ -41,11 +41,18 @@ When crafting input for an attack, think of the ways that the data can be potent
 
 In many apps, admin functions are implemented within the app itself (and is accessible through the same web interface as its core functionality)
       Thus greatly opens up the attack surface.
-        Often times, apps don't implement effective access control of some of their admin functions.  Thus, can attacker may find a means of creating a new user account with powerful privs.
+        Often times, apps dont implement effective access control of some of their admin functions.  Thus, can attacker may find a means of creating a new user account with powerful privs.
 
         Admin functions usually involves displaying data that originated from ordinary users.  Any XSS flaws within that admin interface can be a huge point of concern.
 
         Admin functionality is often subjected to less stringent security testing because its users are "trusted" or pen-testers are given access to only low-privileged accounts.
+
+HTTP Headers
+  Expires, Pragma headers
+    Are leveraged to tell the browser to cache the response.  If you're doing an attack, you can always instruct the clients to cache the contents so when the website changes it's code, it doesn't really matter (unless the cache is flushed).
+
+  Set-Cookie
+    Can domains from one domain interfere with cookies for another? What if they are set "globally"?  Would a SOP still apply to the cookie? 
 
 
 
