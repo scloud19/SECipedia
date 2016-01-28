@@ -29,6 +29,7 @@ HTTP Requests
         For legacy reasons, most browsers include the Mozilla prefix.
           This was the User-Agent string used by the once dominant Netscape browser, and other browsers wanted to assert that they were compatible with this standard.
             Ex: The example payload is from IE
+        
 
 
       The only HTTP versions in common use on the Inernet are 1.0 and 1.1

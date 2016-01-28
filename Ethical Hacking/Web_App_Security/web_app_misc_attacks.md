@@ -55,7 +55,10 @@ HTTP Headers
     Can domains from one domain interfere with cookies for another? What if they are set "globally"?  Would a SOP still apply to the cookie? 
 
 
-
+  Refer
+      If sensitive information is kept in the URL, it can be easily seen in the referer header if a link is followed.
+          What about a person on a website with a sensitive URL and then they click on an ad link, this information can be leaked to the ad's server.  
+              Implications for HTTPS? I believe that it is obfuscated from view in this context.
 
 
 

@@ -31,3 +31,6 @@ HTTP Response
           In the ex above, this shows that the response content expired in the past and therefore shouldn't be cached
 
         A combination of these instructions are frequently issued when dynamic content is being returned to ensure that browsers obtain a fresh version.
+
+      Content-Type header
+        What's the content of the message's body.  In the payload above, it's text/html;
