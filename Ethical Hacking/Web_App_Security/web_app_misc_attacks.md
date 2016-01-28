@@ -60,6 +60,7 @@ HTTP Headers
           What about a person on a website with a sensitive URL and then they click on an ad link, this information can be leaked to the ad's server.  
               Implications for HTTPS? I believe that it is obfuscated from view in this context.
 
-
+  For other idea of potential attacks
+    Look in HTTP_Methods.md
 
 
