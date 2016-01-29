@@ -15,8 +15,37 @@ HTTP Requests
 
     // Optional Message Body
     
-    Additional Notes
+    Additional general notes
       GET requests don't have a message body
+
+    Additional header explanations
+
+      Accept
+        Tells the server what kinds of content the client is willing to accept
+          Ex: image types, flash, etc.
+
+      Accept-Encoding
+        Tells the server what kinds of content encoding that the client can accept
+
+      Authorization
+        Submits credentials to the server for one of the built-in HTTP auth types.
+
+      Cookie
+        Submits cookies to the server
+          Remember these were cookies that the server previously issued
+
+      Host
+        Specifies the hostname that appeared in the full URL being requested
+
+      If-Modified-Since
+        Specifies when the browser last received the requested resource
+          If the resource has not changed since that time, the server may instruct the client to use its cached copy
+            This is done by issuing a 304 status code
+
+      If-None-Match
+        Specifies an entity tag.
+          This is an identifier denoting the contents of the message body.
+
 
       Referer: 
         I.e., Where did the user come from?  If a user clicked a 

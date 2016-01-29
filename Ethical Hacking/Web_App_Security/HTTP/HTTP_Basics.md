@@ -18,4 +18,4 @@ HTTP
       Rest-style URL (with REST-style parameters)
         http://wahh-app.com/search/ford/pinto
 
-        CURRENTLY AT HTTP Headers PAGE 81
+        
