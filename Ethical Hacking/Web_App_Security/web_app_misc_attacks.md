@@ -52,7 +52,8 @@ HTTP Headers
     Are leveraged to tell the browser to cache the response.  If you're doing an attack, you can always instruct the clients to cache the contents so when the website changes it's code, it doesn't really matter (unless the cache is flushed).
 
   Set-Cookie
-    Can domains from one domain interfere with cookies for another? What if they are set "globally"?  Would a SOP still apply to the cookie? 
+    The domain flag of this header specifies the domain for which the cookie is valid.  This must be the same or a parent of the domain from which the cookie is received.
+        So, if a webhost hosts websites on subdomains (*.webhost.com). Could an attacker access the cookies that were set on the parent (assuming the path flag isn't set)?
 
 
   Refer

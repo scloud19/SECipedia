@@ -25,9 +25,9 @@ HTTP Response
         Indicates whether the resource can be retrieved via cross-domain Ajax requests.
 
 
-      Cache-Control
-        Passes caching directives to the browser
-          Ex: no-cache
+    Cache-Control
+      Passes caching directives to the browser
+        Ex: no-cache
 
       ETag
         Specifies an entity tag
