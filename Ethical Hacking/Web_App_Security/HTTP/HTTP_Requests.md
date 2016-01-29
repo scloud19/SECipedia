@@ -45,6 +45,14 @@ HTTP Requests
       If-None-Match
         Specifies an entity tag.
           This is an identifier denoting the contents of the message body.
+        Ex:
+          When the server gives a response, it keys the HTTP Response body with a unique identifier and sends that entity tag in the response.
+            Then when the browser requests a given resource, it sends the last received entity tag for a given resource.
+
+          This sequence of events helps the server to determine whether the browser may use its cached copy of the resource.
+
+      Origin
+        Utilized in cross-domain Ajax requests to indicate the domain from which the request originated.
 
 
       Referer: 

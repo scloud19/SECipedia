@@ -14,24 +14,51 @@ HTTP Response
 
     <html></html>
 
-    Notes
+    General Notes
       The "reason phrase" aka OK can have any value so don't key off of it.
-
-      Server header
+    
+    Header notes
+      Server
         The information contained here may/may not be accurate (if it is shown)
 
-      Set-Cookie header
+      Access-Control-Allow-Origin
+        Indicates whether the resource can be retrieved via cross-domain Ajax requests.
+
+
+      Cache-Control
+        Passes caching directives to the browser
+          Ex: no-cache
+
+      ETag
+        Specifies an entity tag
+
+        Ex: See If-None-Match header is HTTP_Request.md
+
+      Server
+        Provides information about the web server software being utilized
+
+      WWW-Authenticate
+        When a server issues a 401, this is included as a header.
+
+        This header provides the details on the types of authentication that the server supports.
+
+      X-Frame-Options
+        If and how the current response may be loaded within a browser frame.
+
+
+      Set-Cookie
         Issues the browser a further cookie
           This is then submitted back in the Cookie header of subsequent requests to the server
 
-      Pragma header
+      Pragma
         Instructs the browser not to store its response in its cache
 
-        Expires header
+        Expires
           In the ex above, this shows that the response content expired in the past and therefore shouldn't be cached
 
         A combination of these instructions are frequently issued when dynamic content is being returned to ensure that browsers obtain a fresh version.
 
-      Content-Type header
+      Content-Type
         What's the content of the message's body.  In the payload above, it's text/html;
                     
+
