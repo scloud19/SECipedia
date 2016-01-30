@@ -47,9 +47,43 @@ Status Codes
             WWW-Authenticate header
               Will specify what types of authentication will be provided.
 
+        403 Forbidden
+          Indicates that no one is allowed to access the requested resource (regardless of authentication)
+
+        404 Not Found
+          Indicates that the requested resource does not exist
+
+        405 Method Not Allowed
+          Indicates that the method used in the request is not supported for the specified URL.
+            Ex: Utilizing a DEL when it's not supported
+
+        413 Request Entity Too Large
+          Indicates that the body of your request is too large for the server to handle
+            Ex: This could happen an attacker is probing for buffer overflow vulnerabilities in native code.  And is therefore submitting long strings of data.
+
+        414 Request URI Too Long
+          Similar to 413
+
+          Indicates that the URL used in the request is too large for the server to handle
 
     5xx
       The server encountered an error fulfilling the request
+
+      Ex:
+        500 Internal Server Error
+          The server encountered an error fulfilling the request.
+
+          Ex: You have submitted unexpected input that caused an unhandled error somewhere within the application's processing.
+
+          In these cases, you should closely review the full contents of the server's response for any details on the error.
+
+
+        503 Service Unavailable
+          Usually, this means that; Although the web server is functioning (and can respond to requests), the application accessed via the server is not responding.
+            If you see this, you should verify whether this is the result of any action that you have performed.
+
+        
+
 
 
     

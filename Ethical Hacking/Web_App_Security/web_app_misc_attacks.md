@@ -73,3 +73,4 @@ HTTP Headers
     Look in HTTP_Methods.md
 
 
+Create a public proxy server on AWS that injects affiliate cookies into browsers.  This gives attackers a financial edge.
