@@ -1,6 +1,15 @@
 HTTP Requests
   All HTTP messages (requests and responses) consist of one or more headers, each on a separate line, followed by a mandatory blank line, which is followed by an optional message body.
 
+  Send parameters to the server mainly in these ways (but any input can be used):
+    URL query string
+    File path of REST-style URLs
+    Cookies
+    Body of requests using POST
+
+      Except exs:
+      Using the User-Agent header to serve content based on browser type
+
   Ex: 
     GET /auth/488/YourDetails.ashx?uid=129 HTTP/1.1
     Accept: application/x-ms-application, image/jpeg, application/xaml+xml, image/gif, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, */*
