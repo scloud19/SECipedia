@@ -47,6 +47,14 @@ In many apps, admin functions are implemented within the app itself (and is acce
 
         Admin functionality is often subjected to less stringent security testing because its users are "trusted" or pen-testers are given access to only low-privileged accounts.
 
+HTTP Responses
+  301 Moved Permanently
+    Redirects the browser permanently to a different URL (which is specified in the Location header.)
+      The client should use the new URL in the future rather than the original.
+
+    Any way to inject MtM a response and inject a 301 to another domain?
+
+
 HTTP Headers
   Expires, Pragma headers
     Are leveraged to tell the browser to cache the response.  If you're doing an attack, you can always instruct the clients to cache the contents so when the website changes it's code, it doesn't really matter (unless the cache is flushed).
