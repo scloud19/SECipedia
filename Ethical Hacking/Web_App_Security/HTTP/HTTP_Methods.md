@@ -44,11 +44,18 @@ Methods
 
   Ex URLs with Verbs
     If these aren't directly shown, try them anyways...
-    
+
     GET http://blah.com/product/38
       Generally means: Get a product with an ID of 38
+    
     POST http://blah.com/product
+      Will usually create a product that's keyed off of the request body
 
+    PUT  http://blah.com/product/38
+      Update a product with an ID of 38
+
+    DELETE  http://blah.com/product/38
+      DELETE a product with an ID of 38
 
     PUT http://blah.com/product/38
     GET http://blah.com/product/38

@@ -1,6 +1,5 @@
 Also see attack_categories.md for additional details
 
-
 Changing the price of a product that is transmitted in a hidden HTML form field to fraudulently purchase the product for a cheap amount.
 
 If you compromise a user's email account, you have access to everything.
