@@ -16,7 +16,35 @@ General Headers
 
     Content-Type
       The type of content contained in the message body
-        Ex: text/html for HTML documents
+        Ex: text/html
+              for HTML documents
+
+            application/x-www-form-urlencoded
+              The parameters (from the form) are represented in the message body as name/value pairs in the same structure as a url query string
+                ex: username=yo&password=supdude&submit=log+in 
+
+            multipart/form-data
+              An application can request that browsers use multipart encoding by specifying this in an enctype attribute in the form tag.
+                ex: <form enctype='multipart/form-data'>
+
+                When this occurs, the Content-Type header in the reuest also includes a random string that's utilized as a separator for the parameters in the request body.
+
+                  Ex request:
+                    // Assuming we have a data format like the string above
+                    
+                    POST /secure/login.php?app=quotations HTTP/1.1Host: wahh-app.comContent-Type: multipart/form-data; boundary=------------7d71385d0a1a
+                    Content-Length: 369
+                    Cookie: SESS=GTnrpx2ss2tSWSnhXJGyG0LJ47MXRsjcFM6Bd
+
+                    ------------7d71385d0a1a
+                    Content-Disposition: form-data; name=”username”
+
+                    daf------------
+                    7d71385d0a1a
+                    Content-Disposition: form-data; name=”password”
+
+                    foo
+
 
     Transfer-Encoding
       Any encoding that was performed on the message body to facilitate its transfer over HTTP.
