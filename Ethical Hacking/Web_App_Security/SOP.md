@@ -1,6 +1,14 @@
 Same Origin Policy
   Applied inconsistently across browsers, their versions, and even plugins.
 
+  Basic idea
+    Content received from one website is allowed to read and modify other content received from the same site.
+      However, this content (aka Javascript) can't access content received from other sites.
+
+      What does this prevent?
+        If this SOP didn't exist...
+          
+
 Definition
   Essentially is a sandbox.
 

@@ -31,7 +31,7 @@ General Headers
 
                   Ex request:
                     // Assuming we have a data format like the string above
-                    
+
                     POST /secure/login.php?app=quotations HTTP/1.1Host: wahh-app.comContent-Type: multipart/form-data; boundary=------------7d71385d0a1a
                     Content-Length: 369
                     Cookie: SESS=GTnrpx2ss2tSWSnhXJGyG0LJ47MXRsjcFM6Bd
@@ -39,11 +39,11 @@ General Headers
                     ------------7d71385d0a1a
                     Content-Disposition: form-data; name=”username”
 
-                    daf------------
-                    7d71385d0a1a
+                    yo
+                    ------------7d71385d0a1a
                     Content-Disposition: form-data; name=”password”
 
-                    foo
+                    supdude
 
 
     Transfer-Encoding
