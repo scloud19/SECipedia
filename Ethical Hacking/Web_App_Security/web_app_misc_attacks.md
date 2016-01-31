@@ -1,6 +1,25 @@
+fileName param (in URL, etc.)
+  Also see google_hacking.md
+  
+  utilize with a directory traversal attack or leverage to find log files, etc.
+
+  Put in an invalid filename to see if error is occurs.
+    If so, look for path of "file not found" and leverage in directory traversal attack.
+      If the fileName param is being directory appended to a preexisting directory path, simply ass "../../", etc. to bust out of the current directory.
+
+      Ex: 
+        Certain web frameworks house "juicy" files at predefined locations.  
+          ASP.NET
+            look for: web.config file
+          Windows
+            system.ini
+
 Also see attack_categories.md for additional details
 
 Changing the price of a product that is transmitted in a hidden HTML form field to fraudulently purchase the product for a cheap amount.
+
+Robots.txt
+  Usually holds juicy information for /admin routes,etc.  
 
 If you compromise a user's email account, you have access to everything.
 

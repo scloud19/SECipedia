@@ -1,3 +1,7 @@
+General Notes
+  When doing these types of attacks, it's important to "view source" on the returned page if it's blank.
+    Ex: web.config is an XML file, so it might not directly render to the screen.
+
 More Ideas
   Google
     "Google Hacking"
@@ -25,3 +29,6 @@ Google Searches
 
       filetype:config
         This helps mitigate false positives, such as open source projects on github.
+
+  system.ini
+  
