@@ -5,6 +5,11 @@ Ways that sessions are implemented
 
 If a user doesn't make a request for a certain amount of time, the session should be expired.
 
+The overall session data can be stored on the client or server.
+  If it's on the client, it obviously needs to be encrypted.
+
+  A session token keys a session's data to specific user across multiple requests.
+
 Vulnerabilities in Sessions
   Get the session token = Can log in as the user
 

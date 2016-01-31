@@ -6,8 +6,9 @@ Same Origin Policy
       However, this content (aka Javascript) can't access content received from other sites.
 
       What does this prevent?
-        If this SOP didn't exist...
-          
+        If the SOP didn't exist...
+          If a user browser to a malicious website, script code running on that site could access the data/functionality of other websites visited by the user.
+
 
 Definition
   Essentially is a sandbox.
@@ -23,6 +24,18 @@ Definition
 
   Origin
     Consists of a hostname, scheme, and port.
+
+Key items for consideration when using the SOP
+  The following features of the SOP can lead to cross-domain attacks...
+    
+  A page residing on one domain can cause an arbitrary request to be made to another domain (Ex: submitting a form/loading an image).  But, it can't process the data returned from the request.
+    Exploit: Send sensitive data as a parameter in a GET request
+
+  A page residing on one domain can load a script from another domain and execute it.
+    This is because scripts are assumed to contain code, rather than data, so cross-domain access should not lead to disclosure of any sensitive information
+
+  A page residing on one domain can't read/modify the cookies or other DOM data belonging to another domain.
+
 
 
 
