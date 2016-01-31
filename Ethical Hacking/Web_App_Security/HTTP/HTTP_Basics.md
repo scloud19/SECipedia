@@ -16,6 +16,9 @@ HTTP
       Ex: http://wahh-app.com/search?make=ford&model=pinto
 
       Rest-style URL (with REST-style parameters)
-        http://wahh-app.com/search/ford/pinto
+        http://wahh-app.com/search/ford/pinto/delete
+          Sometimes, the action is at the end.
+
+
 
         

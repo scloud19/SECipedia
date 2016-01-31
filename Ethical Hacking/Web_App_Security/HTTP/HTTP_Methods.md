@@ -41,4 +41,16 @@ Methods
 
     If enabled, you may be able to leverage it to attack the application
       Ex: upload a script to execute on the server
+
+  Ex URLs with Verbs
+    If these aren't directly shown, try them anyways...
+    
+    GET http://blah.com/product/38
+      Generally means: Get a product with an ID of 38
+    POST http://blah.com/product
+
+
+    PUT http://blah.com/product/38
+    GET http://blah.com/product/38
+ 
  
