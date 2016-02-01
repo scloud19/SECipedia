@@ -1,7 +1,8 @@
 Unicode Encoding
   Is a character encoding standard that is designed to support all of the world's writing systems.
 
-  For pentesting, Unicode encoding is of interest because it can sometimes be 
+  For pentesting, Unicode encoding is of interest because it can sometimes be leveraged to defeat input validation.
+    Ex: An input filter blocks certain malicious expressions, but later, the function that processes this input understands Unicode, you can potentially do a bypass with various standard and malformed Unicode encodings.
 
   It employees various encoding schemes, some of which can be used to represent unusual characters in web applications.
 
