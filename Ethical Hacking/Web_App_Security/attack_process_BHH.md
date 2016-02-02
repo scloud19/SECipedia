@@ -1,3 +1,4 @@
+
 1) Initiating Control
   Every attack sequence starts by running instructions within the web browser.  Thus, the browser must execute instructions under your control.
     Exs: XSS, etc.
@@ -17,6 +18,7 @@
       The next stage, 3, is attacking.  However, in that stage, you might find a way to increase the retaining phase (which could help the attacking phase more).  Look at the cost/benefits and pivot to the stage that is the most helpful.
 
 3) Attacking
+  
   Many attacks need you to bypass the SOP
   Leverage the control you've gained and explore the attack possibilities from the present position.
 
