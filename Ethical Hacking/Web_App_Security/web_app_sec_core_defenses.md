@@ -15,6 +15,15 @@ Trust boundary
 
 
 Handling Attackers
+  Spidering
+    Make your urls have an element of randomness to them
+      As spiders usually won't traverse the same link twice, This can cause spiders to go into an infinite loop.
+
+    Use per-page tokens
+      The spider will probably fail to handle these properly by requesting pages out of their expected sequence.    
+        If the web app is aware of this, it can defensively terminate the session.
+
+
   Handling Errors
     The application should never return any system-generated messages or other debug information in its responses.
   Keeping logs
