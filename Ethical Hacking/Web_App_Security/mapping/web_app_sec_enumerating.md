@@ -87,6 +87,52 @@ User-Directed Spidering
       Another option is to tell the tool to actively spider the site using all of the already enumerated content as a starting point.
         For this to occur you need to identify any URLs that are dangerous or could break the applications session./
 
+Finding hidden content
+  It's fairly common for applications to contain functionality that is not directly visible in the main content
+    Ex: 
+      Functions used in testing/debugging purposes that was never removed
+
+      This can also occur when an application exposes different functionality to different roles of users (admin, anonymous, etc.)
+        Spidering at one role may not find functionality exposed to another role (that's still 'open')
+
+    Examples of hidden content
+      Backup copies of live files.
+        As the file extension might be different, you can potentially navigate to these files (i.e. via directory traversal, etc.) and view the source.
+          This can inform attacks on the main page.
+
+      Backup archives
+        Can contain a full snapshot of files within (or outside of) the web root.
+
+      New functionality that has been deployed to the server but isn't directly linked to the main application
+
+      Default application functionality in an off-the-shelf application (or framework/template) that has been superficially hidden from the user but is still present on the server.
+
+      Old versions of files that have not been removed from the server.
+        Ex: Dynamic pages that contain vulnerabilities that have been fixed in the current version but can still be exploited in older versions
+
+      Config (and include files) containing sensitive data.
+        Ex: Database credentials
+
+      Source files from which the live app has been compiled
+
+      Comments/function names in the source code
+        Ex: "Need to test this function"
+            Auth function
+
+      Log files
+        Ex: Usernames, session tokens, URLs visited (for spidering), and actions performed.
+
+
+      Tools for finding hidden content
+        Burp Intruder
+          Utilize Burp yIntruder to do a brute force enumeration over common directory names
+
+      "Juicy" routes
+        /admin
+        /auth
+
+      Technique
+        Lets say you find content via burp intruder (acct registration page) that you don't find through spidering.  It would be wise to try to sign up for an account (as this might be "hidden" functionality).
 
 
 
