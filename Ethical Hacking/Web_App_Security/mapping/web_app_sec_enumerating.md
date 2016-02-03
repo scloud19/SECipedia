@@ -134,15 +134,58 @@ Finding hidden content
       Technique
         Lets say you find content via burp intruder (acct registration page) that you don't find through spidering.  It would be wise to try to sign up for an account (as this might be "hidden" functionality).
 
+        Most apps employ a certain naming scheme for their functionality, utilize this to fine tune your enumeration "master route/word list", etc.
+          Ex: Are resource names camel case, all caps?
+
+              If you see www.yoman.com/user/11
+                This is a prime target for enumeration
+
+          Steps to hone in on naming scheme and find hidden content
+            1) Review the results of user-directed browsing and basic brute force enumeration.  Compile lists of the names of all subdirectories, file stems, file extensions.  Add to this list by the sub-steps below
+
+              Review this list to ID any naming schemes in use.  Ex: if you see an AddDocument.jsp, maybe you can try a RemoveDocument.jsp
+                Exs: Are the devs verbose (AddANewDocument.jsp), succinct (AddDoc.jsp), use abbreviations (AddDc.jsp), or cryptic (AddD.jsp)
+
+              Does the naming scheme use numbers/dates?
+                Ex: payReport2003.pdf
+                It would be very easy to try the 2016 version.
+
+              Review all client-side code to identify any clues about hidden server-side content
+                Ex: 
+                  HTML comments about protected or unlinked functions
+                
+                  HTML forms with disabled SUBMIT elements
+
+                  References to server side include files
+                    this may be publicly downloadable
+
+                    can contain highly sensitive information such as DB connection strings, passwords, etc.
+
+            2) Add to the lists of enumerated items any further potential names that you can deduce from the aforementioned steps.
+              Also add to the file extension list common exts such as txt, bak, src, inc, old
+                Add in extensions associated with the language in use (such as .java/.cs)
+
+            3) Search for temp files that may have 
+
+
+
+
+
+
+
+
+
         It is difficult to fully leverage automated tools because the responses from the server can have different meanings (i.e. 200 might truly be a 200- Look at http_status_codes.md for me).
           Solution Steps:
             Make some manual requests for known valid and invalid resources, and identify how the server handles the invalid resources
 
-            If you find that the application
+            If you find that the application handles invalid resources in a non-standard manor (aka a 200 with a "file not found" page), configure intruder to highlight these results so they can be ignored.
 
             Use the site map generated through user-directed spidering as a basis for automated discovery of hidden content
 
             Use Burp Intruder (with a wordlist of common filenames)Make automated requests for common filenames/directories within each directory/path known to exist within the app.
+
+
 
 
 
