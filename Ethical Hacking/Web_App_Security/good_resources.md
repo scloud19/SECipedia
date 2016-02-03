@@ -9,6 +9,10 @@ Good resources
     User directed spidering
       Burpe, WebScarab
 
+    Finding hidden content
+      Burp Intruder
+        Enumerate over common directory names
+
 
   Suites of Pen testing tools
     Burp Suite

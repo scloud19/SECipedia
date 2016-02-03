@@ -23,6 +23,10 @@ Handling Attackers
       The spider will probably fail to handle these properly by requesting pages out of their expected sequence.    
         If the web app is aware of this, it can defensively terminate the session.
 
+    For enumerating hidden content, attackers utilize common path names that are stored in publicly available "master files".
+      When making paths, make sure that they aren't within these "master files" aka /admin routes, etc.
+
+
 
   Handling Errors
     The application should never return any system-generated messages or other debug information in its responses.

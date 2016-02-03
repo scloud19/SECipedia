@@ -134,6 +134,19 @@ Finding hidden content
       Technique
         Lets say you find content via burp intruder (acct registration page) that you don't find through spidering.  It would be wise to try to sign up for an account (as this might be "hidden" functionality).
 
+        It is difficult to fully leverage automated tools because the responses from the server can have different meanings (i.e. 200 might truly be a 200- Look at http_status_codes.md for me).
+          Solution Steps:
+            Make some manual requests for known valid and invalid resources, and identify how the server handles the invalid resources
+
+            If you find that the application
+
+            Use the site map generated through user-directed spidering as a basis for automated discovery of hidden content
+
+            Use Burp Intruder (with a wordlist of common filenames)Make automated requests for common filenames/directories within each directory/path known to exist within the app.
+
+
+
+
 
 
 
