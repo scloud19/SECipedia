@@ -19,3 +19,6 @@ HTML Source
   HTML source also has a lot of other goodies, so it's important to throughly review it.
     Ex:
       The backend architecture of the app by reviewing the URL structures, etc.
+
+Using Public Information
+  An app that you're surveying 

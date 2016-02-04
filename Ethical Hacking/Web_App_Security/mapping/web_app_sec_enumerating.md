@@ -141,9 +141,9 @@ Finding hidden content
                 This is a prime target for enumeration
 
           Steps to hone in on naming scheme and find hidden content
-            1) Review the results of user-directed browsing and basic brute force enumeration.  Compile lists of the names of all subdirectories, file stems, file extensions.  Add to this list by the sub-steps below
+            1) Review the results of user-directed browsing and basic brute force enumeration.  Compile lists of the names of all subdirectories, file stems, file extensions.  Add to this list by the sub-steps below.  Do all combinations to try and brute force.  For example, in a given directory, request each file step combined with each file extension.  Try to request each directory name as a subdirectory of every known directory.
 
-              Review this list to ID any naming schemes in use.  Ex: if you see an AddDocument.jsp, maybe you can try a RemoveDocument.jsp
+              Review this list to ID any naming schemes in use.  Ex: if you see an AddDocument.jsp, maybe you can try a RemoveDocument.jsp (and all other REST IDs: edit, delete, etc.)  Also, try Addxxx (AddUser, AddFile, etc.)
                 Exs: Are the devs verbose (AddANewDocument.jsp), succinct (AddDoc.jsp), use abbreviations (AddDc.jsp), or cryptic (AddD.jsp)
 
               Does the naming scheme use numbers/dates?
@@ -165,14 +165,18 @@ Finding hidden content
               Also add to the file extension list common exts such as txt, bak, src, inc, old
                 Add in extensions associated with the language in use (such as .java/.cs)
 
-            3) Search for temp files that may have 
+            3) Search for temp files that may have been created inadvertently by dev tools and file editors.
+              Ex: .DS_Store
+                contains a directory index in OS X
 
+                  file.php~1
+                    Temp file that is created when file.php is edited
 
+                  *.tmp
+                    Used by numerous software tools
 
-
-
-
-
+            Note: Some of the aforementioned steps for finding hidden content (naming scheme) can be found through the Content Discovery feature of Burps Pro tools.  After you have manually mapped a portion of an apps content using your browser, you can select one or more branches of Burps site map and initiate a content discovery session on one of those branches.
+              For more specific examples, see web_app_sec_resources.md
 
 
         It is difficult to fully leverage automated tools because the responses from the server can have different meanings (i.e. 200 might truly be a 200- Look at http_status_codes.md for me).
