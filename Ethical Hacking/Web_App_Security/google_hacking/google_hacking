@@ -2,10 +2,31 @@ General Notes
   When doing these types of attacks, it's important to "view source" on the returned page if it's blank.
     Ex: web.config is an XML file, so it might not directly render to the screen.
 
+  While these ideas pertain to Google, other web searches have similar functionality.
+    Look for an "Advanced Search" option.
+
 More Ideas
   Google
     "Google Hacking"
-    If google indexes ftps, what other types of protocols does it index?
+      If google indexes ftps, what other types of protocols does it index?
+
+      When doing specialized google searches, don't just do them in the default web section also in others (Groups and News, etc.)
+
+      Repeat the Search with the Omitted Results Included
+        Go to the last page of the query and select the aforementioned option.
+
+        By default, Google attempts to filter out redundant results by removing pages that it believes are sufficiently similar to others included in the results.
+
+        By overriding this behavior, you may be able to uncover subtly different pages that are of interest to you.
+
+        When you've found an interesting page, view the cached version.
+          Sometimes the cached copy contains resources that can't be directly accessed in the application without auth or payment.
+
+          The Cached content may expose "older" server side functionality that might still be in place (and thus is vulnerable.)
+
+        Once you're finished doing your "Google Recon", utilize the same techniques on other domains belonging to the organization.
+
+
 
 Google Searches
   If someone accidentally does a index.html symlink to their root directory in their web hosting directory, then a user can potentially access all files on the server.
@@ -29,6 +50,20 @@ Google Searches
 
       filetype:config
         This helps mitigate false positives, such as open source projects on github.
+
+  site:www.target.com
+    Returns every resource within the target site that Google has a reference to
+
+    site:www.target.com login
+      Returns all the pages containing the expression login
+
+      Other ideas:
+        Site maps, password reset functions, admin menus, etc.
+
+  related:www.target.com
+    Returns pages that are "similar" to the target (thus there's a lot of irrelevant material)
+
+    Although, this information may also discuss the target on other sites, which can be of interest. 
 
   system.ini
   

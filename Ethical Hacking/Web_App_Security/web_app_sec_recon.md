@@ -21,4 +21,31 @@ HTML Source
       The backend architecture of the app by reviewing the URL structures, etc.
 
 Using Public Information
-  An app that you're surveying 
+  An app that you're surveying may contain content and functionality that is not presently linked from the main content but has been linked in the past.
+    
+
+    To find this information
+      Search Engines
+        Exs: Google, Yahoo, MSN
+
+        Also look for cached copies of the content
+
+        View google_hacking for more info.
+
+      Web Archives
+        Ex: WayBack Machine (archive.org)
+
+      Internet Forums
+        Ex: stackoverflow.com,etc.
+
+        Look up developers from a company on linkedin and then look for those developers on stackoverflow, etc.
+          Additional ways to find people
+            Names within the HTML source code, names found in the contact information section of the main website
+
+        Usually, these forum posts contain source code, technologies in use, etc.
+
+
+      These repos also contain references to content that is linked from third-party sites, but isn't immediately visible in the target application itself.
+        Ex: Some applications contain restricted functionality for use by their business partners.  These partners may disclose the existence of the functionality in ways that the application itself does not.
+
+      Technique
