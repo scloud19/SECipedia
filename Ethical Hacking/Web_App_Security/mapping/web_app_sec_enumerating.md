@@ -231,7 +231,23 @@ Finding hidden content
       In these cases, the parameter can't be deduced from following a link, etc. I just simply needs to be guessed.
 
         Technique
-          
+          (Burp Intruder can do this via the "cluster bomb" attack type)
+
+          Target functions where it's most likely that developers have implemented debug logic
+            Ex: login, search, file uploading/downloading, etc.
+
+          Leverage a list of common debug parameter names
+            Ex: debug, test, hide, source, etc.
+
+            Combined with common values
+              Ex: true, yes, on, 1, etc.
+
+          Make a large number of requests to a known application page/function.
+            For POST, insert the added param in both the URL query string and the message body.
+
+          Monitor all responses received to ID anything that might indicate that the added param has an effect on the apps processing.
+
+
 
 
 
