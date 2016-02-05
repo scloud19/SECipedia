@@ -52,3 +52,28 @@ Using Public Information
         Ex: Some applications contain restricted functionality for use by their business partners.  These partners may disclose the existence of the functionality in ways that the application itself does not.
 
       Technique
+
+Analyzing the Application
+  Keys areas
+    Core functionality
+      The actions that can be used (when the app is used as intended)
+
+    Peripheral app behavior
+      Off-site links, error messages, admin/logging functions, use of redirects.
+
+    Core security mechanisms
+      Management of session state
+      access controls
+      auth mechanisms/supporting logic
+        Ex: user registration, password change, acct. recovery
+
+    User input
+      All of the different locations at which the app processes user-supplied input
+        Ex: every URL, query string param, item of POST data, cookies, HTTP headers
+          Headers of importance
+            User-Agent, Referer, Accept, Accept-Language, Host
+
+    Tech employed on the server side (including static/dynamic pages), types of req. params employed, use of SSL, interaction with databases (interaction with email systems, and other backend components.)
+
+
+      
