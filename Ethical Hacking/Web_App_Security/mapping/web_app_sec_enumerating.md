@@ -4,6 +4,22 @@ Types of enumeration
       While others can expose their functionality to a single url that gets hit with different parameters (via a POST request, etc.)
 
       It is often more fruitful to map via the functional paths (even if app page mapping "works") because these relationships are often more logical than directory structure
+        The relationships amongst functions is often more useful to attackers.  The mapping of functions also may not directly correspond to directory structure (so it's more fruitful to do both)
+
+      Functional Path Mapping technique
+        Most types of enumeration applications will enumerate via the application page mapping, you need to switch this functionality to be functional path mapping.  Utilize the methods described in the page for application page mapping (but just switch it to functional path mapping)
+
+        1) ID any instances where app functionality is accessed not by requesting a specific page for a function (ex: /admin/editUser.jsp) but by passing the name of a function in a parameter (ex: /admin.jsp?action=editUser)
+
+        2) Enumeration
+
+           Ex: If your app uses servlets that are invoked with a particular method. enumerate servlets and the methods utilized by each servlet
+
+           If the app uses parameters that specify the servlet and method names, determine the behavior when an invalid servlet and/or method is requested.  Then try it with a valid method is requested with other invalid parameters.  
+            You need to identify attributes of the server's responses that indicate successes (i.e valid servlets and methods)
+
+        3) Compile a map of app content based on functional paths, showing all of the enumerating functions and the logical paths dependencies between them.
+
  
 Look at "site map" for enumerating content.
 
@@ -207,8 +223,15 @@ Finding hidden content
 
             Use Burp Intruder (with a wordlist of common filenames)Make automated requests for common filenames/directories within each directory/path known to exist within the app.
 
+  Hidden Parameters
+    debug=true  
+      Can sometimes be added to the end of the query string of any URL in an app.
+      This can sometimes turn off certain input validation checks, etc.
 
+      In these cases, the parameter can't be deduced from following a link, etc. I just simply needs to be guessed.
 
+        Technique
+          
 
 
 
