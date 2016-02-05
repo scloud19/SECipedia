@@ -13,6 +13,10 @@ Good resources
       Burp Intruder
         Enumerate over common directory names
 
+      Wikto
+        Finding resources that are installed on the webserver via enumeration
+        Ex: domain.com/phpadmin
+
       Burp's Content Discovery Feature
           Burp uses the following techniques when attempting to discover new content (once new content is found, these steps or then carried out recursively):
             Brute force using built-in lists of common file and directory names

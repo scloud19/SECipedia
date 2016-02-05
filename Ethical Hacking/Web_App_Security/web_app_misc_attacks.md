@@ -1,3 +1,8 @@
+Enumeration
+  When enumerating, make sure that you have software that specifically enumerates the web server (ex: phpmyadmin routes, etc.) AS well as application level enumeration (/admin routes).  You want to test both layers, so make sure that your tool does both.
+    Remember, in certain enumeration apps, they can be configured using an IP or domain (for the target).
+      Sometimes, if you use an IP (it'll use that as its "domain") and wont crawl the real domain of the site (it'll see it as external).  Crawl the domain with both IP and domain in mind.
+
 fileName param (in URL, etc.)
   Also see google_hacking.md
   

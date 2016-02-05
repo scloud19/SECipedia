@@ -1,4 +1,12 @@
+Types of enumeration
+  Enumerating via GET requests (sometimes referred to as application page mapping) or POST (or other non GET request) (sometimes referred to as functional path mapping)
+    Certain applications expose their functionality through different URLs
+      While others can expose their functionality to a single url that gets hit with different parameters (via a POST request, etc.)
+
+      It is often more fruitful to map via the functional paths (even if app page mapping "works") because these relationships are often more logical than directory structure
+ 
 Look at "site map" for enumerating content.
+
 
 
 
@@ -88,6 +96,16 @@ User-Directed Spidering
         For this to occur you need to identify any URLs that are dangerous or could break the applications session./
 
 Finding hidden content
+  
+  Third-party components
+    Many web apps incorporate third-party components for standard functionality (such as shopping carts, discussion forums, CMS, etc.)
+      These are often installed to a fixed location relative to the web root or the apps starting directory
+
+      There are automated tools that lend themselves naturally to this type of task
+        See Wikto
+          Ex: finding http://myapp.com/phpmyadmin/
+
+
   It's fairly common for applications to contain functionality that is not directly visible in the main content
     Ex: 
       Functions used in testing/debugging purposes that was never removed

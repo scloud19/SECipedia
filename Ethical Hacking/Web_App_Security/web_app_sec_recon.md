@@ -1,3 +1,6 @@
+Web Server Vulnerabilities
+  Look at the server layer for vulnerabilities that could allow for directories to be exposed
+
 Spidering
   Done through a tool
 
