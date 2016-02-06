@@ -1,8 +1,10 @@
 IDing Server-Side Technologies
+CURRENTLY_AT
   Remember, items such as the Server header, etc. can be falsified by the sysadmin.
 
   Banner Grabbing
     Server header
+      Remember that different portions of the app may use different servers, so different server headers may be received depending on the different part of the app that is utilized.
 
     Additionally, you may find server info in
       Custom HTTP headers
@@ -16,7 +18,43 @@ IDing Server-Side Technologies
     cfm - Cold Fusion
     php - Php
     d2w - WebSphere
+    pl - Perl
+    py - Python
+    dll - Compiled native code (C/C++)
+    nsf/ntf - Lotus Domino
 
+  URL Signatures Mappings
+    Vignette CMS
+      https://wahh-app/news/0,,2-421206,00.html
+        Notice the comma-separated numbers
+
+  Directory Name mappings
+    servlet - Java servlet
+    pls - Oracle Application Server PL/SQL gateway
+    cfdocs/cfide - Cold Fusion
+    SilverStream - SilverStream web server
+    WebObjects/ {function_name}.woa - Apple WebObjects
+    rails - Ruby on Rails
+
+  Session Token Mappings
+    JSESSIONID - Java Platform
+    ASPSESSIONID - Microsoft IIS Server
+    ASP.NET_SessionId - ASP.NET
+    CFID/CFTOKEN - Cold Fusion
+    PHPSESSID - PHP
+
+
+
+
+    To see if a web server is of a particular type, try requesting an invalid file with a given file extension (ex aspx)
+      If doing yo.com/doesntexist.html
+        Returns generic "not found" message
+      If doing yo.com/doesntexist.aspx
+        Get a ASP.NET error message
+
+
+      This occurs because many web servers map specific files extensions to different executables on the server
+        Each component may handle errors (or '404s') differently
 
 
 Web Server Vulnerabilities
