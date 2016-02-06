@@ -23,6 +23,24 @@ Finding the name of a device
 udev system
   Enbables user-space programs the ability to automatically configure and use new devices.
 
+  udevd
+    User space daemon
+
+    The kernel can send notifications to udevd upon detecting a new device on the system
+
+
+devtmpfs
+  Developed in response to some of udev's shortcomings
+
+  Here, the kernel creates device files as necessary, but it also notifies udevd that a new device is available.
+    Upon receiving this signal, udevd doesn't create the device files, but it does perform the device initialization and process notification.
+
+  creates sym
+
+
+
+
+
 device files (aka device nodes)
   Are the files that represent devices
 
