@@ -1,7 +1,47 @@
  Linux File System
     File system layout
         Look at disk_structure.md
-        
+
+        Partitions
+            Subdivisions of the whole disk
+
+            The kernel presents each partition as a block device 
+
+
+            /dev/sda
+                Whole block device
+
+            /dev/sda1
+                Partition of the device
+
+            From a sysadmin perspective, it can be prudent to make a partition just so users don't take up too much space and crash the system
+
+        Partition Table
+            A small portion of the disk where the partitions are defined.
+
+        The next layer after the partition is the filesystem
+
+    Filesystem
+        The database of files and directories that you interact with in the user space
+
+        When you try to access the data in a file
+            Also see disk_access_process picture
+
+            The partition table is leveraged to get the appropriate partition location
+            Then,  the filesystem database on that partition is searched for the desired file data
+
+        Ways to access a file
+            See disk_access_process
+            
+            Through the..
+                File system
+
+                Directly through the disk device
+
+
+
+
+
 
     Compression
         bzip2
