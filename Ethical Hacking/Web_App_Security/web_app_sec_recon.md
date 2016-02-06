@@ -1,3 +1,24 @@
+IDing Server-Side Technologies
+  Remember, items such as the Server header, etc. can be falsified by the sysadmin.
+
+  Banner Grabbing
+    Server header
+
+    Additionally, you may find server info in
+      Custom HTTP headers
+      Templates used to build HTML pages
+      query string params
+
+  File Extensions
+    asp - Microsoft Active Server Pages
+    aspx - Microsoft ASP.NET
+    jsp - Java Server Pages
+    cfm - Cold Fusion
+    php - Php
+    d2w - WebSphere
+
+
+
 Web Server Vulnerabilities
   Look at the server layer for vulnerabilities that could allow for directories to be exposed
 
@@ -49,7 +70,7 @@ Using Public Information
 
 
       These repos also contain references to content that is linked from third-party sites, but isn't immediately visible in the target application itself.
-        Ex: Some applications contain restricted functionality for use by their business partners.  These partners may disclose the existence of the functionality in ways that the application itself does not.
+        Ex: Some applications contain restricted functionality for use by their business partners.  These partners may disclose the existence of the functionality in] ways that the application itself does not.
 
       Technique
 
@@ -73,7 +94,7 @@ Analyzing the Application
           Headers of importance
             User-Agent, Referer, Accept, Accept-Language, Host
 
-    Tech employed on the server side (including static/dynamic pages), types of req. params employed, use of SSL, interaction with databases (interaction with email systems, and other backend components.)
+    Tech employed on the server side (including static/dynamic pages), types of req. employed, use of SSL, interaction with databases (interaction with email systems, and other backend components.)
 
 
       

@@ -247,7 +247,26 @@ Finding hidden content
 
           Monitor all responses received to ID anything that might indicate that the added param has an effect on the apps processing.
 
+  Uncommon Params
+    Some parameters may not come in the simple name=value format.  If this is the case, you need to change your tools to account for this fact
 
+      Exs:
+
+        /dir/file;foo=bar&foo2=bar2
+
+        /dir/file?foo=bar$foo2=bar2
+
+        /dir/file/foo%3dbar%26foo2%3dbar2
+
+        /dir/foo.bar/file
+
+        /dir/foo=bar/file
+
+        /dir/file?param=foo:bar
+
+        /dir/file?data=%3cfoo%3ebar%3c%2ffoo%3e%3cfoo2%3ebar2%3c%2ffoo2%3e
+
+      
 
 
 

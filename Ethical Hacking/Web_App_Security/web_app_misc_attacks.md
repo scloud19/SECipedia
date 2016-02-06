@@ -1,3 +1,47 @@
+HTTP Headers
+  Referer header
+    Some apps perform additional processing on the Referer header.  
+      
+      Ex: an application may detect that a user has arrived via a search engine and seek to provide a customized response tailored to the user's query.
+        For SEO, some applications will try to add content such as HTML keywords to the page (which are created through a user's search term in the referer header).  
+          Thus, they would be open to injection risks.
+
+  User-Agent header
+    By inspecting this header, some applications serve different content (mobile device, etc.)
+
+    Besides potential injection risks, this header allows you to potentially access a simpler interface (mobile) that could allow for different attacks (and interfaces such as mobile.. whos code has gone through less security testing)
+
+      Tools
+        Burp Intruder
+          Contains a built-in payload list which contains a large number of user agent strings.
+            Leverage this and inspect the results to see if a different user interface is being presented.
+
+
+  X-Forwarded-For request header
+    DEF: A common method for IDing the originating IP address of a client connecting to a web server through an HTTP proxy/load balancer
+
+    Usually, the IP address of the client's network connection is available to the server via an API.
+      However, sometimes this isn't feasible if the application resides behind a load balancer or proxy.
+        In this case, an application may use the IP address specified in the X-Forwarded-For request header (if it's present)
+          Some developers may then mistakenly assume that the IP address value is untainted and process it in dangerous ways.
+            This opens up SQLi and XSS, etc.
+
+
+
+
+
+Out-of-Band Channel
+  A class of entry points for user input.
+  These types of entry points are harder to discover, and simply watching the HTTP traffic might not show them.
+    Usually, finding these requires an understanding of the wider context of the functionality that the application implements.
+
+  Exs:
+    A web main app that processes/renders e-main messages via SMTP
+
+    A publishing app that contains a function to retrieve content via HTTP from another server
+
+    Any kind of app that provides an API interface for use by non-browser user agents (ex: cell phone apps, etc), if the data processed via this interface is shared with the primary web app.
+
 Enumeration
   When enumerating, make sure that you have software that specifically enumerates the web server (ex: phpmyadmin routes, etc.) AS well as application level enumeration (/admin routes).  You want to test both layers, so make sure that your tool does both.
     Remember, in certain enumeration apps, they can be configured using an IP or domain (for the target).

@@ -1,4 +1,7 @@
 Good resources
+  Web server fingerprinting
+    Httprecon
+
   Vulnerability Scanning
     Netsparker
       Also do spidering
