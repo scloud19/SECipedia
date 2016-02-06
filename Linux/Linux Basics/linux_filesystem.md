@@ -1,4 +1,8 @@
  Linux File System
+    File system layout
+        Look at disk_structure.md
+        
+
     Compression
         bzip2
             *.bz2 files

@@ -28,6 +28,18 @@ udev system
 
     The kernel can send notifications to udevd upon detecting a new device on the system
 
+    creates symbolic links in /dev to further identify devices
+      ex: /dev/disk/by-id
+        Each attached disk has one or more entries
+
+        In this folder, udevd names the links by
+          interface type, then by manufacturer and model information, serial number, and partition (if applicable)
+
+    How does it work?
+      1) The kernel sends udevd a notification event called a uevent
+        This occurs through an internal network link
+      2) udevd will then load all of the attributes in the uevent
+      3) udevd parses its rules, and it takes actions (or sets more attributes based on those rules)
 
 devtmpfs
   Developed in response to some of udev's shortcomings
@@ -35,7 +47,7 @@ devtmpfs
   Here, the kernel creates device files as necessary, but it also notifies udevd that a new device is available.
     Upon receiving this signal, udevd doesn't create the device files, but it does perform the device initialization and process notification.
 
-  creates sym
+  udevd
 
 
 
