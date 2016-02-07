@@ -128,9 +128,36 @@ Apache Configs Overview
 
       </VirtualHost>
 
-      
-      FOR TUTORIAL SERIES (IM CURRENTLY AT HERE) :)
-    Multi-Process Settings (CAN I BLEND WITH WITH DOS?)
+    Threading Review
+      Apache has certain modules that help mitigate DoS attacks
+        This modules utilize threading to help
+
+  
+    Multi-Process Modules (MPMs)
+      Responsible for binding to network ports on the machine, accepting requests, and dispatching sub-processes to handle the requests.
+        Can only utilize one module for this purpose
+
+      Types of MPMs
+        Threaded Modules
+          Utilize threading
+
+        Non-threaded modules
+
+      Are "swappable" so the webmaster can optimize the server based on usage needs
+        If the website needs a large degree of scalability
+          Choose the a
+
+      Modules available
+        (Can only use one)
+
+        Work
+
+
+      Very important for DoS mitigation
+
+
+
+
       To improve latency, apache maintains a pool of "spare" server processes.  Apache will spawn new processes if things get busy, and kill processes off if server load diminishes.
 
 
