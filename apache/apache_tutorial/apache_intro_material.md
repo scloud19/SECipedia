@@ -129,8 +129,29 @@ Apache Configs Overview
       </VirtualHost>
 
     Threading Review
-      Apache has certain modules that help mitigate DoS attacks
-        This modules utilize threading to help
+      Apache has certain modules that can more efficiently utilize the CPU and thus, can help mitigate DoS attacks
+      
+      These modules utilize threading which the operating system's scheduler controls
+
+      What is a scheduler?
+        Spoke about this in Linux Architecture series (kernel's process scheduler)
+
+        Nutshell:
+          (Assuming a single core machine on Linux)
+
+          You have multiple programs (aka processes) running on your computer
+          Only one process can utilize the processor at a time
+          The Linux kernel utilizes an algorithm to pick which process should utilize the 
+
+
+      What is a thread?
+        Threads are short for "threads of execution"
+
+        A thread is the smallest sequence of programmed instructions that can be managed independently by a scheduler
+
+
+
+
 
   
     Multi-Process Modules (MPMs)
