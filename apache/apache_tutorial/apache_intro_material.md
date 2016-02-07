@@ -131,7 +131,11 @@ Apache Configs Overview
     Threading Review
       Apache has certain modules that can more efficiently utilize the CPU and thus, can help mitigate DoS attacks
       
-      These modules utilize threading which the operating system's scheduler controls
+      These modules utilize multi-threading which the operating system's scheduler controls
+
+      Think of multi-threading as a operating systems "load balancer"
+        Understanding the mechanics of threading is VERY important in your securing journey, as many attacks aim to crash a system by overwhelming its resources.
+          By making sure that your code is compatible with multi-threading (ex: leveraging Java's Thread objects) AND making sure that your server software utilizes multi-threading, you can potentially subvert a lot of attacks.
 
       What is a scheduler?
         Spoke about this in Linux Architecture series (kernel's process scheduler)
@@ -140,8 +144,31 @@ Apache Configs Overview
           (Assuming a single core machine on Linux)
 
           You have multiple programs (aka processes) running on your computer
-          Only one process can utilize the processor at a time
-          The Linux kernel utilizes an algorithm to pick which process should utilize the 
+            (Only one process can utilize the processor at a time)
+          The kernel utilizes an algorithm to pick which process should utilize the processor
+            Inside the now active process, the scheduler can then activate a unique thread to run on the processor
+
+            (Think of a process as a "container" of threads)
+
+            If multi-threading is enabled multi_threading.png occurs
+              A: Contrast to single threading
+
+              Note that type of execution is called "concurrent execution" not "parallel execution"
+                Parallel execution occurs when multiple threads are running at the same instant.  (Thus, you'd need a mult-core system.)
+
+        Threads vs processes
+          Processes are generally independent of eachother; whereas threads are subsets of a process
+
+          Memory
+            Processes carry much more state information than threads.
+              The threads inside a process share the process' state (the value of its variables at any given moment)
+
+            Processes have separate memory address spaces (in RAM), where threads of a process share their address space
+
+          Processes can only interact
+
+
+
 
 
       What is a thread?
