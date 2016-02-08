@@ -1,3 +1,23 @@
+
+
+
+Strategic Areas of Attack
+  Aka: Where do I get the biggest bang for my buck?
+
+  If an app is using a well-known framework that prevents XSS, SQL injection, etc. an attacker shouldn't attack these portions.  They should look for areas that have been "added on" and maybe aren't handled by the general security framework.
+
+  "Added on" areas
+    Can be found by
+      Differences in GUI appearance
+      Param naming conventions
+      Comments in the source code
+      Differences in navigation mechanisms
+
+      Look for functionality that is likely to be added "later"
+        CAPTCHA controls
+        Usage tracking
+        Third-party code
+
 Dissecting Requests
   
   Ex1
@@ -56,6 +76,22 @@ Dissecting Requests
 
 
 Extrapolating App Behavior
+  Ex: You find a potential SQL injection vulnerability but you don't have the ability to see how the input is sanitized, etc.
+    Look for a portion of the application that echos back user input.  As input sensitization (and other items) are often global in scope, there's a high probability that code is being reused.
+      Given this echoed output: try different encodings and strings to see what happens.
+
+  Ex: You are given a obfuscated cookie and need to find what it means?
+    Some apps use custom obfuscation schemes (when storing data on the client) which can be very difficult to decipher.
+
+    Although, there may be situations where a user can submit an obfuscated string that gets "reversed" to the original.
+      Ex: An error message may include the deobfuscated data that led to the error.
+        Thus you could reverse engineer the obfuscation scheme
+
+
+  Ex: Error handling is often handled inconsistently throughout the app.
+    Some areas might handle errors gracefully, while others simply crash and return verbose debugging to the user
+      Utilize the errors in certain parts of the app to deduce components that can't be readily "seen" by the areas that handle errors gracefully.
+
 
 IDing Server-Side Technologies
   Remember, items such as the Server header, etc. can be falsified by the sysadmin.
@@ -192,5 +228,12 @@ Analyzing the Application
 
     Tech employed on the server side (including static/dynamic pages), types of req. employed, use of SSL, interaction with databases (interaction with email systems, and other backend components.)
 
+Mapping the surface for Attack
+  aka "What vulnerabilities should I look for at every level of the app?"
 
-      
+  Client-side validation - Checks may not be on the server
+  Database interaction - SQLi
+  File interaction (uploading/downloading) - Path traversal vulnerabilities, persistent XSS
+    
+
+
