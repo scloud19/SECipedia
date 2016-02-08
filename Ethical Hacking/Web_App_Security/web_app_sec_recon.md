@@ -231,9 +231,47 @@ Analyzing the Application
 Mapping the surface for Attack
   aka "What vulnerabilities should I look for at every level of the app?"
 
-  Client-side validation - Checks may not be on the server
-  Database interaction - SQLi
-  File interaction (uploading/downloading) - Path traversal vulnerabilities, persistent XSS
-    
+  Client-side validation
+    Checks may not be on the server
+  Database interaction
+    SQLi
+  File interaction (uploading/downloading)
+    Path traversal vulnerabilities, persistent XSS
+  Display of user-supplied data
+    XSS
+  Dynamic redirects
+    Redirection and header injection attacks
+  Social networking features
+    username enumeration, stored XSS
+  login
+    Username enumeration, weak passwords, brute forcing
+  Multistage login
+    Logic Flaws
+  Session state
+    predictable tokens, insecure handling of tokens
+  access controls
+    horizontal/vertical privilege escalation
+  user impersonation functions
+    privilege escalation
+  Using cleartext communications
+    Session hijacking, capture of credentials, etc.
+  Off-site links
+    Leakage of query string params in the Referer header
+  Interfaces to external systems
+    Shortcuts in the handling of sessions/access controls
+  Error messages
+    Information leakage
+  E-mail interaction
+    Email/command injection
+  Native code components/interaction
+    Buffer overflows
+  Use of third-party app components
+    Known vulnerabilities
+  Known web server software
+    Common config weakness, known software bugs
+
+
+
+
 
 
