@@ -1,5 +1,63 @@
+Dissecting Requests
+  
+  Ex1
+  https://domain.com/calendar.jsp?name=new%20applicants&isExpired=0&startDate=22%2F09%2F2010&endDate=22%2F03%2F2011&OrderBy=name
+
+    Items to note
+      .jsp - Java server pages
+      OrderBy - maybe an ORDER BY clause of a SQL query
+      isExpired - BOOLEAN.  Maybe an access control vulnerability? This could allow a user to inspect expired content
+
+  Ex2
+  https://domain.com/workbench.aspx?template=NewBranch.tpl&loc=/default&ver=2.31&edit=false
+
+    Items to note
+      .aspx - This is a ASP.NET app
+      template - Probably used to specify a filename (file ext= .tpl)
+      loc - directory name
+      edit - obvious
+
+
+      Maybe this route is vulnerable to path traversal attacks?
+
+  Ex3 (Request used to submit a question to app admins)
+
+    POST /feedback.php HTTP/1.1
+    Host: wahh-app.comContent-Length: 389
+
+    from=user@domain.com&to=helpdesk@domain.com&subject=Problem+logging+in&message=Please+help...
+
+    Items to note
+      .php
+
+      Looks like the server is interfacing with an email server, thus could be vulnerable to e-mail header injection
+
+
+    Ex4
+      http://eis/pub/media/117/view
+
+        Items to note
+          Potential possibilities
+            source 117 is probably in the collection "media"
+              Change media to "users", "pages", etc.
+
+            App is performing an action on this resourve that is equiv to 'view'
+              Potentially change to - edit or add
+                add
+                  But add would likely fail because a resouce of 117 already exists
+                    Try to add 118 or a very high number
+
+
+              Look into the structure of other routes to confirm if these assumptions are true (or mess with the params)
+
+        is probably equiv to
+
+          http://eis/manager?schema=pub&type=media&id=117&action=view
+
+
+Extrapolating App Behavior
+
 IDing Server-Side Technologies
-CURRENTLY_AT
   Remember, items such as the Server header, etc. can be falsified by the sysadmin.
 
   Banner Grabbing
