@@ -32,3 +32,9 @@ Important Headers
       This header is used to prevent the page from being rendered in an iframe.
         This header is utilized to help mitigate UI redressing attacks (Ex: Click Jacking)
 
+  Referer Header
+    Used to indicate the URL of the page from which the current request originated.
+      This can occur when a user
+        clicks a hyperlink
+        submits a form
+        the page referenced other resources such as images
