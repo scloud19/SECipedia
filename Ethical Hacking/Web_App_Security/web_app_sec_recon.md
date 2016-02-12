@@ -1,3 +1,19 @@
+EH - Ethical Hacking
+
+In EH in general, the most effective approach is to use manual techniques that are supplemented by controlled automation.
+
+In summation
+  It is tempting to try to find bugs "off the bat", but dont do this.  You need to do your recon
+
+  When doing your recon. Leverage:
+    Manual browsing and user-directed spidering to enumerate the apps visible content and functionality
+
+     Brute force (combined with human logic) to discover as much hidden content as possible.
+
+     Assessment of the app's attack surface 
+       An analysis of the app to ID its key functionality, behavior, security mechanisms, and technology.
+
+
 
 
 

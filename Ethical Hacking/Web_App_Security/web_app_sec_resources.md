@@ -1,4 +1,8 @@
 Good resources
+  vulnerability databases
+    osvdb.org
+      Check any third-party code against this db for vulnerabilities
+
   Web server fingerprinting
     Httprecon
 

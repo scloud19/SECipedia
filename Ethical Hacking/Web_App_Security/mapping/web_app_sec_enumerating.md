@@ -164,7 +164,12 @@ Finding hidden content
       "Juicy" routes
         /admin
         /auth
-
+        /home
+          horizontal privilege escalation attack
+            home usually requires you to auth to access.  As such, it could be a good target for trying to access other users content at the same privilege level
+        /icon /images
+          Usually hold static content
+          May be worthwhile to brute-force for icon names that could indicate third-party software utilized
       Technique
         Lets say you find content via burp intruder (acct registration page) that you don't find through spidering.  It would be wise to try to sign up for an account (as this might be "hidden" functionality).
 
@@ -224,6 +229,16 @@ Finding hidden content
             Use Burp Intruder (with a wordlist of common filenames)Make automated requests for common filenames/directories within each directory/path known to exist within the app.
 
   Hidden Parameters
+    Wildcarding
+      When testing params, try items like...
+        userId=all
+        userId=*
+
+    /
+      When looking at params always try to add a slash to try to exploit a directory traversal.  Be on the lookout for params like
+        Ex: pageID=/home&display=none
+          the slash could mean that an underlying file system resource is being leveraged, and thus could be a potential vulnerability
+
     debug=true  
       Can sometimes be added to the end of the query string of any URL in an app.
       This can sometimes turn off certain input validation checks, etc.
@@ -266,9 +281,14 @@ Finding hidden content
 
         /dir/file?data=%3cfoo%3ebar%3c%2ffoo%3e%3cfoo2%3ebar2%3c%2ffoo2%3e
 
+  Misc "juicy" params
+    login=true
+      Login bypass
+
+      Try to add this param and see if anything occurs
+
+      Or, if you see this, try to exploit it.
       
-
-
 
 
 
