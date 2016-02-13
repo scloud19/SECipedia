@@ -25,6 +25,10 @@ Opaque Data
   Usually, you'll see this as a part of the apps session-handling mechanism
     Ex: Session tokens sent in cookies, anti-CSRF tokens in hidden fields, one time URL tokens for accessing app resources.
 
+    Or, this helps with tracking the state of the view (offloads processing from the server)
+      This enables the server to preserve elements within the UI across successive requests without needing to maintain all of the relevant state info server side 
+      Ex: ASP.NET viewstate
+
   Ex: <input type=”hidden” name=”pricing_token” value=”E76D213D291B8F216D694A34383150265C989229”>
 
   Once you see this type of data, you know that something is juicy (as something is trying to be hidden.)
@@ -52,5 +56,23 @@ Opaque Data
 
       This is a hidden field that is created by default on all ASP.NET apps
 
-      Contains ser      
+      Contains serialized information about the state of the current page. 
 
+      Developers use this to store arbitrary information across successive requests.
+        Ex: Can also set pricing information
+          <form method=”post” action=”Shop.aspx?prod=3”>
+            <input type=”hidden” name=”__VIEWSTATE” id=”__VIEWSTATE” value=”/wEPDwULLTE1ODcxNjkwNjIPFgIeBXByaWNlBQMzOTlkZA==” />
+            Product: HTC Avalanche <br/>
+            Price: 399 <br/>
+            Quantity: <input type=”text” name=”quantity”> (Maximum quantity is 50) <br/>
+            <input type=”submit” value=”Buy”>
+          </form>
+
+            Ex: POST body
+              __VIEWSTATE=%2FwEPDwULLTE1ODcxNjkwNjIPFgIeBXByaWNlBQMzOTlkZA%3D%3D&quantity=1
+
+              ViewState param is Base-64 string that can be decoded
+                See de
+
+
+      The viewState is simply a 
