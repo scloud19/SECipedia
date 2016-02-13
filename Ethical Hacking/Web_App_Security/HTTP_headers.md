@@ -38,3 +38,4 @@ Important Headers
         clicks a hyperlink
         submits a form
         the page referenced other resources such as images
+          If you're an image provider, you might have a lot of juicy information in the form of URL params (session tokens, etc.)

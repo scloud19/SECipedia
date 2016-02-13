@@ -1,3 +1,9 @@
+Javascript
+  Exploits/Quirks could exist on the client and the server (Node, etc.)
+  
+  Many devs use parseInt/parseFloat to parse input.
+  When an individual places in a comma, only the numbers before the comma are returned.
+
 HTTP Headers
   Referer header
     Some apps perform additional processing on the Referer header.  
@@ -127,6 +133,7 @@ HTTP Responses
 
 
 HTTP Headers
+  In general, developers assume that the HTTP headers are more "tamper proof" and thus they might not put sanitization mechanisms on these inputs.
   Expires, Pragma headers
     Are leveraged to tell the browser to cache the response.  If you're doing an attack, you can always instruct the clients to cache the contents so when the website changes it's code, it doesn't really matter (unless the cache is flushed).
 
