@@ -39,3 +39,38 @@ Important Headers
         submits a form
         the page referenced other resources such as images
           If you're an image provider, you might have a lot of juicy information in the form of URL params (session tokens, etc.)
+
+
+When you attempt to modify server responses coming to the client, you might get this HTTP message in your proxy
+
+  HTTP/1.1 304 Not Modified
+  Date: Wed, 6 Jul 2011 22:40:20 GMT
+  Etag: “6c7-5fcc0900”
+  Expires: Thu, 7 Jul 2011 00:40:20 GMT
+  Cache-Control: max-age=7200
+
+  Thus, there isn't any "payload" portion of the message to adulterate.
+
+  The aforementioned response occurs because the browser already has a cached copy of the resource that it requested.
+
+  If the browser requests a resource (that was previously cached) it typically adds two headers to the request:
+    If-Modified-Since
+    -If-None-Match
+
+  Ex:
+    GET /scripts/validate.js HTTP/1.1
+    Host: wahh-app.com
+    If-Modified-Since: Sat, 7 Jul 2011 19:48:20 GMT
+      * Tells the server when the browser last updated its cached copy
+
+    If-None-Match: “6c7-5fcc0900”
+      * "6c7.." This is called the Etag string, which the server provided with that copy of the resource.
+        You can think of it as a tracking number for each cacheable resource.  Each time the resource is modified, this number is updated.
+
+      If the server possesses a newer version of the resource than the date specified in the If-Modified-Since header OR if the etag of the current version is different than the one specified in the If-None-Match header, the server will respond with the requested resource.  Otherwise, it will return a 304 which tells the browser (use your cached copy)
+
+
+    If you need to get around a 304 so you can modify the payload returned from the server
+      Intercept the request and remove to 2 aforementioned headers
+        Burp contains an option to strip these headers from every request
+

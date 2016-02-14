@@ -86,8 +86,15 @@ Opaque Data
               __VIEWSTATE=%2FwEPDwULLTE1ODcxNjkwNjIPFgIeBXByaWNlBQMzOTlkZA%3D%3D&quantity=1
 
               ViewState param is Base-64 string that can be decoded
-                See de
+                See decoding.md
 
 
 Form Data
   Scan the forms an see if the developers are placing any validations/limits on user input.  If so, they might be assuming that the input is safe on the server.
+
+  Script Based Form Validation
+    For custom validation solutions (outside of HTML 5 form validations), you can see something like
+      <form method=”post” action=”Shop.aspx?prod=2” onsubmit=”return validateForm(this)”>
+
+      Very simple to get around this
+        Enter a normal value and then intercept the request
