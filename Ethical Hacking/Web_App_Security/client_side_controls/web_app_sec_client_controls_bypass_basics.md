@@ -54,6 +54,20 @@ Opaque Data
     ASP.NET ViewState
       A common mechanism for transmitting opaque data via the client is the ASP.NET viewstate
 
+      By default, ASP.NET protects the ViewState from adulteration by adding a keyed hash to it (known as MAC protection)
+        Note: This can occur on a per-page basis, so some pages might not be protected.
+          If you are using Burp Scanner (with passive scanning enabled), Burp automatically reports any pages that aren't MAC protected.
+        Burp has a viewstate parser that indicates whether the viewstate is MAC protected.
+          If it isn't, there is an editor in Burp that you can change the values.
+            Try modifying a value (without changing the overall structure), and see if an error message results.
+
+          If it is protected, you can still decipher the viewstate in burp to see if there is any sensitive data.
+        MACs are basically cryptographic checksums. They are used to detect when an attacker has tampered with a message. Therefore they require a secret key (to be withheld from an attacker) and should be as fast as possible (to reduce overhead).
+
+        Remember, this doesn't prevent replay attacks.
+
+        Although, some applications disable this default protection (so you can modify the viewstate's value)
+
       This is a hidden field that is created by default on all ASP.NET apps
 
       Contains serialized information about the state of the current page. 
@@ -75,4 +89,5 @@ Opaque Data
                 See de
 
 
-      The viewState is simply a 
+Form Data
+  Scan the forms an see if the developers are placing any validations/limits on user input.  If so, they might be assuming that the input is safe on the server.

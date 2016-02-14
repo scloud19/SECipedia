@@ -1,6 +1,6 @@
 Base64
   Block based format in which every 4 bytes of encoded data, translates into 3 bytes of decoded data.
-    If your attempts to decode are weird, simply start from four adjacent offsets into the encoded string.
+    If your attempts to decode are weird, simply start from four adjacent offsets into the encoded string.i
 
 
   A common mistake is to begin decoding at the wrong position within the string.
