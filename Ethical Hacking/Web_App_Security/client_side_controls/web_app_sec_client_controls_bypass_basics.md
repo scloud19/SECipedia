@@ -1,3 +1,8 @@
+Browser Extensions
+  Outside of HTML forms, the other main method of validating/submitting user data.
+
+  See browser_extensions.md
+
 Traditional Implementations
   Applications passing data to the client in a form that the end user can't directly see/modify
     The expectation is that this data will be sent back to the server in a subsequent request.
@@ -91,10 +96,32 @@ Opaque Data
 
 Form Data
   Scan the forms an see if the developers are placing any validations/limits on user input.  If so, they might be assuming that the input is safe on the server.
+    If you are trying to inject malicious input into multiple fields
+      Only try 1 malicious input at a time (while the rest are normal).  On the server, sometimes it will stop processing on the first condition that it feels is "abnormal".  
+
 
   Script Based Form Validation
     For custom validation solutions (outside of HTML 5 form validations), you can see something like
       <form method=”post” action=”Shop.aspx?prod=2” onsubmit=”return validateForm(this)”>
 
       Very simple to get around this
-        Enter a normal value and then intercept the request
+        The most elegant way
+          Enter a normal value and then intercept the request and then change the value.
+
+  Disabled inputs
+    <input disabled='true'>
+
+    Aren't submitted as a parameter in the form.
+      Thus, to find these, you need to look through the applications source.
+
+      Burps HTML modification feature
+        Will automatically re-enable any disabled fields within the app.
+
+    Sometimes this means that the input was used for testing, etc.  If you see a disabled input, try submitting that parameter and see if the server still accepts it.
+
+    Disabled Submits
+      Submit elements are flagged as disabled so that buttons appear as "greyed out" in contexts when the relevant action is unavailable.
+
+      Always try to submit the names of these elements to see whether the app performs a server-side check before attempting to carry out the requested action
+
+
