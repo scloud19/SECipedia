@@ -1,4 +1,10 @@
  Linux File System
+    Partitioning vs File System manipulation
+        Remember, there is a big difference.
+        Partitioning
+            The boundaries of the disk
+        File System
+            A much more involved data system.
     File system layout
         Look at disk_structure.md
 
@@ -18,6 +24,29 @@
 
         Partition Table
             A small portion of the disk where the partitions are defined.
+
+            There are many kinds of partition tables.
+                Master Boot Record (MBR)
+                    Houses the traditional MBR
+
+                Globally Unique Identifier Partition Table (GPT)
+                    A newer standard
+
+            Linux partitioning tools
+                parted
+                    View more about parted below in this file
+                    Text based tool that supports both MBR and GPT
+
+                    While this does have the functionality to create and resize filesystems: it shouldn't be used for file system manipulation because it can be confusing (as there are large differences between the two).
+
+                gparted
+                    A GUI for parted
+                fdisk
+                    The "standard"
+                    Doesn't support GPT
+                gdisk
+                    A version of fdisk that supports GPT but not MBR
+
 
         The next layer after the partition is the filesystem
 
@@ -259,3 +288,13 @@
                     ~root = /root
                     ~ftp = /srv/ftp
                         Services often have their own accounts
+
+Partitioning Tools of Note
+    parted
+        -l
+            View the systems partition table
+            Output
+                partition table: msdos
+                    Traditional MkinBR partition table
+                    Names don't exist under this scheme
+                
