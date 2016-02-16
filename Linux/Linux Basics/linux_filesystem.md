@@ -5,6 +5,35 @@
             The boundaries of the disk
         File System
             A much more involved data system.
+    
+    Filesystem
+        What you see when you run ls, cd, etc.
+        A form of database
+        Provides the structure to transform a simple block device into a hierarchy of files
+
+        SCSI subsystem
+            Standardizes the communication between different device types and kernel control commands
+
+        Dont just contain just normal "files"
+            /sys and /proc
+                System interfaces
+
+        Where traditionally implemented in the kernel
+            File System in User Space (FUSE)
+                A more recent revelation that allows user-space file systems.
+
+        Virtual File System (VFS)
+            An abstraction layer that allows Linux to support a huge number of file systems.
+
+            Makes sure that all FS implementations support a standard interface so that user-space apps can access files and directories in the same manner.
+
+        Filesystem Types
+
+
+
+
+
+
 
     File system layout
         Look at disk_structure.md
@@ -334,3 +363,23 @@ Partitioning Tools/processes of Note
                             These can be used like any other partitions in the operating system
 
 
+Misc Notes on File Systems/Disks
+    SSDs
+        Are radically different from spinning disks in terms of their access characteristics.
+            Ex: For SSDs, random access is not a problem because there's no head to sweep across the platter (aka the "record" looking part)
+
+        Data reading process
+            Data is read in chunks (typically 4096 bytes at a time)
+                So, the read must begin at a multiple of that size
+
+
+
+        Factors effecting performance
+            Partition alignment
+                If your partition (and its data) do not lie on a 4096 boundary
+                    You may have to do two reads instead of one for common operations
+                        Ex: reading contents of a directory
+
+                parted includes functionality to put newly created partitions at the proper offsets
+
+    
