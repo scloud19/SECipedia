@@ -23,7 +23,17 @@
             From a sysadmin perspective, it can be prudent to make a partition just so users don't take up too much space and crash the system
 
         Partition Table
+            Changing the partition tables
+                Makes it difficult to recover any data on partitions that you delete
+                    This is because it changes the initial point of reference for a file system
+                    Thus, backup if you're partitioning a device with critical data
+
+                Make sure that no partitions on your target disk are currently in use
+                    This is a concern because most distros mount any detected FS
+
             A small portion of the disk where the partitions are defined.
+
+
 
             There are many kinds of partition tables.
                 Master Boot Record (MBR)
@@ -291,10 +301,24 @@
 
 Partitioning Tools of Note
     parted
+        When partitioning, be careful.  As you issue the commands, parted makes changes in real time.  You don't get a chance to review the changes.
+
+        Modifies the partitions entirely in user space
+            There is no need to provide kernel support for rewriting a partition table because the user space can read and modify all of a block device.
         -l
             View the systems partition table
             Output
+
                 partition table: msdos
-                    Traditional MkinBR partition table
+                    Traditional MBR partition table
                     Names don't exist under this scheme
-                
+                        primary partition
+                            Normal subdivision of a disk
+                            There are a limit of 4 primary partitions
+                        extended partition
+                            If you want more than 4 partitions (you exhausted all of the primary partitions), you can designate one partition as a extended partition
+                        logical partitions
+                            Are used to extend the "extended partition"
+                            These can be used like any other partitions in the operating system
+
+
