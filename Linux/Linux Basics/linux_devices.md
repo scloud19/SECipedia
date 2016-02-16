@@ -23,6 +23,16 @@ Finding the name of a device
 udev system
   Enbables user-space programs the ability to automatically configure and use new devices.
 
+  Think of udev as a device manager for the Linux kernel
+
+  udevadm
+    Allows a lot of admin functionality
+    Including, watching the kernel for udev related changes, etc.
+
+    Ex:
+      udevadm monitor --kernel
+        If partitioning, this will show the old partition devices being removes and the new ones being added
+
   udevd
     User space daemon
 

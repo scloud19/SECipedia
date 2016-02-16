@@ -5,6 +5,7 @@
             The boundaries of the disk
         File System
             A much more involved data system.
+
     File system layout
         Look at disk_structure.md
 
@@ -299,12 +300,23 @@
                     ~ftp = /srv/ftp
                         Services often have their own accounts
 
-Partitioning Tools of Note
+Partitioning Tools/processes of Note
+    To view partition changes
+        udevadm monitor --kernel
+    To see partitions in general
+        /proc/partitions
+        /sys/block/device
+            altered partition system interfaces
+        /dev
+            For altered partition devices
+
     parted
         When partitioning, be careful.  As you issue the commands, parted makes changes in real time.  You don't get a chance to review the changes.
 
         Modifies the partitions entirely in user space
             There is no need to provide kernel support for rewriting a partition table because the user space can read and modify all of a block device.
+
+            Although, at the end, it does signal the kernel when individual partitions are altered, so the kernel can keep track.
         -l
             View the systems partition table
             Output
