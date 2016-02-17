@@ -1,3 +1,6 @@
+Basics
+  As browser exts can make NON HTTP requests (that aren't seen in a typical proxy.. aka Burp), use a network sniffing tool to make sure that no other protocols are being leveraged.
+
 Exs of attacks
   Online casino exts
 
@@ -49,6 +52,14 @@ Popular browser extension technologies
 
 Problems Intercepting Traffic from Browser Exts
   Symptoms
+    Browser Ext is communicating in a non HTTP-protocol
+      This can't be handled using an intercepting proxy
+
+      Solution
+        Modify the network traffic by using a network sniffer or function-hooking tool
+          Ex: Echo Mirage
+            Can inject into a process and intercept calls to socket APIs
+              This allows you to view/modify data before it's sent over the network.
     Requests made by browser exts are not being intercepted by the proxy (or are failing)
       This is usually due to issues with the exts handling of HTTP proxies and/or SSL.
 
@@ -68,12 +79,14 @@ Problems Intercepting Traffic from Browser Exts
             The ext may still reject it.
 
               Reasons for rejection
-                The ext does not pick up the browser's config for trusting certain certs
+                1) The ext does not pick up the browser's config for trusting certain certs
 
-                The ext itself specifically blocks untrusted certs
+                2) The ext itself specifically blocks untrusted certs
+
 
               Circumvention 
-                Configuring the proxy to use a master CA certificate
-                  These certs are used to sign valid per-host certs for each site you visit.
+                1,2
+                  Configuring the proxy to use a master CA certificate
+                    These certs are used to sign valid per-host certs for each site you visit.
 
-                  Make sure to install this CA cert in your CPU's trusted cert store.
+                    Make sure to install this CA cert in your CPU's trusted cert store.
