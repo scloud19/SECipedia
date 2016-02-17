@@ -27,7 +27,36 @@
 
             Makes sure that all FS implementations support a standard interface so that user-space apps can access files and directories in the same manner.
 
-        Filesystem Types
+        Common Filesystem Types
+            (the filesystem in Linux is in the parens)
+
+            Extended filesystem (ext*)
+                (ext4)
+                    Current iteration of a line of filesystems native to Linux
+
+                Backwards compatibility in ext series
+                    If (ext2), (ext3), can mount:
+                        As each other
+                        As (ex4)
+                    If (ex4), can't mount:
+                        As (ext2), (ext3)
+            ISO 9660 (iso9660)
+                FS used in CD-Roms
+
+            FAT filesystems (msdos, vfat, umsdos)
+                Microsoft systems
+
+                msdos
+                    Supports the very old monocase variety of MS-DOS systems
+
+                vfat
+                    Used in most modern windows filesystems
+                    Use this to get full access from Linux
+                HFS+ (hfplus)
+                    Mac systems
+
+
+
 
 
 
