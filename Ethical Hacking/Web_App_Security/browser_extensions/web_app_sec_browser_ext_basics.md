@@ -46,3 +46,34 @@ Popular browser extension technologies
 
     These apps can be written in any .NET-compliant language from C# to Python
       Most are written in C#
+
+Problems Intercepting Traffic from Browser Exts
+  Symptoms
+    Requests made by browser exts are not being intercepted by the proxy (or are failing)
+      This is usually due to issues with the exts handling of HTTP proxies and/or SSL.
+
+      Solution
+        Careful configuration of Burp
+
+      Pot. Subproblems
+        Ext may not honor the proxy config you have created
+          This is because exts can issue their own HTTP requests (outside of browser APIs or ext framework)
+
+          Solution
+            Modify your CPUs host file to achieve the interception
+            Configure your proxy to support invisible proxying and automatic redirection to the correct destination address.
+
+        Ext isn't accepting the SSL cert being presented by your intercepting proxy
+          If your proxy is using a generic self-signed cert (and you've configured the browser to accept it)
+            The ext may still reject it.
+
+              Reasons for rejection
+                The ext does not pick up the browser's config for trusting certain certs
+
+                The ext itself specifically blocks untrusted certs
+
+              Circumvention 
+                Configuring the proxy to use a master CA certificate
+                  These certs are used to sign valid per-host certs for each site you visit.
+
+                  Make sure to install this CA cert in your CPU's trusted cert store.

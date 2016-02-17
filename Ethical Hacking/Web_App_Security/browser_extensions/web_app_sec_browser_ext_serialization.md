@@ -22,3 +22,15 @@ Flash Serialization
 
 Silverlight Serialization
   Silverlight apps make use of the Windows Communication Foundation remoting framework that is built into .NET
+
+  Microsofts .NET Binary Format for Soap
+    Silverlight client components using WCF typically use this format.
+
+    IDed by
+      Content-Type: application/soap+msbin1
+
+    Useful plugin for Burp
+      www.gdssecurity.com/l/b/2009/11/19/wcf-binary-soap-plug-in-for-burp/
+
+      
+
