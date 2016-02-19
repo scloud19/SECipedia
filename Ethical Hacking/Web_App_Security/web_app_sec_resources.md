@@ -46,3 +46,21 @@ Good resources
     Burp Suite
       
     OWasp ZAP
+
+  Decompilation Tools
+    Java
+      www.varaneckas.com/jad
+
+    Flash Tools
+      Flash bytecode can be decompiled into ActionScript source code
+        Although, a more fruitful alternative is to disassemble the bytecode into a human-readable form (without actually fully decompiling it)
+
+      Tools:
+        Flasm - www.nowrap.de/flasm
+        Flare - www.nowrap.de/flare
+        SWFScan — www.hp.com/go/swfscan
+          Works for Actionscript 2 and 3
+
+    Silverlight
+      .NET reflector
+        www.red-gate.com/products/dotnet-development/reflector/
