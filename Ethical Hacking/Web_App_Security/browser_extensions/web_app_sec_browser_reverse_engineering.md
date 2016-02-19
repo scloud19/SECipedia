@@ -90,6 +90,13 @@ Reverse Engineering Techniques
 
         References to server-side functionality that wasn't previously IDed
 
+        After reviewing the source, you may see that you can simply adulterate the javascript that interacts with the component (and then achieve your aims in that fashion)
+          ID all of the exts public methods that can be invoked directly from the JS
+            Look at the way in which the params to those methods are handled.
+
+            'Secret methods'
+              Many times, there are more methods than are physically called from the application pages
+
     2) Changing the logic
       Remove validation
       Submit nonstandard data to the server
@@ -97,7 +104,8 @@ Reverse Engineering Techniques
       Directly invoking functionality within the component
 
     3) Recompile
-      You must recompile the adulterated source back into bytecode
+      In most cases, you must recompile the adulterated source back into bytecode
+
       
       Java
         javac
@@ -135,6 +143,11 @@ Reverse Engineering Techniques
               Replace the body with your executable
                 Can use Burp's "Paste from File" context menu option
       5) Executing outside the browser
+          For these attacks, one needs to change the original executable into a standalone program
+            Ex: Java
+              main method
+                Encapsulate the program in this method and you can run the program through the Java CLI
+
         Ex: An ext. validates the user input, obfuscates/encrypts the result, then submits a request to the server.
           In this situation, we'd simply be after the request (or, injecting into it).
             Strip out the validation and create a local version of the extension.
@@ -144,6 +157,26 @@ Reverse Engineering Techniques
             Make a request with the unadulterated extension (in the browser)
 
             Inject your local output into the request
+
+Bytecode Obfuscation
+  As it's very easy to decompile the bytecode, certain developers obfuscate the given source code.
+    
+    obfuscator program functionality.
+
+      These programs can...
+
+        Class, method, variables names
+          Replaced with meaningless identifiers "a", "b", etc.
+
+        replace item names with language specific keywords (ex: new)
+          While this is technically 'illegal', most VMs will execute the code
+            However, the compiler isn't so generous.  When one tries to recompile the source, there will be substantial problems.
+              One most rename all of the illegally named items.
+          Some decompilers have problems with his code
+            Even if it CAN decompile, the source is VERY difficult to read
+          
+
+
 
 
 
