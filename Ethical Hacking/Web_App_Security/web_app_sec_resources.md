@@ -1,4 +1,7 @@
 Good resources
+  Bytecode obfuscators
+    Java
+      Jode
   vulnerability databases
     osvdb.org
       Check any third-party code against this db for vulnerabilities

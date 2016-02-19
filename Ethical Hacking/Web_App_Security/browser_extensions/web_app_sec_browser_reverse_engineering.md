@@ -171,10 +171,40 @@ Bytecode Obfuscation
         replace item names with language specific keywords (ex: new)
           While this is technically 'illegal', most VMs will execute the code
             However, the compiler isn't so generous.  When one tries to recompile the source, there will be substantial problems.
-              One most rename all of the illegally named items.
+              One must rename all of the illegally named items.
           Some decompilers have problems with his code
             Even if it CAN decompile, the source is VERY difficult to read
-          
+
+        Add redundant code that tries to throw you "off"
+
+        Obfuscate the path of execution
+
+
+          Misc other items that are stripped from the bytecode
+            Source filenames and line numbers
+              (Makes stack traces more difficult to follow)
+            local variable names
+              (debug difficulty)
+            inner class information
+              Hinders reflection
+  
+  Dealing with obfuscation
+    See bytecode obfuscators in resources.md
+    Run the obfuscated bytecode through an obfuscator a second time through
+      Choose suitable options
+      This can undo a lot of the previous obfuscation
+
+    You can review a components public methods without fully understanding the source
+      It should be obvious which methods can be invoked from Javascript (and what their signatures are)
+        Test these methods by passing in various inputs
+
+    Class, method, variable obfuscation
+      Leverage the refactoring functionality that's built into many IDEs to help understand the code
+
+      Once you figure out a variables underpinnings, leverage the "replace everywhere" functionality in an editor to make its name logical
+
+
+
 
 
 
