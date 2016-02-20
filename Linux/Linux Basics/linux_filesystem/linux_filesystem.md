@@ -411,4 +411,17 @@ Misc Notes on File Systems/Disks
 
                 parted includes functionality to put newly created partitions at the proper offsets
 
-    
+    Buffering
+        Write Buffering
+            Linux buffers writes to the disk
+                Means that the kernel usually doesn't immediately write changes to FSs when a process requests a change.
+                    Instead, changes are stored in RAM until the kernel can conveniently persist the changes to disk.
+            # umount
+                The kernel automatically flushes all changes to disk
+            # sync
+                Manually flushes the cache to disk
+
+        Read Buffering
+            The kernel has functionality that utilizes RAM to automatically cache blocks read from disk.
+                If a process has to repeatedly access a file, the kernel doesn't have to go to the disk over and over.
+                    It reads from the RAM cache and saves time.
