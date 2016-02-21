@@ -80,7 +80,39 @@ Apache
 
         Apache does have a form based authentication module, but I'd rather use a library that has TONS of extensibility and users (thus more stack overflow answers/blog posts, etc.)  Thus I'd suggest another auth route.  In the future, I will be doing an follow up lecture to look at the pros/cons/differences between the "big players" in web authentication (Oauth, openID, etc.) and the different types of auth schemes out there (kerberos, etc.)
 
+    apachectl
+      Recommended way to run httpd
+        All arguments are automatically passed to httpd
 
+        This sets certain ENV variables that are necessary on some operating systems.
+
+        Will pass through any CLI args
+
+      Ever presents args
+        Simply add them into the ctl script
+
+        You can watch how signals/or other items interact with apache by
+          Ex: tail -f /usr/local/apache2/logs/error_log
+
+        Additional Args: start, restart, stop, graceful
+          Must utilize -k to invoke
+          
+          apachectl -k stop
+            This will send TERM to the parent
+              The parent will immediately attempt to kill off its children.
+
+          apachectl -k graceful
+            Will send SIG USR1 to the parent
+
+            Process
+              Causes the parent process to advise the children to exit after their current request
+                OR to immediately exit if they're not serving anything
+              Parent re-reads its config files and re-opens its log files, as each child dies off the parent replaces it with a child from the new generation of the configuration and the child begins serving new requests immediately.
+
+
+
+
+            Once you have sent 
     Apache Starting Process
       Runs as a daemon that executes continuously in the background to handle requests
 
@@ -90,7 +122,10 @@ Apache
 
       Process
         User invokes httpd
-          Recommended invocation is through the apachectl script
+          apachectl
+            Recommended invocation is through the apachectl script
+
+
         Preliminary activities
           Reads httpd.conf
           Opening log files
@@ -105,4 +140,5 @@ Apache
       Misc
         Start on boot
           /etc/rc.local
-            Add acachectl call
+            Add apachectl call
+            This will start apache as root
