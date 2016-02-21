@@ -1,6 +1,7 @@
-Top ideas
+Core ideas of Modsecurity
   Blend between WAF and IDS
   Allows realtime monitoring, logging, and access control.
+  Apache module
   
 Important usage scenarios
 
@@ -33,5 +34,37 @@ Important usage scenarios
   Out of the box ideas
     An XML web service router
 
+Deployment Options
+  Embedded
+    As it's an Apache module, you can add it to any compatible version of apache that you're using as a web server
 
+    Great option for
+      People who dont want to introduce a new point of failure and want seamless scaling (with additional servers being added)
+      Cases where implementing a separate proxy-based security layer is impractical
+        Exs:
+          Those who already have their architecture laid out and can't change it
+
+          Protecting 100s of web servers
+          
+
+  Reverse proxy
+    Def: Are HTTP routers that stand between web servers and their clients.
+
+    Topology
+      Install a dedicated Apache reverse proxy (with Mod security) between the browsers and your Apache web server
+
+    This solution will get you a "proper" WAF
+      You can leverage this to protect any number of web servers on the same network
+
+      Separate security layer
+        This is preferred by many security professionals
+        Gives you isolation from the systems that you are protecting
+
+      Performance
+        Standalone ModSecurity will have resources dedicated to it
+          You can have more complex rule sets
+
+      CONS
+        New point of failure
+          Need to be addressed with high availability setup of multiple reverse proxies
 
