@@ -68,3 +68,47 @@ Deployment Options
         New point of failure
           Need to be addressed with high availability setup of multiple reverse proxies
 
+Hybrid Nature of ModSecurity
+  Mod Security relies on Apache for some of the work
+    
+    Apache role in ModSecurity (and all other modules)
+      Decrypts SSL
+      
+      Breaks up the inbound connection stream into HTTP requests
+
+      Partially parses HTTP requests
+
+      Invokes ModSecurity
+        Chooses the correct config context via the conf directives
+
+      As a reverse proxy
+        Forwards requests to backend servers (with/without SSL)
+        
+        Partially parses HTTP responses
+
+        De-chunks the response bodies as necessary
+
+Apache Security Considerations
+  Apache does
+    Request line and headers are NUL-terminated
+      Normally, as what Apache doesn't see can't harm any module/app
+        Although, NUL-byte evasion is a way to hide things, and this Apache behavior helps this process.
+
+      Request Header Transformation
+        Apache with combine multiple headers that use the same name
+        Apache will collapse headers than span two+ lines
+
+        May make it difficult to detect subtle signs of evasion
+          In practice, this hasn't been a problem yet
+
+      Quick request handling
+        Sometimes modsecurity is unable to do anything but notice a request in the logging phase
+
+        One ex: Invalid HTTP requests will be rejected by Apache without ModSecurity's input
+
+        CURRENTLY AT
+          https://www.feistyduck.com/library/modsecurity-handbook/online/ch01-introduction.html
+          "NO access to some response headers"
+
+
+
