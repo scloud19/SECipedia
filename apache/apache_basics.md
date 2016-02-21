@@ -81,7 +81,7 @@ Apache
         Apache does have a form based authentication module, but I'd rather use a library that has TONS of extensibility and users (thus more stack overflow answers/blog posts, etc.)  Thus I'd suggest another auth route.  In the future, I will be doing an follow up lecture to look at the pros/cons/differences between the "big players" in web authentication (Oauth, openID, etc.) and the different types of auth schemes out there (kerberos, etc.)
 
 
-    How Apache Starts
+    Apache Starting Process
       Runs as a daemon that executes continuously in the background to handle requests
 
       Privileged port
@@ -90,10 +90,19 @@ Apache
 
       Process
         User invokes httpd
-          Recommended 
+          Recommended invocation is through the apachectl script
         Preliminary activities
-          Opening log files, etc
+          Reads httpd.conf
+          Opening log files
         httpd launches several child processes
           These handle the request/response cycle from clients
           These processes run as a less privileged user
             This is controlled by the selected MPM
+
+      Errors during startup
+        Sent to console or the ErrorLog
+
+      Misc
+        Start on boot
+          /etc/rc.local
+            Add acachectl call
