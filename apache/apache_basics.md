@@ -1,3 +1,6 @@
+Definitions
+  MPM- Multi-Processing Module
+
 Apache
   Install Apache on AWS Linux
     Put in bootup script
@@ -78,3 +81,19 @@ Apache
         Apache does have a form based authentication module, but I'd rather use a library that has TONS of extensibility and users (thus more stack overflow answers/blog posts, etc.)  Thus I'd suggest another auth route.  In the future, I will be doing an follow up lecture to look at the pros/cons/differences between the "big players" in web authentication (Oauth, openID, etc.) and the different types of auth schemes out there (kerberos, etc.)
 
 
+    How Apache Starts
+      Runs as a daemon that executes continuously in the background to handle requests
+
+      Privileged port
+        If the Listen config is set to port 80
+          One must have root to start apache
+
+      Process
+        User invokes httpd
+          Recommended 
+        Preliminary activities
+          Opening log files, etc
+        httpd launches several child processes
+          These handle the request/response cycle from clients
+          These processes run as a less privileged user
+            This is controlled by the selected MPM

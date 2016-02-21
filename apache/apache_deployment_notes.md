@@ -1,0 +1,1 @@
+These notes are imperative when running httpd
