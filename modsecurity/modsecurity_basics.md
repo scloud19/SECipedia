@@ -2,6 +2,38 @@ Core ideas of Modsecurity
   Blend between WAF and IDS
   Allows realtime monitoring, logging, and access control.
   Apache module
+
+  Everything in ModSecurity revolves around two items
+    Configurations
+      How does Modsecurity process the data it sees?
+    Rules
+      What to do with the processed data
+      
+  Main Functionality
+    Parsing
+      Modsecurity's supported data formats are backed by security-conscious parsers that extract bits of data and store them for usage in the rules.
+
+    Buffering
+      Both the request and response bodies are buffered
+        Thus, the complete requests are seen before they're passed to the app
+          The responses are seen before they're passed to the client
+
+    Audit Logging
+      Full transaction logging
+        Ex: Request headers, request body, response headers, response body
+
+      Allows you to selectively sanitize items of your logs
+
+    Rule engine
+      Also see modsecurity_rules_basics.md
+      Builds on the work of all of the other components
+        Takes these inputs and perform various actions
+
+    Main items that Modsecurity Avoids
+      Data sanitation (outside of logs)
+        If you're being attacked, block the offending request/response entirely.
+          Don't try to sanitize it, you're just opening up a new battlefield for loopholes.
+
   
 Important usage scenarios
 
@@ -9,18 +41,10 @@ Important usage scenarios
     Persistent storage mechanism
       Enables you to track system events time and perform event correlation
 
-    Full request/response buffering
-      Allows you to block requests
-
   Virtual patching
     Is the concept of vulnerability mitigation in a separate layer
       Allows you fix problems in apps without having to touch the application itself
         Aka, block traffic
-
-  Full HTTP traffic logging
-    Allows the logging of raw transaction data
-      Very helpful in forensics.
-    Allows you to select what parts of your logs should be sanitized.
 
   Continuous passive security assessment
     This is a variation of real-time monitoring, where, instead of focusing on the behavior of external parties, you focus on the behavior of the overall system.
@@ -106,9 +130,9 @@ Apache Security Considerations
 
         One ex: Invalid HTTP requests will be rejected by Apache without ModSecurity's input
 
-        CURRENTLY AT
-          https://www.feistyduck.com/library/modsecurity-handbook/online/ch01-introduction.html
-          "NO access to some response headers"
-
+      Restricted access to certain response headers
+        Due to Apache's implementation the following response headers can't be inspected or logged
+          Server
+          Date
 
 
