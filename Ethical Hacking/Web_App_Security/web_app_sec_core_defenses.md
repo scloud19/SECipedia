@@ -31,6 +31,8 @@ Handling Attackers
   Handling Errors
     The application should never return any system-generated messages or other debug information in its responses.
   Keeping logs
+    The IDS should be aware of any client side input validations, if these are being circumvented, the user is known to be malicious
+    
     At a minimum:
       All events relating to the authentication system
         Successful and failed login

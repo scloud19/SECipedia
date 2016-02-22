@@ -152,3 +152,27 @@ HTTP Headers
 
 
 Create a public proxy server on AWS that injects affiliate cookies into browsers.  This gives attackers a financial edge.
+
+Everytime you see validations occuring on the client, try to submit data that is out of its range.
+
+Account Lockout Bypass
+  If the account you're brute forcing is locked out, try repeating the exercise with a different account
+    If the app issues any cookies, use each cookie for only a single login attempt
+      Clear your cookies (to get a new one) and do only one login attempt
+        Repeat the steps for every password you're trying.
+
+  Try to lockout an account that you own, then try submitting a valid password
+    Is there any differences in the way the application responds?  If so, leverage this to keep trying passwords when an account is locked out.
+
+Brute Forcing
+  First, how does the app respond to successful attempts?  Then, deduce how it responds to unsuccessful attempts
+    With this baseline, start your brute force.
+  
+  Leverage a list of common usernames and a list of common passwords.
+    Understand the password rules for the site to minimize the amount of login attempts.
+
+    Make sure the list starts with the most common passwords first.
+    
+  If you are targeting server UserIDs at once
+    Do breadth-first (rather and depth-first)
+

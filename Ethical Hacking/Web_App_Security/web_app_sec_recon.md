@@ -260,7 +260,21 @@ Mapping the surface for Attack
   Social networking features
     username enumeration, stored XSS
   login
-    Username enumeration, weak passwords, brute forcing
+    Username enumeration
+      Leverage registration forms to see which users exist/dont exist
+      Any time a user can make their own username, there's an enumeration risk.
+
+    weak passwords, brute forcing
+    Brute Forcing
+      First, how does the app respond to successful attempts?  Then, deduce how it responds to unsuccessful attempts
+        With this baseline, start your brute force.
+  Passwords
+    Attempt to discover any rules regarding password quality
+      Either by creating accounts or looking for rules on the website
+      If you can create an account, try changing its value to a weak one.
+    Attempt to login with a bad password 10 times
+      If you control the account, attempt to login.
+        If successful, there's probably no account lockout policy
   Multistage login
     Logic Flaws
   Session state

@@ -1,0 +1,2 @@
+The IDS should be aware of any client side input validations, if these are being circumvented, the user is known to be malicious
+    Remember, JS can be disabled, and so certain input validations can be bypassed without a malicious intend.  Make sure the IDS accounts for this
