@@ -1,3 +1,7 @@
+Boot options
+  Single user mode
+    Mode in which a multiuser computer boots into a single superuser
+
 lilo (LInux LOader)
   A lot of Linux distros use this for booting operating systems.
 

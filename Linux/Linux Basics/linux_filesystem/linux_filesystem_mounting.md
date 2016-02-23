@@ -1,3 +1,5 @@
+FS = File system
+
 mounting
   The process of attaching a file system
 
@@ -35,6 +37,46 @@ mounting
 
       Ex: You can also mount a FS by its UUID
         # mount UUID=7715e0d4-454d-4844-857b-5ef65f06b574 /
+
+    mount options
+      There are short options and long options.  
+        Commands can be sometimes expressed in both formats.  Although, long options are preferred
+
+        Short options
+          Letters of the alphabet
+          Can you really recognize the given option from a single letter?
+        Long options
+          start with -o and supply trailing keywords
+          Ex:
+            mount -t vfat /dev/hda1 /dos -o ro,conv=auto
+              ro
+                read only mode (same as -r)
+              conv=auto
+                If a text file contains the DOS newline character, the kernel will automatically convert it into UNIX style.
+            
+            Useful long options
+              exec, noexec
+                Enables/disables execution of programs on the FS.
+      Additionally, the mount options can be categorized into general and filesystem specific
+      
+      general
+        -t
+          specifies the filesystem type that you want to mount
+        -r
+          Mounts the FS in read-only mode
+            You don't need to do this if mounting a CD, etc.
+        -n
+          Ensures that mount doesn't try to update the system runtime mount database (/etc/mtab)
+            The mount operation vails when it can't write to this file, which is important at boot because the root partition (that houses the mount database) is read-only at first
+
+            If you're in single-user mode, this option is very handy because the mount database isn't available at that time.
+
+      filesystem-specific
+        pertain only to certain filesystem types
+
+        Ex: -o norock
+          Turns off Rock Ridge exts on an ISO 9660 file-system, but has no meaning for any other kind of FS
+
 
   umount
     Unmounting (detaching) a filesystem
