@@ -42,6 +42,17 @@ mounting
       There are short options and long options.  
         Commands can be sometimes expressed in both formats.  Although, long options are preferred
 
+      Ex: In both formats
+        Remounting a filesystem
+          Sometimes, you may need to reattach a currently mounted FS at the same mount point; (but you'd need to change the mount options)
+            Ex: Make a read-only FS writable during a crash recovery
+              # mount -n -o remount /
+                Remounts / in rw mode
+                -n
+                  Need this because mount can't write to the system mount db when the root is read only
+                This overall command also assumes that the correct device listing for / is in /etc/fstab
+                  If not, you need to manually specify the device
+
         Short options
           Letters of the alphabet
           Can you really recognize the given option from a single letter?
@@ -57,6 +68,32 @@ mounting
             Useful long options
               exec, noexec
                 Enables/disables execution of programs on the FS.
+              suid, nosuid
+                Enables/Disables setuid programs
+              ro
+                Mounts the FS in read only mode
+              rw
+                Mounts in read/write mode
+              conv=RULE
+                For fat-based FSs
+                Converts the newline characters in files based on RULE
+
+                RULE
+                  binary, text, auto
+                    binary
+                      the default
+                      disables any character translation
+                    text
+                      Will treate all files as text
+                    auto
+                      Converts files based on their ext.
+                        Ex: .jpg file gets no special considerations, while a .txt file does
+                  Be careful with these rules, as they can damage files.
+                    Consider using these in read-only mode
+
+
+
+
       Additionally, the mount options can be categorized into general and filesystem specific
       
       general
@@ -112,7 +149,6 @@ mounting
             aka Block ID
             View a list of devices and the corresponding FS UUIDs
             Some FSs, like FAT don't have a UUID that is in the traditional formatting
-
 
 
 
