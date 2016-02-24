@@ -109,6 +109,9 @@ Apache
                 OR to immediately exit if they're not serving anything
               Parent re-reads its config files and re-opens its log files, as each child dies off the parent replaces it with a child from the new generation of the configuration and the child begins serving new requests immediately.
 
+            This will always respect the process control directive of the MPMs
+              So, the number of processes and threads available for serving clients will be maintained throughout the restart process
+
 
 
 
