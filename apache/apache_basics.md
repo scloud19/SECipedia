@@ -112,6 +112,10 @@ Apache
             This will always respect the process control directive of the MPMs
               So, the number of processes and threads available for serving clients will be maintained throughout the restart process
 
+              CURRENTLY AT
+                Graceful Restart
+              http://httpd.apache.org/docs/current/stopping.html
+
 
 
 
