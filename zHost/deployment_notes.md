@@ -24,3 +24,6 @@ AWS
 
 Linux
   Look into fstab and see if noatime is set.  If a partition is mounted with this option, there can be significant performance considerations.
+
+  SSL
+    https://www.ssllabs.com/projects/best-practices/index.html
