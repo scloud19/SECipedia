@@ -20,3 +20,7 @@ AWS
   CloudWatch
     Make sure to set up triggers for abnormal spikes in CPU/memory
       If being DoSed in Apache, look at apache_troubleshooting.md
+
+
+Linux
+  Look into fstab and see if noatime is set.  If a partition is mounted with this option, there can be significant performance considerations.

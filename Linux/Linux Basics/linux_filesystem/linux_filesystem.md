@@ -6,6 +6,9 @@
         File System
             A much more involved data system.
     
+    File system integrity checks
+        # fsck
+        
     Filesystem
         What you see when you run ls, cd, etc.
         A form of database

@@ -1,5 +1,33 @@
 FS = File system
 
+/etc/fstab Filesystem Table
+  To mount filesystems at boot time
+  A permanent list of FSs and options
+  Ex on Amazon Linux
+    LABEL=/     /           ext4    defaults,noatime  1   1
+    tmpfs       /dev/shm    tmpfs   defaults        0   0
+    devpts      /dev/pts    devpts  gid=5,mode=620  0   0
+    sysfs       /sys        sysfs   defaults        0   0
+    proc        /proc       proc    defaults        0   0
+
+    Columns (1,2,3...)
+      1) Device/UUID
+      2) Mount point
+      3) Filesystem type
+      4) long options used when mounting
+        comma delimited
+      5) Backup information for use by the dump command
+      6) Filesystem integrity test order
+        # fsck
+          Runs this command on the order you list
+            Typically
+              1 - root
+              2 - any other FS (after root)
+              0 - Disable the boot up check
+                Ex: CD drives, swap, and the proc FS
+
+
+
 mounting
   The process of attaching a file system
 
