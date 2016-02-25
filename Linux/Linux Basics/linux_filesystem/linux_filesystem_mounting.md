@@ -16,6 +16,16 @@ FS = File system
       3) Filesystem type
       4) long options used when mounting
         comma delimited
+        Addition options that are only specific to the fstab file
+          defaults
+            Uses the mount defaults (read-write mode, enable device files, executables, the setuid bit, etc.)
+          noauto
+            Tells #mount -a to ignore the entry
+            Use this to prevent a boot-time mount of removable-media device (Ex: floppy drive, etc.)
+          user
+            Allows unprivileged users to run mount on a particular entry.
+              This is useful for items like CD-ROM drives, etc.
+
       5) Backup information for use by the dump command
       6) Filesystem integrity test order
         # fsck
@@ -25,6 +35,8 @@ FS = File system
               2 - any other FS (after root)
               0 - Disable the boot up check
                 Ex: CD drives, swap, and the proc FS
+
+  
 
 
 
@@ -39,9 +51,8 @@ mounting
       The mount point can be anywhere on the system
 
   # mount
-    -t 
-
-    Shows the current filesystem status
+      NO ARGS
+        Shows the current filesystem status
 
     Ex output:
       proc on /proc type proc (rw,relatime)
@@ -65,6 +76,14 @@ mounting
 
       Ex: You can also mount a FS by its UUID
         # mount UUID=7715e0d4-454d-4844-857b-5ef65f06b574 /
+
+    Ex: mounting a filesystem in /etc/fstab/
+      You can now take some shortcuts with # mount
+        Ex: mount /cdrom
+
+    Ex: mounting all /etc/fstab entries at once
+      mount -a
+        This will mount all entries in which there's no NOAUTO option
 
     mount options
       There are short options and long options.  
