@@ -236,6 +236,39 @@ Analyzing the Application
       auth mechanisms/supporting logic
         Ex: user registration, password change, acct. recovery
 
+        Forgot my password functions
+          See if it's vulnerable to brute forcing
+
+          Obtain a bunch of different account recovery URLs (usually come to the account owners email)
+            See if there's any patterns in the URL structure.
+
+          Also see 'password change' steps below for inspiration
+
+          Where to send the new password or activation link
+            See if the users email is stored in cookies/(hidden form field)
+              Double opportunity
+                Discover the compromised users' email
+
+                Modify the value to go to your email
+
+
+
+        Password change
+          1) ID any password change functionality within the app.  If it's not readily visible, it still may be there.
+
+          2) Make requests to the password change function using invalid usernames, invalid existing passwords, and mismatched "new password" and "confirm new password" values.
+            Get a valid username and see if the password authentication mechanism requires valid passwords to change passwords.  Study the responses for valid usernames.
+
+            See if the password change field is available to unauthenticated users.
+
+            If the password change field doesn't allow username submissions (on the surface)
+              look for hidden form field submissions.
+              Try submitting a username with the parameter name that's leveraged on the main login forms.
+
+          3) ID any behavior that can be leveraged for username enumeration or brute-force attacks
+
+
+
     User input
       All of the different locations at which the app processes user-supplied input
         Ex: every URL, query string param, item of POST data, cookies, HTTP headers
@@ -261,8 +294,36 @@ Mapping the surface for Attack
     username enumeration, stored XSS
   login
     Username enumeration
+      Look in source code for username ideas, also look at employee emails
+        One can try the whole email or just the username portion of it.
       Leverage registration forms to see which users exist/dont exist
       Any time a user can make their own username, there's an enumeration risk.
+
+      If one is testing an email service provider, are the user IDs simply emails addresses? If so, simply search for google for @domain.com
+
+      Are the userIDs enumerable by design?
+        Ex: user1, user2, etc.?
+
+      Look at timing differences between correct/incorrect usernames. 
+
+      Do a DIFF on the exact payload differences between correct/incorrect username submissions (with a wrong password)
+        Sometimes, there's incredibly small nuances that can tip off an attacker.
+        Leverage the comparer tool within Burp to automatically highlight the differences between 2 app responses
+
+      Steps
+        1)Submit a request for a valid username (with an incorrect pass) and an invalid username
+        
+        2) Record every detail of the servers response
+          Ex: status code, any redirect, basically everything in the HTTP response is in SCOPE
+
+        3) Do a comparison using a tool
+
+        4) If you can't find any changes, try it on self-registration, password change, forgotten password, etc.
+
+        5) If a difference IS detected in the server's response, leverage a list of common usernames, and deduce which one/s are valid.
+          a) Before doing this, see if there is any account lockout mechanisms.
+            Ex: If there is, you just "wasted" one attempt by trying to find the username (if found.) Thus, try all usernames with a common password, (ex: password1 or the username itself)
+              BURP: To make the login/password the same, leverage the "battering ram" attack mode.
 
     weak passwords, brute forcing
     Brute Forcing

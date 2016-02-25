@@ -53,6 +53,12 @@ Enumeration
     Remember, in certain enumeration apps, they can be configured using an IP or domain (for the target).
       Sometimes, if you use an IP (it'll use that as its "domain") and wont crawl the real domain of the site (it'll see it as external).  Crawl the domain with both IP and domain in mind.
 
+  Forgot my password functionality
+    Create a script that
+      Enumerates over common usernames and retrieves the challenges
+
+      Find the ones that are the easiest to break
+
 
 
 fileName param (in URL, etc.)
@@ -176,3 +182,8 @@ Brute Forcing
   If you are targeting server UserIDs at once
     Do breadth-first (rather and depth-first)
 
+Authentication
+  If a website is switching from HTTP to HTTPS at the exact point of login
+  If you did to go down this rough path, one needs to switch to HTTPS  for when the login page is loaded into the browser.
+    NOT when the credentials are submitted in the login form.
+      Ex: A suitably positioned attacker can intercept and modify the login page, and change the submission url of the form.
