@@ -6,9 +6,22 @@
         File System
             A much more involved data system.
     
-    File system integrity checks
-        # fsck
-        
+    Filesystem capacity
+        df
+            Shows the size and utilization of the currently mounted FSs
+            -m
+                List capacities in 1MB blocks
+            -h
+                Best guess at what a person can read (Maybe GB)
+        du
+            Prints the disk usage of every directory in the directory hierarchy (starting with the CWD)
+
+            -s 
+                Summary mode
+                To summarize the disk usage of all of directories in the CWD
+                    du -s *
+
+
     Filesystem
         What you see when you run ls, cd, etc.
         A form of database
@@ -428,3 +441,13 @@ Misc Notes on File Systems/Disks
             The kernel has functionality that utilizes RAM to automatically cache blocks read from disk.
                 If a process has to repeatedly access a file, the kernel doesn't have to go to the disk over and over.
                     It reads from the RAM cache and saves time.
+
+Checking and Repairing Filesystems
+    Filesystems are basically a sophisticated database mechanism
+
+    fsck MOUNT_POINT || FSTAB_NAME
+        Tool utilized to check a filesystem
+        WARNING
+            Never use this on a mounted FS
+                The kernel may alter the disk as you run the check, which can cause runtime mismatches.
+                    EXCEPTION: Mount / read-only in single-user mode
