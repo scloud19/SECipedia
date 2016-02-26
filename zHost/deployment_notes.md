@@ -1,5 +1,8 @@
+Everything you utilize, make sure to get notifications of updates.
 Apache
+  Build Apache from source.
   Look in Apache folder
+
 
   Make sure to bake in modules for DoS evasion
     Ex: mod_evasion, etc.
@@ -10,11 +13,20 @@ Apache
       apache_key_modules.md
       apache_troubleshooting.md
 
-  Mod Security
+  Look at modsecurity_good_resources.md
+  modsecurity_installation.md
+
+
     Deploy as a standalone reverse proxy
       See modsecurity_basics.md/reverse proxy
 
     See modsecurity_basics.md/Apache Security Considerations
+
+    modsecurity_performance_considerations.md
+
+    Look at leveraging third party rulesets as a base
+      Do they have ones for WordPres?
+      Exs: Core Rule Set project (OWASP)
 
 AWS
   CloudWatch
