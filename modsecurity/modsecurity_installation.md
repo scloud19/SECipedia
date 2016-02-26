@@ -4,6 +4,9 @@ Installing from source
   The preferred way
     https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#Installation_for_Apache
 
+    Go through https://www.feistyduck.com/library/modsecurity-handbook/online/ch02-installation.html
+      Maybe 
+
 
 
 
