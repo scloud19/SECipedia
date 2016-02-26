@@ -1,6 +1,10 @@
 Everything you utilize, make sure to get notifications of updates.
 Apache
-  Build Apache from source.
+  Look at https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#Installation_for_Apache
+
+  Make sure that the Apache version is the latest
+    Aka you might need to install from source
+    
   Look in Apache folder
 
 

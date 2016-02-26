@@ -58,7 +58,7 @@ Ciphers
       Ex: hash functions, message authentication codes, pseudorandom generators, stream ciphers
     Most popular
       AES (Advanced Encryption Standard)
-        
+
 
     Problems
       You can only use them to encrypt data lengths equal to the size of the encryption block
@@ -71,6 +71,9 @@ Ciphers
         block cipher modes
           Attempt to address the limitations
           Sometimes add authentication into the process
+
+      CURRENTLY AT
+        https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#crypto-padding
 
   Stream Ciphers
     Most popular
