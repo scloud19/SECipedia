@@ -46,12 +46,31 @@ Encryption strength
 Ciphers
   Are divided into two groups
     Stream and block ciphers
-
-  CURRENTLY AT "Stream Ciphers" in https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html
   
   Stream Ciphers
+    keystream
+      The key is fed into the cipher, which produces an infinite stream of seemingly random data
+    Encryption process
+      XOR logical operation
+        One byte of the keystream is combined with one byte of plaintext using the XOR operation.
+        Ciphertext
+          The result of the XOR operation
+          Ex:
+            Key -> Stream Cipher -> 1 (Keystream) | 1 (Plaintext) = 0 (Ciphertext)
+    Security Test
+      The encryption process is considered secure if the attacker can't predict which keystream bytes are at which positions.
+        For this reason, with stream ciphers, it's important that a key is only utilized once.
+          Why?
+            Ex: 1)Encrypting HTTP requests
+              Attackers know plaintext at certain locations (protocol version, header names, etc.)
+              2) As one knows the ciphertext, they can combine this with the plaintext to deduce certain parts of the keystream.
+              3) If the same key is used in future ciphertexts, you can utilize this information to uncover the same parts of future ciphertexts
+
       Encryption
         You feed 1 byte of plaintext to the cipher, and the output is 1 byte of  ciphertext
+
+
+
           Process
 
 
