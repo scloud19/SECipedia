@@ -47,7 +47,36 @@ Ciphers
   Are divided into two groups
     Stream and block ciphers
   
+  Block Ciphers
+    Encrypt entire blocks of data at a time
+      Blocks - Usually defined as 128 bits (16 bytes)
+    For every possible input combination, there is exactly one output
+      Given that the key stays the same
+    A small variation in input produces a large variation in output
+      Ex: a change of one bit anywhere
+    Can be utilized as the basis for certain cryptographic primitives
+      Ex: hash functions, message authentication codes, pseudorandom generators, stream ciphers
+    Most popular
+      AES (Advanced Encryption Standard)
+        
+
+    Problems
+      You can only use them to encrypt data lengths equal to the size of the encryption block
+        In real life, data doesn't always have this fixed length
+      Deterministic
+        Always produce the same output for the same input
+          Opens up a number of attacks
+
+      Solutions
+        block cipher modes
+          Attempt to address the limitations
+          Sometimes add authentication into the process
+
   Stream Ciphers
+    Most popular
+      RC4
+        Became popular due to its speed and simplicity
+        No longer considered secure
     keystream
       The key is fed into the cipher, which produces an infinite stream of seemingly random data
     Encryption process
@@ -65,6 +94,8 @@ Ciphers
               Attackers know plaintext at certain locations (protocol version, header names, etc.)
               2) As one knows the ciphertext, they can combine this with the plaintext to deduce certain parts of the keystream.
               3) If the same key is used in future ciphertexts, you can utilize this information to uncover the same parts of future ciphertexts
+          Mitigation
+            Stream algorithms are utilized with one-time keys derived from long-term keys
 
       Encryption
         You feed 1 byte of plaintext to the cipher, and the output is 1 byte of  ciphertext
