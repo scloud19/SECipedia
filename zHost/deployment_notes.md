@@ -1,3 +1,5 @@
+Review everything in this document before deployment
+
 Everything you utilize, make sure to get notifications of updates.
 Apache
   Look at https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#Installation_for_Apache
@@ -43,3 +45,8 @@ Linux
 
   SSL
     https://www.ssllabs.com/projects/best-practices/index.html
+
+Cpanel
+  go through cpanel_install_setup.md
+  Should I allow dedicated IPs for servers? Or, just share 1 static IP amongst all clients?
+
