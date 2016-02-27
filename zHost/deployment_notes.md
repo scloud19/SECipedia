@@ -50,10 +50,12 @@ Linux
   SSL
     https://www.ssllabs.com/projects/best-practices/index.html
 
-Cpanel
+Cpanel/WHM
   go through cpanel_install_setup.md
   Should I allow dedicated IPs for servers? Or, just share 1 static IP amongst all clients?
 
   Always monitor
     /usr/local/cpanel/logs/*
-    
+  
+  Any way to force bcrypt for this?
+    https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Security#TweakSettings-Security-UseMD5passwordswithApache

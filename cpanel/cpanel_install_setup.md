@@ -58,6 +58,12 @@ Basic server setup
         The location of the cPanel binary
           Default: /usr/local/cpanel
 
+      statthreshhold
+        If an accounts available disk space is less than this amount, the system does not process statistics for the account
+        Default: 256
+
+          Z: This is silly, why do we have this default?
+
       port
         Specifies the port number that non-SSL logins to cPanel use
         Default - 2082
@@ -98,6 +104,9 @@ Basic server setup
 
   WHMs PHP open_basedir Tweak Interface
     Home >> Security Center >> PHP open_basedir Tweak
+
+  WHMs Service Manager Interface
+    Home >> Service Configuration >> Service Manager
 
 
 
