@@ -39,6 +39,10 @@ AWS
     Make sure to set up triggers for abnormal spikes in CPU/memory
       If being DoSed in Apache, look at apache_troubleshooting.md
 
+  Firewall Ports
+    2083 - Cpanel SSL access
+    2082 - Cpanel nonSSL access
+    
 
 Linux
   Look into fstab and see if noatime is set.  If a partition is mounted with this option, there can be significant performance considerations.

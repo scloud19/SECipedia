@@ -53,6 +53,23 @@ Basic server setup
       cpanel_locale
         Default: undef
           Security considerations?
+
+      engineroot
+        The location of the cPanel binary
+          Default: /usr/local/cpanel
+
+      port
+        Specifies the port number that non-SSL logins to cPanel use
+        Default - 2082
+        The SSL value is equal to this value + 1
+
+      root
+        Specifies the location of the cPanel root installation
+        /usr/local/cpanel
+
+      roundcube_db
+        What type of DB the RoundCube DB utilizes
+        Default: mySQL
   
   WHMs Statistics Software Configuration Interface
     Home >> Server Config >> Statistics Software Configuration
@@ -61,7 +78,26 @@ Basic server setup
     Home >> Clusters >> DNS Cluster
       https://documentation.cpanel.net/display/ALD/DNS+Cluster
 
+  WHMs Apache Configuration Interface
+    Home >> Service Configuration >> Apache Configuration
 
+  WHMs FTP Server Selection Interface
+    Home >> Service Configuration >> FTP Server Selection
+
+  WHMs Nameserver Selection Interface
+    Home >> Service Configuration >> Nameserver Selection
+
+  WHMs Mailserver Selection Interface
+    Home >> Service Configuration >> Mailserver Selection
+
+  WHMs Password Strength Configuration interface
+    Home >> Security Center >> Password Strength Configuration
+
+  WHMs Remote MySQL interface
+    Home >> Databases >> Remote MySQL
+
+  WHMs PHP open_basedir Tweak Interface
+    Home >> Security Center >> PHP open_basedir Tweak
 
 
 
