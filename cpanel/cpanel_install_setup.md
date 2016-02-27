@@ -1,3 +1,6 @@
+Notable other URLS
+  https://documentation.cpanel.net/display/ALD/WHM+Home+Interface
+
 Caveats
   Only works on publicly visible, static IPs.
     Add in elastic IP
@@ -29,16 +32,9 @@ Basic server setup
       If you need more information about a setting that IS in tweak
         Recommented the READ THROUGH all of these BEFORE setting up tweak
 
-        https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+System
-        
-        https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Domains
+          https://documentation.cpanel.net/display/ALD/Tweak+Settings
+            Go through all of the tabs
 
-        https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Redirection
-
-        https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Stats+and+Logs
-
-        https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Stats+Programs
-        
 
     Notable Settings NOT in Tweak interface
       I will outline by the key name in cpanel.config
@@ -53,6 +49,18 @@ Basic server setup
 
       adminuser
         Default: cpanel
+
+      cpanel_locale
+        Default: undef
+          Security considerations?
+  
+  WHMs Statistics Software Configuration Interface
+    Home >> Server Config >> Statistics Software Configuration
+
+  WHMs DNS Cluster Interface
+    Home >> Clusters >> DNS Cluster
+      https://documentation.cpanel.net/display/ALD/DNS+Cluster
+
 
 
 
