@@ -50,3 +50,6 @@ Cpanel
   go through cpanel_install_setup.md
   Should I allow dedicated IPs for servers? Or, just share 1 static IP amongst all clients?
 
+  Always monitor
+    /usr/local/cpanel/logs/*
+    
