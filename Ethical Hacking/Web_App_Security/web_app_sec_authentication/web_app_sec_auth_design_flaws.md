@@ -101,3 +101,54 @@ Forgotten Password Functions
 
 "Remember Me" functionality
   Used so users dont have to reenter their username/pass on every visit.
+
+  Opens up attack vectors on local/remote computers
+
+  Ex:
+    Sometimes all the app does is set a cookie with the username
+      Ex: RememberUser=user38
+        Once this cookie is submitted, the application automatically logs in that user
+          Exploit
+            All one would need is to 
+            enumerate usernames
+      Even if the cookie is encrypted, others can still steal it through XSS or access to local ENV.
+
+User impersonation features
+  Usual context
+    Given to helpdesk individuals so they can switch into a customers account.
+
+  Problems
+    As it's a 'hidden' function, it might have insufficient access controls.
+      Ex:
+       By finding the 'hidden' url
+       A cookie such as "SessionOf=user" that can be easily changed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

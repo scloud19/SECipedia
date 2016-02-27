@@ -233,6 +233,13 @@ Analyzing the Application
     Core security mechanisms
       Management of session state
       access controls
+        "Remember me" functionality
+          Invoke this functionality and then observe the results in cookies/localstorage.
+            Does the app simply set a "RememberUser=user73" cookie and blindly trust the client side application?
+            Obfuscation
+              Sometimes user73 can be a number that the application maps to a user.
+                Can you enumerate over this number? Are there any patterns in the mapping?
+              Create many users that are very similar in username and/or password, etc.  Does any of the obfuscated data have similarities?
       auth mechanisms/supporting logic
         Ex: user registration, password change, acct. recovery
 
