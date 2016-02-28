@@ -1,5 +1,6 @@
-Notable other URLS
-  https://documentation.cpanel.net/display/ALD/WHM+Home+Interface
+After initial installation
+  Go through every config in WHM, and match it to the documentation in the link below to make sure that you're setting it up correctly
+    https://documentation.cpanel.net/display/ALD/WHM+Home+Interface
 
 Caveats
   Only works on publicly visible, static IPs.
@@ -76,37 +77,6 @@ Basic server setup
       roundcube_db
         What type of DB the RoundCube DB utilizes
         Default: mySQL
-  
-  WHMs Statistics Software Configuration Interface
-    Home >> Server Config >> Statistics Software Configuration
-
-  WHMs DNS Cluster Interface
-    Home >> Clusters >> DNS Cluster
-      https://documentation.cpanel.net/display/ALD/DNS+Cluster
-
-  WHMs Apache Configuration Interface
-    Home >> Service Configuration >> Apache Configuration
-
-  WHMs FTP Server Selection Interface
-    Home >> Service Configuration >> FTP Server Selection
-
-  WHMs Nameserver Selection Interface
-    Home >> Service Configuration >> Nameserver Selection
-
-  WHMs Mailserver Selection Interface
-    Home >> Service Configuration >> Mailserver Selection
-
-  WHMs Password Strength Configuration interface
-    Home >> Security Center >> Password Strength Configuration
-
-  WHMs Remote MySQL interface
-    Home >> Databases >> Remote MySQL
-
-  WHMs PHP open_basedir Tweak Interface
-    Home >> Security Center >> PHP open_basedir Tweak
-
-  WHMs Service Manager Interface
-    Home >> Service Configuration >> Service Manager
 
 
 

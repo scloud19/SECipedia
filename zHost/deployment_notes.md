@@ -45,6 +45,11 @@ AWS
     
 
 Linux
+  Linux hardening
+    https://github.com/lfit/itpol/blob/master/linux-workstation-security.md
+    Search Linux Security on PLuralsight
+  Cloud Linux
+    Install before installing anything else
   Look into fstab and see if noatime is set.  If a partition is mounted with this option, there can be significant performance considerations.
 
   SSL
@@ -59,3 +64,5 @@ Cpanel/WHM
   
   Any way to force bcrypt for this?
     https://documentation.cpanel.net/display/ALD/Tweak+Settings+-+Security#TweakSettings-Security-UseMD5passwordswithApache
+
+

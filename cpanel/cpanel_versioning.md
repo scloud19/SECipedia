@@ -31,6 +31,9 @@ Ex: 11.30.0.52
       A unique build of cPanel & WHM
         No upper limit on this value  
 
+  CURRENTLY_AT
+    For more information about the /etc/cpupdate.conf file, read our The cPanel & WHM Update Configuration File documentation.
+
 
 As of cPanel & WHM version 54, the UI no longer includes the parent value in the version number.
   However, config files and API functions will contrinue to use the parent version num.

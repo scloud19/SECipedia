@@ -62,7 +62,25 @@ Ciphers
 
     Problems
       You can only use them to encrypt data lengths equal to the size of the encryption block
-        In real life, data doesn't always have this fixed length
+        In real life, data doesn't always have this fixed length.
+        
+        EX: 128-bit AES (worlds most popular block cipher) requires 16 bytes of input data
+          This produces 16 bytes of output
+            What if you have LESS data than this?
+
+          Solution:
+            Padding
+              The extra data that is appended to the plaintext to produce the required block size
+
+              The padding must follow a format that allows the receiver to know that it IS padding
+                It can't be random
+                Ex TLS Padding:
+                  The last byte of the encryption block contains the padding length
+                    This byte communicates how many bytes of paddings (excluding the padding length byte) there are.
+                    The padding bytes are set to the same value as the padding length
+                      Ex:https://www.feistyduck.com/library/bulletproof/online/figs/padding-example.png
+
+
       Deterministic
         Always produce the same output for the same input
           Opens up a number of attacks
@@ -70,10 +88,7 @@ Ciphers
       Solutions
         block cipher modes
           Attempt to address the limitations
-          Sometimes add authentication into the process
-
-      CURRENTLY AT
-        https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#crypto-padding
+          Sometimes add authentication into the process        
 
   Stream Ciphers
     Most popular
@@ -102,11 +117,6 @@ Ciphers
 
       Encryption
         You feed 1 byte of plaintext to the cipher, and the output is 1 byte of  ciphertext
-
-
-
-          Process
-
 
         This occurs for every byte in the stream that's fed into the cipher
           
