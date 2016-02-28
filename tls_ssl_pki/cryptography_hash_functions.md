@@ -37,25 +37,31 @@ Hash functions vs. cryptographic hash functions
       It's unfeasible to find plaintexts that have the same hash
 
 Verifying Data integrity
-  A hash function can be utilized for this
-    ONLY if the hash of the data is transported separately (from the data itself)
-      Security reasons
-        Attacker could modify the message and the hash
-  Message Authentication Code (MAC)
-    Aka keyed-hash
-    
-    Problems with standalone encryption:
-      Produces confidentiality, but not integrity
-      An eavesdropper cant decrypt the ciphertext, but they could replace the legitimate ciphertext with their own.
+  Problems with standalone encryption:
+    Produces confidentiality, but not integrity
+      Ex: An eavesdropper cant decrypt the ciphertext, but they could replace the legitimate ciphertext with their own.
         Solution
-          When a MAC is sent with the ciphertext, the legitimate communication partners (who all share the hashing key) can be sure the message hasn't been tampered with.
-
-
-    Cryptographic function that extends hashing with authentication
+          Sending a MAC with the ciphertext         
+  Message Authentication Code (MAC)
+    EX: https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/MAC.svg/661px-MAC.svg.png
     
-    Only those who have the hashing key can produce the MAC
+    Short piece of information used to authenticate a message
+  
+    MAC algorithm
+      Cryptographic function that extends hashing with authentication
+      SOMETIMES called a keyed (cryptographic) hash function
+        there can be other creation mechanisms
+      Input 
+        A secret key (hashing key) and a variable length message
+      Output
+        A MAC
+          aka tag
+          This MAC is sent with the ciphertext to the receiver
 
-    Commonly used in combination with encryption
+      Vetting
+        The receiver of the message runs the ciphertext (and hashing key) through the MAC algorithm
+          If the MAC matches what was sent, the message is valid
+
 
 
 

@@ -90,6 +90,8 @@ Ciphers
           Attempt to address the limitations
           Sometimes add authentication into the process        
 
+          CURRENTLY AT: https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#block-cipher-modes
+
   Stream Ciphers
     Most popular
       RC4
