@@ -21,6 +21,7 @@ Apache
 
   Look at modsecurity_good_resources.md
   modsecurity_installation.md
+  modsecurity_configuration.md
 
 
     Deploy as a standalone reverse proxy
