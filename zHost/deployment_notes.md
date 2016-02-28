@@ -1,3 +1,6 @@
+In all main folders that will be leveraged for the deployment
+  Read the _good_resources.md
+
 Review everything in this document before deployment
 
 Everything you utilize, make sure to get notifications of updates.

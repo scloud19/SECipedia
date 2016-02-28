@@ -1,3 +1,7 @@
+ClamAV
+  Usually paired with modsecurity to scan uploaded files
+    Add to the Apache Group and relax the file permissions on the SecUploadFileMode directive
+
 Viewing log files (GUIs)
   AuditConsole
     jwall.org
@@ -12,3 +16,4 @@ Viewing log files (GUIs)
       Event tagging
 
       Event rules
+

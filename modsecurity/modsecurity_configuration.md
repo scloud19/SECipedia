@@ -1,4 +1,5 @@
 Create all of the following
+  This will be the basis for the principle directory hierarchy
   Make sure that there's an apache group that only has the user apache
     httpd should do this by default
 
@@ -45,6 +46,9 @@ Create all of the following
       apache  root  rwx------
 
   /opt/modsecurity/var/log
+    Instead of its own logging directory, it may make sense to put this with all of the Apache logs
+      Counterpoint: If utilizing the audit logging feature a lot, it may make sense to give it its own HD (to save on I/O operations for the main server)
+      Still leverage the same permissions as shown below.
     Logs
     Permissions
       root  root  rwx------
@@ -55,12 +59,16 @@ Create all of the following
           EX: OR utilize this as a basis for symlink attacks
           
           Ex: By submitting certain requests to Apache, one might be able to control exactly what is written to the log files and compromise the system.
-          
+
   /opt/modsecurity/var/tmp
     Temporary files
     Permissions
       apache  apache  rwxr-x---
 
+      Rationale
+        Sometimes, you will have third party software scanning the items in tmp
+          Ex: Scan uploaded files for viruses through ClamAV
+          Any third party software should be added to the Apache group
   /opt/modsecurity/var/upload
     File uploads
       apache  root  rwx------
@@ -68,3 +76,34 @@ Create all of the following
   Overall permission logic
     Root is owner of everything
       We only assign to Apache if necessary
+
+Configuration File Layout
+  modsecurity.conf
+    The main entry point to modsecurity configs
+    Reference this 1 file from Apache
+
+    Contents:
+      <IfModule mod_security2.c>
+      # Main conf file
+      Include /opt/modsecurity/etc/main.conf
+      # Rules that run first
+      Include /opt/modsecurity/etc/rules-first.conf
+      # Main rule file
+      Include /opt/modsecurity/etc/rules.conf
+      Include /opt/modsecurity/etc/rules-last.conf
+      </IfModule>
+
+Adding ModSec to Apache
+  httpd.conf
+    Contents
+      LoadFile /usr/lib/libxml2.so
+      LoadFile /usr/lib/liblua5.1.so
+      # Finally, load ModSecurity
+      LoadModule security2_module modules/mod_security2.so
+
+      Include /opt/modsecurity/etc/modsecurity.conf
+
+Starting ModSec
+  CURRENTLY AT
+    POWERING UP
+      https://www.feistyduck.com/library/modsecurity-handbook/online/ch03-configuration.html
