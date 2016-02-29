@@ -31,6 +31,7 @@
             Standardizes the communication between different device types and kernel control commands
 
         Dont just contain just normal "files"
+            See 'Special FSs' below
             /sys and /proc
                 System interfaces
 
@@ -348,12 +349,16 @@
         /mnt - Used to mount external file systems
         /proc - Provides system statistics through a       browsable directory-and-file interface.
              Provides info about running processes and kernel parameters
+             There's a movement to place non-process information out of /proc/ and into /sys
         /root - Home directory for the root account 
         /sbin - System administration binaries.  Regular users usually do not have /sbin in their PATH.  For many of this items, you need to be running as root.  Remember: System Binaries = /sbin
         /srv - Contains data which is served by the system
             Ex: /srv/www
                 Web server files
         /sys - Used to display and sometimes configure the devices known to the kernel.  This is very similar in nature to /proc  It also provides a system interface.
+            This can also show more "low level" items
+                Ex: bus, firmware, power
+            Also see /sys notes in linux_devices.md
 
         Shell Prompts
             $ - Normal User
@@ -487,7 +492,42 @@ Checking and Repairing Filesystems
                         When reconnecting this file, the fsck will place the file in "lost+found" of the FS, with a number as the filename.
 
                         You'll need to guess the name based on the content of the file
+Special FSs
+    Not all filesystems represent storage on physical media
+        Some are essentially system interfaces
+            Ex: show system information such as process IDs, diagnostic information,etc.
+    proc (aka process)
+        Found in /proc
+        Note: There's currently a push to move information unrelated to processes into /sys
+            So unprocess related info in /proc may be depreciated
+        Each numerical directory in /proc is a current PID on the system.
+            The files in these PID directories contain metadata about the PID
+        /proc/self
+            The current process
+        /proc/cpuinfo
+            Additional kernel and hardware information
+    sysfs
+        /sys
+            See notes above
+    tmpfs
+        CURRENTLY AT
+
 Severe Disk Problems
     Solutions
+        debugfs
+            (Start with this solution first)
+            Allows you to look through the files and copy them elsewhere.
+            Will open the FS in read-only mode
+
         dd
             Try to extract the entire FS image from the disk with dd and transfer it to a partition on another disk of the same size
+
+            You still need to repair the FS before you mount it
+        Patching and Salvage
+            Try to patch the FS as much as you can, then mount it in read-only mode
+
+            You still need to repair the FS before you mount it
+
+
+
+
