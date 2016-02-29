@@ -447,6 +447,10 @@ Checking and Repairing Filesystems
     Filesystems are basically a sophisticated database mechanism
 
     fsck MOUNT_POINT || FSTAB_NAME
+        Caveat
+            ext3, ext4 FSs
+                You normally dont have to check these systems manually with fsck because the journal system ensures data integrity
+                    Although, these FSs can still break
         WARNING
             Never use this on a mounted FS
                 The kernel may alter the disk as you run the check, which can cause runtime mismatches.
@@ -461,8 +465,17 @@ Checking and Repairing Filesystems
 
 
         Tool utilized to check a filesystem
-        fsck -b NUM
-            Ex: If you are recovering y
+        Recovering the superblock
+            Ex: if someone wrote to the beginning of the disk partition
+            mkfs superblock backup
+                You might be able to recover the FS with one of the superblock backups that mkfs creates
+            Solution
+                1) If you don't know the superblock
+                    mkfs -n
+                        Potentially view a list of superblock backup numbers (without adulterating data)
+                2)    fsck -b NUM
+                    Replace the corrupted superblock with one at NUM
+                
         -p
             Automatically fixes ordinary problems without prompting the user a million times
             aka: -a
@@ -474,3 +487,7 @@ Checking and Repairing Filesystems
                         When reconnecting this file, the fsck will place the file in "lost+found" of the FS, with a number as the filename.
 
                         You'll need to guess the name based on the content of the file
+Severe Disk Problems
+    Solutions
+        dd
+            Try to extract the entire FS image from the disk with dd and transfer it to a partition on another disk of the same size

@@ -46,6 +46,8 @@ AWS
   Firewall Ports
     2083 - Cpanel SSL access
     2082 - Cpanel nonSSL access
+
+  By default, some distros (including Amazon Linux) create ext2 FS's by default.  You want ext4
     
 
 Linux

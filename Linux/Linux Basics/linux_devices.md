@@ -136,6 +136,9 @@ dd
 
   dd copies data in blocks of a fixes suze.
 
+  Ex: Transferring a whole FS from one disk to another 
+    Extract the entire FS image from the disk with dd and transfer it to a partition on another disk of the same size
+  
   Ex: use dd with a character device and some common options
     dd if=/dev/zero of=new_file bs=1024 count=1
 
