@@ -1,5 +1,10 @@
 Key monitoring modules
   mod_status
+    graceful restart
+      For implications within a graceful restart
+        See apache_basics/apachectl -k graceful
+      
+
     Security issues
       If mod_status is loaded into the server, its capability is available in ALL configuration files (this includes per-directory files, ex: .htaccess)
         This may give unwanted access to sensitive information

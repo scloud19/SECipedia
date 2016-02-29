@@ -104,6 +104,22 @@ Apache
           apachectl -k graceful
             Will send SIG USR1 to the parent
 
+            Before issuing command
+              You need to check the semantics of the config files, etc.
+                Try starting httpd as non-root
+                  If there are no errors, it will attempt to open its sockets and logs, but it will fail 
+                    Failures
+                      non-root
+                      already bound ports
+                    Config errors
+                      Any failures that aren't listed above, thus you should make changes to configs before graceful restart
+
+            mod_status
+              Server stats
+                When this signal is sent, the server stats are NOT set to 0
+              G
+                Indicates the children which are still serving requests that were started before the graceful restart
+
             Process
               Causes the parent process to advise the children to exit after their current request
                 OR to immediately exit if they're not serving anything
@@ -112,14 +128,24 @@ Apache
             This will always respect the process control directive of the MPMs
               So, the number of processes and threads available for serving clients will be maintained throughout the restart process
 
-              CURRENTLY AT
-                Graceful Restart
-              http://httpd.apache.org/docs/current/stopping.html
+            Logging
+              To rotate the logs after sending USR1, use a suitable delay
+                Maybe set a 15 minute delay
+                  Look at your traffic patterns to estimate when all of the children will "reset" and give yourself some padding (maybe 5 mins)
+
+          apachectl -k graceful-stop
+            SIG:
+              WINCH
+
+            Causes the parent process to advise the children to exit after their current request
+
+            Once all the children have exited (or GracefulShutdownTimeout has been reached), the parent will exit.
+              If GracefulShutdownTimeout is met, a TERM signal will immediately terminate all children         
 
 
 
 
-            Once you have sent 
+            
     Apache Starting Process
       Runs as a daemon that executes continuously in the background to handle requests
 
