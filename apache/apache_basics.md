@@ -137,12 +137,31 @@ Apache
             SIG:
               WINCH
 
-            Causes the parent process to advise the children to exit after their current request
+            Process
 
-            Once all the children have exited (or GracefulShutdownTimeout has been reached), the parent will exit.
-              If GracefulShutdownTimeout is met, a TERM signal will immediately terminate all children         
+            1) Causes the parent process to advise the children to exit after their current request finishes
+            2) Parent will then remove its PidFile and cease listening on all ports
+              The parent will continue to run, and monitor children that are still handling requests
 
+              Once all the children have exited (or GracefulShutdownTimeout has been reached), the parent will exit.
+                If GracefulShutdownTimeout is met, a TERM signal will immediately be sent to (and terminate) all children         
 
+            In a graceful state, A TERM signal will immediately terminate the parent process and all children.
+              As the parent's PidFile will have been removed, you can't send this via apachectl/httpd
+
+            Gracefully upgrading httpd in PROD
+              graceful-stop allows you to run multiple identically configured instances of httpd concurrently.
+                This can be leveraged for live upgrading httpd
+                Ex: Gracefully stopping one httpd and concurrent starting the new httpd
+                  This needs to be double checked before actually doing this in live ENV
+
+                CURRENTLY AT
+                  http://httpd.apache.org/docs/current/stopping.html
+                  "The graceful-stop signal allows you to run multiple identically configured instances of httpd at the same time"
+                WARNING
+                  Can cause deadlocks and race conditions with certain configs
+                    Config directives/third-party module/persistent CGI
+                      If any of these 
 
 
             
