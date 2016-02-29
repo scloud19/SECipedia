@@ -344,6 +344,7 @@
         /boot - Contains kernel boot loader files.  These files pertain only to the first stage of the linux startup procedure.  This directory doesn't include information pertaining to service startups.
 
         /media - Some distros mount removable media here.  This can be a base attachment point for removable media such as flash drives. 
+        /lost+found - Ex: fsck can place files here if they have lost a name
         /mnt - Used to mount external file systems
         /proc - Provides system statistics through a       browsable directory-and-file interface.
              Provides info about running processes and kernel parameters
@@ -446,8 +447,30 @@ Checking and Repairing Filesystems
     Filesystems are basically a sophisticated database mechanism
 
     fsck MOUNT_POINT || FSTAB_NAME
-        Tool utilized to check a filesystem
         WARNING
             Never use this on a mounted FS
                 The kernel may alter the disk as you run the check, which can cause runtime mismatches.
                     EXCEPTION: Mount / read-only in single-user mode
+            fsck can seriously mess up a FS that is plagued by larger problems
+                Ex: hardware failure, device misconfiguration
+                You can usually see that there's a larger problem if fsck asks a LOT of questions in manual mode
+                    If you think that there might be other problems
+                        fsck -n
+                            To check the FS without modifying anything
+                            Then run fsck for real
+
+
+        Tool utilized to check a filesystem
+        fsck -b NUM
+            Ex: If you are recovering y
+        -p
+            Automatically fixes ordinary problems without prompting the user a million times
+            aka: -a
+            many linux distros use some form of -p at boot
+        If fsck finds a problem, it will prompt you for a next step
+            Example prompts
+                Reconnecting an inode
+                    The prog has found a file that doesn't appear to have a name
+                        When reconnecting this file, the fsck will place the file in "lost+found" of the FS, with a number as the filename.
+
+                        You'll need to guess the name based on the content of the file

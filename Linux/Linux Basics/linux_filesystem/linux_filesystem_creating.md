@@ -9,6 +9,8 @@ mkfs
         prints diagnostic output as it works, including:
           superblock
             A key component at the top level of the FS database.
+            File system metadata that defines the file system type, size, status, and information about other metadata structures
               It's important that mkfs creates a number of backups
+
             Record a few of the superblock backup numbers
               This will help you recover the superblock if the disk fails
