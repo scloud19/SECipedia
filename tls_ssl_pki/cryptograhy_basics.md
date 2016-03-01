@@ -26,6 +26,13 @@ Cryptographic primitives
 Symmetric Encryption
   aka private-key cryptography
 
+  Pros
+    Great at handling large amounts of data at fast speeds
+  Cons
+    Problems when multiple parties become involved
+      Ex:
+        Members of the same group must share the same key
+          The risk for compromise increases
   Process
     1) Alice and Bob agree on the encryption also and a secret key
     2) When Alice wants to send some data to Bob, she uses the secret key to encrypt the data.
@@ -33,6 +40,7 @@ Symmetric Encryption
 
   Safe as long as the key is a secret
 
+Asymmetric Encryption
 
 Encryption strength
   often measured via the key length
@@ -121,8 +129,24 @@ Ciphers
             CBC (Cipher Block Chaining Mode)
               The main mode in SSL/TLS
               The next "step up" from ECB
-              Initialization vector
+
+              Produces a Initialization vector (IV)
                 To mitigate determinism
+                Random
+                  Produces different output for all inputs
+                    *Even if the inputs are the same
+              Process
+                Ex: https://www.feistyduck.com/library/bulletproof/online/figs/crypto-cbc.png
+
+                1) Generate a IV that is the same length as the encryption block
+                2) The first block of plaintext is combined with the IV using XOR
+                  Ensures that the ciphertext is always different
+                3) Preform encryption
+                4) Utilize the ciphertext as the IV for the next stage in the chain (hence the name)
+                  Perform this step until all data has been encrypted
+                5) Transmit the ciphertext and IV to the receiving party
+
+            
             GCM
               Currently the best mode available
               Relatively new addition to TLS
