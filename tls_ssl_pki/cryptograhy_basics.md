@@ -87,10 +87,46 @@ Ciphers
 
       Solutions
         block cipher modes
-          Attempt to address the limitations
-          Sometimes add authentication into the process        
+          Cryptographic schemes that extend block ciphers
+          Allow encryption of data of variable length
 
-          CURRENTLY AT: https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#block-cipher-modes
+          Support confidentiality
+            But, only some block ciphers combine it with authentication
+
+          Certain modes transform block ciphers to stream ciphers
+
+          Block cipher modes
+            ECB (Electronic Codebook)
+              Only supports data lengths that are multiples of the block size
+                If you have data of a different length, then you need to apply padding before
+              Encryption process
+                1) Split the data into chunks that match the block size
+                2) Encrypt each block individually
+              Simplest mode possible
+
+
+              As block ciphers are deterministic, so is ECB
+                Problems that arise
+                  Patterns in ciphertext will appear that match patterns in plaintext
+
+                  An attacker can detect when a message is repeated
+
+                  An attacker can submit variations of plaintext for encryption, and observe the output
+                    Commonly possible in HTTP
+                    From brute forcing, can deduce patterns and guess other plaintext
+
+                    Ex: BEAST attack against TLS
+
+              An example of how not to design a block cipher mode
+            CBC (Cipher Block Chaining Mode)
+              The main mode in SSL/TLS
+              The next "step up" from ECB
+              Initialization vector
+                To mitigate determinism
+            GCM
+              Currently the best mode available
+              Relatively new addition to TLS
+              Provides confidentiality and integrity
 
   Stream Ciphers
     Most popular
