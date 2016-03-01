@@ -103,7 +103,35 @@ Adding ModSec to Apache
 
       Include /opt/modsecurity/etc/modsecurity.conf
 
-Starting ModSec
-  CURRENTLY AT
-    POWERING UP
-      https://www.feistyduck.com/library/modsecurity-handbook/online/ch03-configuration.html
+Enabling ModSec
+    ! "SecRuleEngine" directive
+        Allows you to quickly turn on/off MS
+        This directive always comes first
+        Works inside of Apache's container tags
+          Ex: <VirtualHost>, <Location>
+          You can control exactly where MS runs          
+        Recommended
+          Start in detection only mode
+            This ensures that nothing will be blocked
+              # Attaching MS to every transaction
+              ! SecRuleEngine DetectionOnly
+
+Important Configs that must be set
+    Info given in this format
+      Ex: Directive name
+            Directive Value
+            # Comment
+
+  Request Buffer Size Configs
+    # Should be corresponding configs for response
+      (Replace Request with Response)
+      Double check in docs
+    SecRequestLimit
+    SecRequestNoFilesLimit
+    SecRequestBodyLimit
+    SecRequestBodyLimitAction
+      ProcessPartial 
+        # Stop accepting resp. body data, but it will NOT block
+
+
+    

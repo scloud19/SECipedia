@@ -1,0 +1,3 @@
+Turning off MS
+  SecRuleEngine Off
+    In httpd.conf

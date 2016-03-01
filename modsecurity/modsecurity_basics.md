@@ -1,3 +1,7 @@
+Abbreviations
+  MS - ModSecurity
+  ! - A config in Apache's httpd.conf
+
 Core ideas of Modsecurity
   Blend between WAF and IDS
   Allows realtime monitoring, logging, and access control.

@@ -33,6 +33,10 @@ Symmetric Encryption
       Ex:
         Members of the same group must share the same key
           The risk for compromise increases
+        CURRENTLY AT
+          Symmetric encryption can’t be used on unattended systems to secure data. Because the process can be reversed by using the same key, a compromise of such a system leads to the compromise of all data stored in the system.
+            https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#block-cipher-modes
+
   Process
     1) Alice and Bob agree on the encryption also and a secret key
     2) When Alice wants to send some data to Bob, she uses the secret key to encrypt the data.
