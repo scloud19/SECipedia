@@ -1,3 +1,5 @@
+!! = Config that must be set
+
 Create all of the following
   This will be the basis for the principle directory hierarchy
   Make sure that there's an apache group that only has the user apache
@@ -116,22 +118,47 @@ Enabling ModSec
               # Attaching MS to every transaction
               ! SecRuleEngine DetectionOnly
 
-Important Configs that must be set
-    Info given in this format
-      Ex: Directive name
-            Directive Value
-            # Comment
+Configs
+  Info given in this format
+    Ex: Directive name
+          Directive Value
+          # Comment
 
-  Request Buffer Size Configs
-    # Should be corresponding configs for response
-      (Replace Request with Response)
-      Double check in docs
-    SecRequestLimit
-    SecRequestNoFilesLimit
-    SecRequestBodyLimit
-    SecRequestBodyLimitAction
-      ProcessPartial 
-        # Stop accepting resp. body data, but it will NOT block
+Request
+  Consist of
+    Headers
+      Always present
+    Body
+      Optional
+
+  # Allow MS to access request body
+  # This will also buffer the req body in RAM
+    # In most cases
+  !! SecRequestBodyAccess On
+
+  Directives that control how buffering is done
+    Directives that control request limits
+      These determine the max req body size that will be accepted for buffering
+      !!SecRequestNoFilesLimit 131072
+        # If uploads are supported, this is the largest file
+        # size that you will accept
+        # Uploads generally dont use RAM
+          # No opportunity for DoS, so its safe to allow
+          # larger uploads
+      !!SecRequestBodyLimit 1310720
+        # Max size of the request (for non-file uploads)
+        # Make this as small as possible
+        # Research this number for use case
+
+Request/Resp Buffer Size Configs
+  # Should be corresponding configs for response
+    (Replace Request with Response)
+    Double check in docs
+  !!SecRequestLimit
+
+  !!SecRequestBodyLimitAction
+    ProcessPartial 
+      # Stop accepting resp. body data, but it will NOT block
 
 
-    
+  
