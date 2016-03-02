@@ -226,3 +226,6 @@ Ciphers
 
       Decryption
         This process is simply reversed 
+
+CURRENTLY_AT
+  https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#digital-signatures

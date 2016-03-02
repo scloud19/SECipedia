@@ -1,9 +1,41 @@
  Linux File System
+
 		2 Components in a traditional Unix FS
 				Pool of data blocks
 						Where you store information
 				Database system
-						This manages 
+						This manages the data pool
+						Centered around an inode data structure
+
+							inode
+									A data structure used to represent a filesystem object (which can include a file/directory)
+										Ex: a directory inode contains a list of filenames and corresponding links to other inodes
+											The directory contains an entry for itself, its parent, and each of its children (either other directories or files).
+					
+
+									Stores the attributes and disk blocks location(s) of the data
+											The attributes can include: manipulation metadata (access, modify time, etc.) as well as owner and permission data.
+
+								IDed by numbers that are listed in an inode table
+
+								link count
+									as seen in ls -l
+
+									The number of total directory entries (across all directories) that point to an inode
+										$ ln file1 file2
+											Both of these files would point to the same inode
+												So usually both of their link count is 1 more than you'd expect
+
+								Viewing Inode details
+									To view the inode numbers for any directory
+										ls -i
+										stat
+											more detailed view
+
+				Ex in understanding:
+					In "How Linux Works: What every superuser should know"
+						Read the example in "4.5 Inside a Traditional Filesystem"
+
 
 		Partitioning vs File System manipulation
 				Remember, there is a big difference.
@@ -88,15 +120,6 @@
 										Use this to get full access from Linux
 								HFS+ (hfplus)
 										Mac systems
-
-
-
-
-
-
-
-
-
 
 		File system layout
 				Look at disk_structure.md
@@ -270,14 +293,6 @@
 
 
 
-
-		inode
-				A data structure used to represent a filesystem object (which can include a file/directory)
-
-				Stores the attributes and disk blocks location(s) of the data
-						The attributes can include: manipulation metadata (access, modify time, etc.) as well as owner and permission data.
-
-				In general, a directory is a list of names that are assigned to inodes.  The directory contains an entry for itself, its parent, and each of its children.
 
 		Proper to refer to "folders" as directories
 		Like a tree
