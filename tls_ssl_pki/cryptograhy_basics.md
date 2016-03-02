@@ -33,9 +33,6 @@ Symmetric Encryption
       Ex:
         Members of the same group must share the same key
           The risk for compromise increases
-        CURRENTLY AT
-          Symmetric encryption can’t be used on unattended systems to secure data. Because the process can be reversed by using the same key, a compromise of such a system leads to the compromise of all data stored in the system.
-            https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#block-cipher-modes
 
   Process
     1) Alice and Bob agree on the encryption also and a secret key
@@ -44,8 +41,31 @@ Symmetric Encryption
 
   Safe as long as the key is a secret
 
-Asymmetric Encryption
+Asymmetric Encryption (public key cryptography)
+  Keys
+    Uses two keys instead of one (as seen in symmetric encryption)
+    2 Keys: Public and Private
+      Both of these keys are linked to eachother
+        Public -> Private
+          If you encrypt data with someones public key
+            Only their corresponding private key to decrypt it
+        Private -> Public
+          If Data is encrypted with someone's private key
+            Anyone with the public key can decrypt
+            Use Case
+              Digital signature
+                Now you can vet the authenticity of a message
+  Pros
+  Cons
+    Rather slow and unsuitable for use with large quantities of data
+      limitations vs symmetric encryption
+        Computation
+          Asymmetric encryption must do a computationally more difficult task: it must be able to publish the encryption key without revealing the decryption key
+        Network bandwidth
+          To mitigate determinism, as
 
+
+      For this reason asymmetric encryption is leveraged for authentication and the negotiation of shared secrets.  In turn, these are utilized for faster symmetric encryption.
 Encryption strength
   often measured via the key length
 
@@ -95,7 +115,16 @@ Ciphers
 
       Deterministic
         Always produce the same output for the same input
+          aka without an element of randomness
+          
           Opens up a number of attacks
+
+            Asymmetric encryption problems
+              (or anytime an attacker knows the input and output)
+                Even if the output is encrypted, these problems still hold
+
+              In asymmetric schemes, anyone can leverage a public key and encrypt a message.  Thus, the attacker can know the input and output
+                Without an element of randomness, an attacker can simply enumerate until they get an input that matches the encrypted output that their attacking.
 
       Solutions
         block cipher modes
