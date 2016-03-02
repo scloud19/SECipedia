@@ -42,6 +42,8 @@ Symmetric Encryption
   Safe as long as the key is a secret
 
 Asymmetric Encryption (public key cryptography)
+  Most popular asymmetric encryption method
+    RSA
   Keys
     Uses two keys instead of one (as seen in symmetric encryption)
     2 Keys: Public and Private
@@ -59,13 +61,19 @@ Asymmetric Encryption (public key cryptography)
   Cons
     Rather slow and unsuitable for use with large quantities of data
       limitations vs symmetric encryption
-        Computation
+        Computationally expensive
           Asymmetric encryption must do a computationally more difficult task: it must be able to publish the encryption key without revealing the decryption key
         Network bandwidth
-          To mitigate determinism, as
+            In symmetric encryption, an attacker can't initially encrypt (because they hopefully don't have the private key).  Hence, under ideal circumstances, determinism isn't an issue and we don't need the randomness
+            
+            In asymmetric encryption, to mitigate determinism, it must add in an element of randomness.
+              This adds to the file size
+                Ex: RSA with a 1024-bit key
+                  You can encrypt a data element only up to 117 bytes, which yields a 128-byte value
 
 
-      For this reason asymmetric encryption is leveraged for authentication and the negotiation of shared secrets.  In turn, these are utilized for faster symmetric encryption.
+      For these reasons asymmetric encryption is leveraged for authentication and the negotiation of shared secrets.  In turn, these are utilized for faster symmetric encryption.
+
 Encryption strength
   often measured via the key length
 
