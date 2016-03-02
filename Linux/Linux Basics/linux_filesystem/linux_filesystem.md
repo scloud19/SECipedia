@@ -510,7 +510,54 @@ Special FSs
         /sys
             See notes above
     tmpfs
-        CURRENTLY AT
+        Mounted on /run (and other locations)
+        You can use your physical memory and swap space as temp storage
+
+Swap space
+    Not every partition on a disk contains a FS
+    Linux virtual memory system
+        When RAM is running low, it can move information to the swap space (or just swap) disk storage
+            This is called swapping
+                Pieces of idle programs are swapped to the disk in exchange for active pieces residing on the disk.
+    $ free
+        shows the current swap usage in kB
+
+    Aside, you can also utilize a FILE as swap space
+        Useful in scenarios were you don't have access to a partition
+
+    Using an entire disk partition as swap
+        1) Create the partition
+        2) $ mkswap PART_DEV
+            PART_DEV is the device that you want to make a partition
+            This creates a swap space signature on the device
+
+        3) swapon PART_DEV
+            Register the swap with the kernel
+            To REMOVE a swap partition leverage swapoff
+        4) /etc/fstab
+            Put a new entry for the swap so the system will leverage it on boot.
+            Ex entry:
+                UUID_OF_SWAP none swap sw 0 0
+    Cons
+        Performance implications
+            If your computer is constantly leveraging swap, this will be a problem.  
+                Disk I/O is too slow
+
+                High performance servers (HPS)
+                    Should avoid disk access if at all possible
+
+                    Sometimes, the kernel will swap out a process for a little more disk cache
+                        Problems
+                            In HPS servers, some sysadmins turn off swap altogether (to avoid the disk cache swapping)
+                                CONS:   
+                                    Out-of-memory killer (OOM Killer)
+                                        If a machine runs out of RAM and swap, the kernel will kill a process with the OOM killer.
+
+                                            Although, if you monitor/load-balance correctly, you will never get to this situation.
+
+
+
+
 
 Severe Disk Problems
     Solutions
