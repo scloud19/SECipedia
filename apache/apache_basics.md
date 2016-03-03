@@ -155,13 +155,17 @@ Apache
                 Ex: Gracefully stopping one httpd and concurrent starting the new httpd
                   This needs to be double checked before actually doing this in live ENV
 
-                CURRENTLY AT
-                  http://httpd.apache.org/docs/current/stopping.html
-                  "The graceful-stop signal allows you to run multiple identically configured instances of httpd at the same time"
                 WARNING
                   Can cause deadlocks and race conditions with certain configs
                     Config directives/third-party module/persistent CGI
-                      If any of these 
+                      If any of these utilizes a lock file or state file, we need to make sure that that multiple instances of httpd do not clobber each others files.
+                        Exceptions:
+                          These files contain the server PID, so they should coexist with multiple Apaches totally fine
+                            Mutex lock file
+                            ScriptSock (unix socket file)
+                  Other potential race conditions
+                    rotatelogs
+                      Multiple httpds that are attempting to rotate the same logfiles at the same time may destroy each other's files
 
 
             

@@ -1,0 +1,12 @@
+Multi-Processing Modules (MPMs)
+  Low-level modules
+  Allow for many different server architectures
+    Ex: 
+      
+
+  Responsible for
+    binding to network ports on the machine
+    accepting requests
+      spawning children to handle these requests
+
+
