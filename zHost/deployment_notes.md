@@ -1,3 +1,5 @@
+Look over my WAHH notes and make sure that the site is secure.
+
 In all main folders that will be leveraged for the deployment
   Read the _good_resources.md
 

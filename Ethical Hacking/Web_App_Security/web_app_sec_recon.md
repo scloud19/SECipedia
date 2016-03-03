@@ -309,8 +309,8 @@ Mapping the surface for Attack
       If one is testing an email service provider, are the user IDs simply emails addresses? If so, simply search for google for @domain.com
 
       Are the userIDs enumerable by design?
-        Ex: user1, user2, etc.?
-
+        Ex: user1, user2, etc.? OR any type of auto-generated username
+          If so, try to create several users in quick succession to see if there's a more granular pattern that you can deduce
       Look at timing differences between correct/incorrect usernames. 
 
       Do a DIFF on the exact payload differences between correct/incorrect username submissions (with a wrong password)
@@ -336,13 +336,29 @@ Mapping the surface for Attack
     Brute Forcing
       First, how does the app respond to successful attempts?  Then, deduce how it responds to unsuccessful attempts
         With this baseline, start your brute force.
+
   Passwords
     Attempt to discover any rules regarding password quality
       Either by creating accounts or looking for rules on the website
       If you can create an account, try changing its value to a weak one.
+
+      Some apps might not display password validation messages to the user
+        Instead, they can simply perform their own "sanitation"
+          Bad examples
+            Only use the first n characters of a password
+              Try removing the last character and see if you can still login
+            performing a case-insensitive check
+            Stripping unusual characters
+          Have a valid username/pass and see if differences in the password still allow you to log in.
+            This can greatly reduce the amount of brute forcing
     Attempt to login with a bad password 10 times
       If you control the account, attempt to login.
         If successful, there's probably no account lockout policy
+
+    Predictable initial passwords
+      If the app generates passwords, try to obtain several in quick succession
+        Any pattern?
+          If so, extrapolate and utilize in a brute-forcing attack with usernames
   Multistage login
     Logic Flaws
   Session state
@@ -351,6 +367,15 @@ Mapping the surface for Attack
     horizontal/vertical privilege escalation
   user impersonation functions
     privilege escalation
+    When bruteforcing passwords, you might get a situation where there are 2 "hits"
+      One of the passwords would likely be a backdoor that is implemented for user impersonation functions (for use with helpdesk, etc.)
+        Usually, this password is the same across all accounts
+
+        Reviewing passwords that have been brute-forced for a site
+          See if there are cases that multiple usernames have the same password
+    Look for cases where a username, etc are sent outside of the normal login process.
+      Try tweaking this value to another username and see if you can impersonate him
+        If you can, try impersonating an admin username
   Using cleartext communications
     Session hijacking, capture of credentials, etc.
   Off-site links
@@ -367,7 +392,17 @@ Mapping the surface for Attack
     Known vulnerabilities
   Known web server software
     Common config weakness, known software bugs
-
+  
+  Distribution of credentials
+    Activation links
+      1)If you're not required to set all creds during registration, find out how the app distributes these items to new user
+      2) If an acct activation URL is leveraged
+        Register several accounts in quick succession and see if any pattern can be deduced
+          if TRUE: predict future URLs and take ownership of accts
+      3) Try to reuse a single activation link many times
+            if true: You can potentially reset a current users password
+              Thus you can extrapolate the activation link pattern BACK in time (as well as FORWARDS) and pawn accts
+            if false: try to lock out an acct (many false passwords) and then use the activation link
 
 
 

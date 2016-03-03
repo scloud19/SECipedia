@@ -117,11 +117,45 @@ User impersonation features
   Usual context
     Given to helpdesk individuals so they can switch into a customers account.
 
+  Backdoor password
+    Sometimes as simple as a ubiquitous password that can be used with any username
+
   Problems
     As it's a 'hidden' function, it might have insufficient access controls.
       Ex:
        By finding the 'hidden' url
        A cookie such as "SessionOf=user" that can be easily changed.
+    If admin users can be impersonated, there could be a huge vulnerability
+
+Password Validation Policies
+  Some apps might not display password validation messages to the user
+    Instead, they can simply perform their own "sanitation"
+      Bad examples
+        Only use the first n characters of a password
+        performing a case-insensitive check
+        Stripping unusual characters
+
+Predictable usernames that can be enumerated
+  Ex: user1, user2, etc.
+
+Predictable Initial Passwords
+  Some applications generate an initial password for you
+    Is it truly random?
+
+    1 Ex: Users are created all at once or in sizable batches
+      Any pattern that you can deduce and extrapolate to other users?
+        Is it derived from something that can be easily understood? Ex: username, title, etc.
+      This is most common in intranet-based corporate apps
+        Ex: Where every employee has an acct and gets a notification of her password.
+
+Insecure distribution of creds
+  Account activation url
+    Usually allows a user to set their own password, etc.
+
+    Look for patterns in this url, or try to enumerate over its values
+
+CURRENTLY AT
+  Implementation Flaws in Authentication
 
 
 
