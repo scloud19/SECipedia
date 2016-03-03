@@ -1,5 +1,6 @@
 T: Action for tutorial
 
+
 Security Tips In Apache
   Always stay updated!
     Subscribe to the main mailing list for various posts on server upgrades and security issues (important issues only)
@@ -496,3 +497,4 @@ Security Tips In Apache
                 Tutorial: Show security category section.
 
                 Make sure to look through code, etc.
+

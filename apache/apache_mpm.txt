@@ -1,12 +1,71 @@
+dir = directive
+
 Multi-Processing Modules (MPMs)
   Low-level modules
   Allow for many different server architectures
+  Only one MPM module can be utilized for a given server
     Ex: 
-      
-
+      threaded mpms
+        ex: worker/event
+          good for sites that need large scalability
+      non/threaded mpms
+        ex: prefork
+          good for sites that need stability and compatibility with legacy software
   Responsible for
     binding to network ports on the machine
     accepting requests
       spawning children to handle these requests
 
+  Implementing MPMs
+    Default on *nix
+      event mpm
+        The vast majority of time
 
+  Ways that an MPM can be implemented
+    Static Module
+      compiled into the server
+      $ httpd -l
+        To see all modules that are compiled into the server
+      
+    DSO module
+      Dynamic
+        Allows for the MPMs to be easily "swapped out"
+      Ex loading in httpd.conf
+        LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+
+  event mpm
+    Designed to allow more requests to be served simultaneously by passing off some processing work to the listener threads
+      This frees up the worker threads to serve new requests
+    Problems that this module aims to solve
+      "keep alive problem" in HTTP
+        After a client completes the first request, it can keep the connection open, sending further requests using the same socket
+          Pros
+            This saves significant overhead in creating TCP connections
+          Cons
+            Apache traditionally keeps an entire process/thread waiting for data from the client
+              This consumes valuable resources
+
+        Solving the problem
+          dedicated listener thread
+            the event mpm uses a dedicated listener thread for each process
+              This handles
+                The listening sockets
+                All sockets that are in the "Keep alive" state
+                Sockets where the handler and protocol filters have done their work
+                Sockets where the only remaining action item is to send the data to the client
+
+    vs worker mpm
+      The event mpm is based on the worker mpm
+      worker mpm
+        implements a hybrid multi-process multi-threaded server.
+          A single control process (the parent) is responsible for launching child processes
+            Child processes
+              ThreadsPerChild dir
+                Each child creates a fixed number of server threads as specified in the dir.
+              Have a listener thread which listens for connections and passes those connections off to a worker thread for processing once they arrive
+
+    Notable dirs
+      ThreadsPerChild (as seen in this doc)
+      
+      AsyncRequestWorkerFactor
+        The total am
