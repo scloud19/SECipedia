@@ -243,6 +243,44 @@ Analyzing the Application
       auth mechanisms/supporting logic
         Ex: user registration, password change, acct. recovery
 
+        "Fail Open" Logic Mechanisms
+          1) Perform a valid login using an account that you control.  
+            Note every item of data in the req/resp cycle.
+          2) Repeat the login process many times, while submitting data in unexpected ways.
+            Ex: In every input sent by the client (cookies, headers, etc.)
+              Submit an empty string
+              Remove the name/value pair altogether
+              Submit very long/short values
+              Submit strings instead of numbers (and vice versa)
+              Submit the same item multiple times
+                With the same and different values
+            3) With each malformed request, review the apps response and see what divergences there are from the base case
+              After you find multiple cases, start submitting these all at the same time
+
+          Multistage Login Mechanisms
+            1) Perform a complete, valid login using an account that you control.
+              Record every piece of data in your proxy
+                a)Sort this data by each distinct phase in the login process
+                  Is any single piece of information collected more than once?
+                  Does data keep getting submitted via a hidden form field? cookie? or a URL param?
+            2) Repeat #1 but with malformed requests
+              Exs:
+                Try performing the login steps in a different sequence
+
+                Try proceeding directly to any given stage in the login process and starting the process from there
+            3) If a datum is submitted more than once, try submitting a different value at different stages.  Is the login still successful?
+              Maybe this data is unconditionally trusted once it has been initially validated
+                Thus try to switch more sensitive items, such as user_id, etc.
+              Sometimes data is validated across multiple stages, but against different mechanisms.
+                Try creating 2 valid users and blending valid information from both during different steps, etc.
+            4) Watch for any dta being transmitted via the client that wasn't directly entered by the user.
+              The app may be using this info to store information about the state of the login process (and unconditionally trust it)
+                Ex: In phase 3, you notice:
+                  stage2=true
+                    You might be able to advance to stage 3 immediately by setting this value
+
+
+
         Forgot my password functions
           See if it's vulnerable to brute forcing
 
@@ -338,7 +376,22 @@ Mapping the surface for Attack
         With this baseline, start your brute force.
 
   Passwords
-    Attempt to discover any rules regarding password quality
+    Insecure storage of passwords
+      Are there any instances where the user's password is transmitted back to the client?
+        This indicates that passwords are being stored insecurely
+          Either in cleartext or using reversible encryption
+
+      If there is a command/query execution vulnerability
+        Attempt to find the location within the apps database/file system where the creds are stored
+          1) Are the passwords being stored in an unencrypted form?
+          2) If the passwords are hashed, check for non-unique values
+            This indicates
+              An account has a common or default password
+              The hashes are not being salted
+          3) If the password is hashed with a standard algo in an unsalted form
+            Google the hash to determine the corresponding cleartext value
+
+      Attempt to discover any rules regarding password quality
       Either by creating accounts or looking for rules on the website
       If you can create an account, try changing its value to a weak one.
 
@@ -361,6 +414,12 @@ Mapping the surface for Attack
           If so, extrapolate and utilize in a brute-forcing attack with usernames
   Multistage login
     Logic Flaws
+      "Random" Questions
+        If one of the login stages uses a randomly varying question
+          Is the question being submitted with the answer?
+            If so, if you know another question that the user has submitted, submit this instead
+            If not, keep logging in and cycle the questions
+              If you get the same questions, see if a cookie has been set, etc.
   Session state
     predictable tokens, insecure handling of tokens
   access controls

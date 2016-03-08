@@ -82,3 +82,67 @@ Handling Attackers
             Exs to "by time":
               Respond to attackers requests increasingly slowly
               Terminate the attacker's session
+
+Securing Authentication
+  Strong Creds
+    Suitable minimum password quality requirements should be enforced.
+      Ex: Enforcing a...
+        (Note: you must look at the cost/benefit with usability with these)
+        Min length
+        Max password time
+        Alphabetic, numeric, !@ type symbols
+        Appearance of both uppercase/lowercase chars
+        avoidance of dictionary words, names, common passwords, user names in passwords
+        password uniqueness policy (on password change)
+          As with most security measures, one can set set password requirements depending on privs
+
+        Any system-generated usernames/pass' should be created with sufficient randomness
+
+    Handle Creds Secretively
+      Always utilize SSL
+      If using HTTP
+        Always have the login form itself loaded via HTTPS
+          DONT switch to HTTPS at the point of login submission
+      A random salt should be generated for EACH password
+      "Remember me" functions
+        Should remember only non-secret items such as usernames
+          For a non security critical app, potentially allow users an ability to "auto login"
+
+    If you're generating a password and sending it to a user (email, text, etc.) it should be time limited
+      The user should be required to change the password on first login and told to destroy the previous communication after first use
+    Capture certain parts of a users login via drop-down menus rather than text fields
+      This will prevent SIMPLE keyloggers from capturing all the data the user submits
+
+    Validating Creds Properly
+      The app should use a catch-all exception handlers around all API calls.
+        These should delete all session and method-local data being used to control the state of the login process
+        These should also invalidate the current session
+          This forces a user to log out even if auth is somehow bypassed
+
+        Do not allow user impersonation features on public facing servers
+
+      Multistage logins
+        All data about progress through the stages and the results of previous validations (i.e. did Stage 1 successfully pass) should NEVER be stored or interface with the client
+
+        No information should be submitted more than once by the user
+          There should be no way that the user can modify data that was already collected and/or validated
+            Ex: Even a username shouldn't be submitted multiple times.  This should be set once on a server session object and referenced from there (on the server).
+
+        The first task at every stage should be to verify that the prior stages have been correctly completed.
+          If not, stop the auth process
+
+        Never disclose which stage of the login failed
+          The application should aways proceed through all stages of the login
+            even if the user submitted ANY invalid input
+              including an invalid username
+          If the login failed, just have a generic "login failed" message
+
+        Randomly varying question
+          Used so someone who observed the users input couldn't replay the login sequence
+
+          For multistage logins, make sure the users ID themselves in an initial stage and the random question is presented at a later stage
+            Thus, you can store the question in a serverside object to make sure that the user is presented with the SAME question until they answer it successfully.
+              If not, one could easily cycle through the questions on subsequent logins
+
+          Store the question that has been asked on the server.
+            If it was on the client, the user could simply submit the question/answer combo that they want.

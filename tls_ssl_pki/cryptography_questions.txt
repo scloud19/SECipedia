@@ -1,0 +1,9 @@
+In the context of digital signing, how is RSA and DSA different?
+
+forward secrecy
+          Problem
+            Computer systems often contain a critical configuration weakness that allows for decryption of all previously recorded internet traffic
+
+            The most common key-exchange mechanism in TLS is based on the RSA algo
+              The RSA key used for the key exchange can also be used to decrypt all previous conversations
+                Thus RSA doesn't support FORWARD secrecy.

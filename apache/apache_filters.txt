@@ -1,0 +1,61 @@
+Filter Chain
+  Enables applications to
+    pre-process incoming data
+    post-process outgoing data
+  Is essentially independent of the traditional request/response cycle process in apache
+
+
+
+  mod_ext_filter
+    Any CLI that you implement that interacts through STDIN/STDOUT can be leveraged as an Apache Filter.
+
+  Provider
+    A filter that is inserted dynamically
+
+  mod_filter
+    Allows the filter chain to be configured dynamically at run time.
+      Ex: Setting up a proxy to rewrite HTML with an HTML filter and GIF images with a completely separate filter.  This occurs even though the proxy has no idea what the request will be.
+        This works by leveraging a filter harness
+
+      Filter harness
+        These work by dispatching to different providers according to the actual contents at runtime.
+
+        Any filter may be either inserted directly in the chain and run unconditionally, or used as a provider and run dynamically
+          Exs:
+            an HTML processing filter that will only run if the content is text/html
+
+  Exposing Filters as HTTP services
+    mod_reflector
+      Accepts POST requests from clients, runs the POST body through the output filter stack, and sends that as the response
+      Ex: You can utilize the mod_deflate module to provide a general compression service, or an image transformation filter might be turned into an image transformation service.
+
+  Implementing Filters
+    Via 2 ways: Simple, Dynamic
+      you should use one or another
+        mixing can have unexpected consequences
+        Ex: Simple input filtering can be mixed with either simple/dynamic output filtering
+
+      Simple Way
+        Static filtering chains
+        The only way to configure input filters
+        Sufficient for output filters where you need a static filter chain
+
+        Relevant Directives
+          SetInputFilter
+          SetOutputFilter
+          AddInputFilter
+          AddOutputFilter
+          RemoveInputFilter
+          RemoveOutputFilter
+
+        Dynamic Way
+          Enables both static and flexible filtering chains
+
+          Relevant Directives
+            (In general, look through mod_filter)
+            FilterChain
+            FilterDeclare
+            FilterProvider
+
+
+

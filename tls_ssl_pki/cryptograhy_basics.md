@@ -16,12 +16,44 @@ Common Terms
     Ex: 40 bit key
       Is 5 bytes
       40 bit length corresponds to a total of 2^40 possible keys
+  entropy
+    The randomness collected by an application (or OS) for use in cryptography
+      Often collected from
+        Hardware sources
+        Mouse movements
+        Keystrokes
+        Specially provided randomness generators 
+          Entropy collected from these sources is a type of true random number generator (TRNG)
 
+          true random number generator (TRNG)
+            CONS
+              The approach is not reliable enough to use directly
+                Ex: You might need to generate a 4096-bit key, but the system might only have a few hundred bits of entropy available
+                  If there aren't enough external events to collect enough entropy, the system can stall
+                    Thus, in practice, pseudorandom number generators (PRNGs) are often leveraged
+          pseudorandom number generators (PRNGs)
+            seeding
+              Use small amounts of truly random data to initialize
+            From the seed, PRNG produce unlimited amounts of pseudorandom data
+
+            CONS
+              While PRNGs can be leveraged in programming, they aren't cryptographically secure (even if the output looks statistically random)
+                Thus, we need cryptographically secure PRNGs (CSPRNGs)
+
+                CSPRNGs
+                  PRNGs that are also unpredictable
 
 Cryptographic primitives
   the building blocks of cryptography
 
   Alone aren't useful, but very powerful when combined
+
+Random Number Generation
+  Cryptography is based on the quality of random number generation
+    Problems
+      Computers aren't very good at random number generation
+        This is true because true random numbers can only be obtained by observing a certain physical processes
+          In the absence of this, computers focus on collecting small amounts of entropy
 
 Symmetric Encryption
   aka private-key cryptography
@@ -74,14 +106,67 @@ Asymmetric Encryption (public key cryptography)
 
       For these reasons asymmetric encryption is leveraged for authentication and the negotiation of shared secrets.  In turn, these are utilized for faster symmetric encryption.
 
-Encryption strength
-  often measured via the key length
+Cryptography strength
+  often measured using the number of operations that need to be performed to break a particular primitive
+    This is presented as bits of security
 
-  It's assumed that the keys are random
-    This means that the keyspace is defined by the number of bits in a key
-      Ex: 128-bit key
-        Considered VERY secure
-        One of 340 billion billion billion billion combinations
+  Accuracy
+    The strength of cryptography can't be measured accurately
+      Due to this, you'll find many different, albeit similar, recommendations
+    ENISA 
+      European Union Agency for Network and Information Security
+
+      Provides guidance on what types of crypto to use for certain use cases
+        To view ENISA and other recommendations
+          https://www.keylength.com/
+
+    Additional Info
+      https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html
+        Table 1.3
+          An encryption strength mapping for common key sizes
+
+    Security is a function of
+      time
+        Changes of strength into the future
+          "items are secure today, and insecure in the future"
+        
+        The strength of encryption changes
+          Why?
+            Computers will continue to get faster/cheaper
+
+      resources
+        A key size could be difficult for an individual to break, but easy for an organization
+
+      Thus, when looking at the strength that you need, always ask
+        Secure is whom? and for how long?
+
+    
+      
+
+    Bits of security
+      Ex: 
+        128 bits of security (2^128 operations)
+          is sufficient for most deployments
+        256 bits of security
+          Need very long-term security or a huge safety margin
+  
+      Symmetric cryptographic operations
+        Adding one more bit of security makes the key twice as strong
+
+      Complications
+        Not all operations are equiv in terms of security
+          Ex: For a given security need, there are different bit values for Symmetric, Asymmetric, DH, Elliptic Curve, and Hash functions
+          Ex: Table 1.2 https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#protocols
+
+  Encryption strength
+    often measured via the key length
+
+    It's assumed that the keys are random
+      This means that the keyspace is defined by the number of bits in a key
+        Ex: 128-bit key
+          Considered VERY secure
+          One of 340 billion billion billion billion combinations
+
 
 Ciphers
   Are divided into two groups
@@ -227,5 +312,94 @@ Ciphers
       Decryption
         This process is simply reversed 
 
-CURRENTLY_AT
-  https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#digital-signatures
+  Digital Signatures
+    A cryptographic scheme that allows one to verify the authenticity of an entity
+
+    Strength 
+      Depends on
+        The individual strengths of the encryption, hashing and encoding
+
+    Are possible through asymmetric encryption
+      A message signed by a private key can be vetted with a public key
+      The exact approach depends on the cryptosystem
+      Ex Creating a signature with RSA
+        Note
+          Not all digital signatures are created as seen with RSA
+          RSA is different because it can be leveraged for both encryption AND digital signing
+            DSA/ECDSA
+              Popular public key algos
+              Can't be used for encryption and thus rely on different approaches for signing
+        1) Calculate a hash of the document that's being signed
+          The size of the document doesn't matter
+            The output will always be fixed
+              Ex: output = 256 bits for SHA256
+        2) Encode the resulting hash and some additional metadata
+          The receiver needs to know the hashing algo to utilize before she can process the signature
+        3) Encrypt the encoded hash using the private key
+          The result of this step is the signature
+          You can add this to the document to VET its authenticity
+
+      Ex: Vetting a signature with RSA
+        1) Receiver takes the document and calculates the hash using the same algo
+        2) Uses your public key to decrypt the message and recover the hash
+          In this process
+            Vets that the correct algo was used
+            Compare the decrypted hash with the one that was calculated in step 1
+
+    MAC
+      See cryptography_hash_functions.txt
+      Is a type of digital signature
+      CONS
+        Still require the sharing of a private key
+
+Protocols/Schemes
+  An ideal protocol will provide these items (if the situation needs it)
+    Three phases
+      Handshake 
+        Includes authentication and a key exchange scheme
+        Authentication
+          Is the other party really who they say they are?
+          Ex: Can leverage public key cryptography to authenticate each party. For example, one party can create a random number and ask the other to sign it.
+
+          Key exchange scheme
+            Negotiates encryption keys securely
+              Ex RSA Key Exchange:
+                Party 1 could generate all the keys and send them to Party 2 by encrypting them with Party 2's public key
+              Ex: Diffie-Hellman (DH) key exchange protocol
+                Slower, but has better security
+
+      Data exchange phase
+        Provides confidentiality and integrity
+      Shutdown sequence
+        A special message to mark the end of a conversation
+          Without it, a MiM attack could prematurely end the conversation
+
+  Combine cryptographic primitives into something useful
+  Aim to provide
+    confidentiality, integrity, authentication
+
+  Sequence numbers
+    Are assigned to each message that's sent
+    Are a part of the MAC calculation
+
+    For MiM attacks, this mitigates the attackers ability to
+      drop messages
+      replay a sent message
+
+    Warning Signs
+      If there's a gab in the numbers
+        There's a message missing
+      If there's a duplicate number
+        We know that there's a replay attack
+
+
+
+
+
+
+
+
+
+
+
+

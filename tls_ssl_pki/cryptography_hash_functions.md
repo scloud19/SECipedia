@@ -42,12 +42,17 @@ Verifying Data integrity
       Ex: An eavesdropper cant decrypt the ciphertext, but they could replace the legitimate ciphertext with their own.
         Solution
           Sending a MAC with the ciphertext         
+
   Message Authentication Code (MAC)
     EX: https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/MAC.svg/661px-MAC.svg.png
     
     Short piece of information used to authenticate a message
-  
-    MAC algorithm
+
+    Is a type of digital signature
+      It can be used to verify authenticity provided that the secret hashing key is securely exchanged ahead of time
+        CONS
+          As a digital signature, it's limited because it still relies on a private secret key
+    MAC algorithm 
       Cryptographic function that extends hashing with authentication
       SOMETIMES called a keyed (cryptographic) hash function
         there can be other creation mechanisms

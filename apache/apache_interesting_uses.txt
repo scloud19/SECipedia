@@ -1,0 +1,2 @@
+mod_ext_filter
+  Any CLI that you implement that interacts through STDIN/STDOUT can be leveraged as an Apache Filter.

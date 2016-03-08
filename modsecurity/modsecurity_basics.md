@@ -42,6 +42,8 @@ Core ideas of Modsecurity
 Important usage scenarios
 
   Real-time security monitoring and access control
+    NOTE: ModSecurity cant protect against traffic that's encrypted.
+    
     Persistent storage mechanism
       Enables you to track system events time and perform event correlation
 

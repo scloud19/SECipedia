@@ -1,5 +1,6 @@
 Definitions
   MPM- Multi-Processing Module
+  ! - Apache config
 
 Apache
   Install Apache on AWS Linux
@@ -35,7 +36,19 @@ Apache
 
   Apache Structure
     Modular Nature
-      Modules are the "powerhouses" that run various parts of apache.  Directives are used to configure these modules and are place in /etc/httpd/conf/httpd.conf
+      Modules are the "powerhouses" that run various parts of apache.  
+
+      Directives
+         are used to configure these modules and are place in /etc/httpd/conf/httpd.conf
+
+         Logic
+          CURRENLY_AT
+            http://httpd.apache.org/docs/current/expr.html
+           Inside of Modules/Directives there is access to an Apache "API" for logic.
+            There are certain variables, conditional statements, and functions that you can leverage inside of directives/modules as needed.
+              http://httpd.apache.org/docs/current/expr.html
+
+
 
       Server binary contains these modules
         core

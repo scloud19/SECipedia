@@ -1,0 +1,26 @@
+Apache Handler
+  A "handler" is an action that Apache invokes when a file is called
+
+  May be configured explicitly
+    via filename ext or file location
+      These are INDEPENDENT of file type
+
+  Added Via
+    Built into the server
+    Included in a module
+    Action directive
+
+  Files
+    Normally, all files are simply served by the server
+      Although, certain file types invoke a handler
+
+  Examples
+    Modify static content using a CGI script
+
+    ! Action add-footer /cgi-bin/footer.pl
+    ! AddHandler add-footer .html
+
+    The CGI script is then responsible for sending the originally requested document (as referenced by the PATH_TRANSLATED env var)
+
+
+

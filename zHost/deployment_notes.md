@@ -1,12 +1,21 @@
 Look over my WAHH notes and make sure that the site is secure.
 
+Make sure to read core_defenses.md
+
+Before doing my own configs, search the internet for secure Configuration guides on a given piece of software
+  Ex: https://www.nsa.gov/ia/mitigation_guidance/security_configuration_guides/index.shtml
+
+
+Overall
+  cryptography_attack_mitigation.md
+
 In all main folders that will be leveraged for the deployment
   Read the _good_resources.md
 
 Review everything in this document before deployment
 
 Everything you utilize, make sure to get notifications of updates.
-Apache
+
   Look at https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#Installation_for_Apache
 
   Make sure that the Apache version is the latest
@@ -62,6 +71,23 @@ Linux
 
   SSL
     https://www.ssllabs.com/projects/best-practices/index.html
+
+    Accuracy
+    The strength of cryptography can't be measured accurately
+      Due to this, you'll find many different, albeit similar, recommendations
+    ENISA 
+      European Union Agency for Network and Information Security
+
+      Provides guidance on what types of key lengths to use for certain use cases
+        To view ENISA and other recommendations
+          https://www.keylength.com/
+            Out of all of them, try to model off of ENISA
+
+    Additional Info
+      https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html
+        Table 1.3
+          An encryption strength mapping for common key sizes
+
 
 Cpanel/WHM
   go through cpanel_install_setup.md

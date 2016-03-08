@@ -70,13 +70,6 @@ Multi-Processing Modules (MPMs)
           Allow you to process a single HTTP request using non-blocking I/O and depending on the implementation, in separate threads
         Unlike previous MPMs, the event mpm don't need a fixed dedicated worker thread
 
-        CURRENTLY AT: 
-          http://httpd.apache.org/docs/current/mod/event.html
-            A similar restriction is currently present for requests involving an output filter that needs to read and/or modify the whole response body
-
-            After I'm done reading this, go back to http://httpd.apache.org/docs/current/mpm.html and look for any links that I didn't read
-
-
     Notable dirs
       ThreadsPerChild (as seen in this doc)
       

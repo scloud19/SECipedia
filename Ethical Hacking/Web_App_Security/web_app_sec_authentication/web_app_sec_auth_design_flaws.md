@@ -1,3 +1,49 @@
+Implementation Flaws in Authentication
+  Fail-Open Logic Mechanisms
+    Ex:
+      public Response checkLogin(Session session) {
+        try {
+          String uname = session.getParameter(“username”);
+          String passwd = session.getParameter(“password”);
+          User user = db.getUser(uname, passwd);
+          if (user == null) {
+            // invalid credentials
+            session.setMessage(“Login failed. “);
+            return doLogin(session);
+          } 
+        }
+        catch (Exception e) {}
+        // valid user
+        session.setMessage(“Login successful. “);
+        return doMainMenu(session);
+      }
+
+      If the call the db.getUser() throws an exception for some reason (ex: a null pointer exception from a request not having a username/pass param), the login won't exactly FAIL
+        While the resulting session might not be bound to a particular user (and thus not fully functional), an attacker could potentially still gain access to sensitive functionality.
+
+      While an app developer might not make a mistake this silly, this type of problem can exist when multi-stage functionality exists (and/or several layers of method calls)
+
+  Defects in Multistage login mechanisms
+    Logic Flaws
+      If a user is at stage 2, the app assumes that the user successfully passed stage 1
+        This includes validations
+          Ex: Maybe the logic mechanism validates if a user has an admin role at phase 1, and then trusts at phase 2 whatever role flag is entered.
+            Other validation examples: if the users account has expired, is locked out, etc.
+          Ex: The app authenticates in phase 1 the username/pass, and then trusts the username hidden form field in later stages.
+      
+Secret Question Logic Flaws
+  Out of a list of predefined questions that the user has answered, some apps select an entry randomly
+    Idea: By doing this, if an attacker witnessed the previous login steps, this element of "randomness" will lock them out
+
+    Flaws
+      App may present a randomly chosen question in the UI, but then store the details within a hidden form field/cookie
+        Then, the Q/A are both sent to the server
+          Obviously an attacker can just submit the Q/A combination that they already recorded
+      App presents a randomly chosen question on each login
+        But, doesn't remember the LAST question that it gave to the user.
+        An attacker can simply go through the login process again and cycle through the questions.
+          Usually a user won't invoke an account lockout for this.
+
 Bad Passwords
   Many web apps give no/minimal quality control on user passwords.
     Ex: Some web apps allow passwords that are
@@ -6,7 +52,13 @@ Bad Passwords
       Same as the username
       Set to a default value
 
-  Admin passwords might not be subjected to the same stringent guidelines
+    Admin passwords might not be subjected to the same stringent guidelines
+
+    Insecure storage
+      If passwords are being hashed using a standard algorithm such as MD5/SHA-1
+        Allows an attacker to simply look up observed hashes in a rainbow table
+
+
 
 Brute-Forcible Login
   If a user tries so many logins within a timeframe, deny him/her
@@ -154,8 +206,7 @@ Insecure distribution of creds
 
     Look for patterns in this url, or try to enumerate over its values
 
-CURRENTLY AT
-  Implementation Flaws in Authentication
+
 
 
 
