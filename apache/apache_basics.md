@@ -42,11 +42,151 @@ Apache
          are used to configure these modules and are place in /etc/httpd/conf/httpd.conf
 
          Logic
-          CURRENLY_AT
-            http://httpd.apache.org/docs/current/expr.html
            Inside of Modules/Directives there is access to an Apache "API" for logic.
-            There are certain variables, conditional statements, and functions that you can leverage inside of directives/modules as needed.
-              http://httpd.apache.org/docs/current/expr.html
+            There are certain variables, conditional statements (if, etc), comparison operators and functions that you can leverage inside of directives/modules as needed.
+
+              Notable binary operators
+                -ipmatch
+                  IP address matches address/netmask
+
+              Notable unary operators
+                Unary operators take one argument
+                -d
+                  The argument is treated as a filename.
+                  Returns true if the file exists and is a directory
+
+                  There is a bunch of other operators that deal with the filesystem (in a similar way)
+                    See: Unary Operators
+                      http://httpd.apache.org/docs/current/expr.html
+
+              Notable Functions
+                req, http
+                  Get HTTP request header; header names may be added to the Vary header, see below  
+                req_novary  Same as req, but header names will not be added to the Vary header  
+                resp  Get HTTP response header  
+                reqenv  Lookup request environment variable (as a shortcut, v can be used too to access variables). 
+                osenv Lookup operating system environment variable  
+                note  Lookup request note 
+                env Return first match of note, reqenv, osenv 
+                tolower Convert string to lower case  
+                toupper Convert string to upper case  
+                escape  Escape special characters in %hex encoding  
+                unescape  Unescape %hex encoded string, leaving encoded slashes alone; return empty string if %00 is found  
+                base64  Encode the string using base64 encoding 
+                unbase64  Decode base64 encoded string, return truncated string if 0x00 is found  
+                md5 Hash the string using MD5, then encode the hash with hexadecimal encoding 
+                sha1  Hash the string using SHA1, then encode the hash with hexadecimal encoding  
+                file  Read contents from a file (including line endings, when present)  yes
+                filesize  Return size of a file (or 0 if file does not exist or is not regular file)
+
+              Variables
+                %{VAR_NAME}
+                  Note that the availability of certain variables might depend on the phase of the request processing in which it's evaluated.
+                    Ex: An expression used in an <If> directive is evaluated before auth is done.
+                      Thus {REMOTE_USER} will not be set
+
+                that one has access to
+                  Request headers variables
+                    HTTP_ACCEPT
+                    HTTP_COOKIE
+                    HTTP_FORWARD
+                    HTTP_HOST
+                    HTTP_PROXY_CONNECTION
+                    HTTP_REFERER
+                    HTTP_USER_AGENT
+                    (Note: Values of other headers can be obtained with req function )
+
+                  Other request related vars
+                    REQUEST_METHOD
+                      The HTTP method of the incoming request
+                    REQUEST_SCHEME
+                      The scheme part of the request's URL
+                    REQUEST_URI
+                      The path part of the request's URI
+                    REQUEST_FILENAME
+                      The full local filesystem path to the file or script matching the request, if this has already been determined by the server at the time REQUEST_FILENAME is referenced. Otherwise, such as when used in virtual host context, the same value as REQUEST_URI
+                    LAST_MODIFIED
+                      The date and time of last modification of the file in the format 20101231235959, if this has already been determined by the server at the time LAST_MODIFIED is referenced.
+                    SCRIPT_USER
+                      The user name of the owner of the script.
+                    SCRIPT_GROUP
+                      The group name of the group of the script.
+                    PATH_INFO
+                      The trailing path name information, see AcceptPathInfo
+                        PATH_INFO EX:
+                          Assume the location /test/ points to a directory that contains only the single file here.html. Then requests for /test/here.html/more and /test/nothere.html/more both collect /more as PATH_INFO.
+                    QUERY_STRING
+                      The query string of the current request
+                    IS_SUBREQ
+                      "true" if the current request is a subrequest, "false" otherwise
+                    THE_REQUEST
+                      The complete request line (e.g., "GET /index.html HTTP/1.1")
+                    REMOTE_ADDR
+                      The IP address of the remote host
+                    REMOTE_HOST
+                      The host name of the remote host
+                    REMOTE_USER
+                      The name of the authenticated user, if any (not available during <If >)
+                    REMOTE_IDENT
+                      The user name set by mod_ident
+                    SERVER_NAME
+                      The ServerName of the current vhost
+                    SERVER_PORT
+                      The server port of the current vhost, see ServerName
+                    SERVER_ADMIN
+                      The ServerAdmin of the current vhost
+                    SERVER_PROTOCOL
+                      The protocol used by the request
+                    DOCUMENT_ROOT
+                      The DocumentRoot of the current vhost
+                    AUTH_TYPE
+                      The configured AuthType (e.g. "basic")
+                    CONTENT_TYPE
+                      The content type of the response (not available during <If >)
+                    HANDLER
+                      The name of the handler creating the response
+                    HTTPS
+                      "on" if the request uses https, "off" otherwise
+                    IPV6
+                      "on" if the connection uses IPv6, "off" otherwise
+                    REQUEST_STATUS
+                      The HTTP error status of the request (not available during <If >)
+                    REQUEST_LOG_ID
+                      The error log id of the request (see ErrorLogFormat)
+                    CONN_LOG_ID
+                      The error log id of the connection (see ErrorLogFormat)
+                    CONN_REMOTE_ADDR
+                      The peer IP address of the connection (see the mod_remoteip module)
+                    CONTEXT_PREFIX  
+                    CONTEXT_DOCUMENT_ROOT 
+                  
+                  Misc variables
+                    TIME_YEAR
+                      The current year (e.g. 2010)
+                    TIME_MON
+                      The current month (1, ..., 12)
+                    TIME_DAY
+                      The current day of the month
+                    TIME_HOUR
+                      The hour part of the current time (0, ..., 23)
+                    TIME_MIN
+                      The minute part of the current time
+                    TIME_SEC
+                      The second part of the current time
+                    TIME_WDAY
+                      The day of the week (starting with 0 for Sunday)
+                    TIME
+                      The date and time in the format 20101231235959
+                    SERVER_SOFTWARE
+                      The server version string
+                    API_VERSION
+                      The date of the API version (module magic number)
+
+                
+
+
+
+              
 
 
 
