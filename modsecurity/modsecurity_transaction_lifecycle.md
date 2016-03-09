@@ -54,5 +54,3 @@ In MS, every transaction goes through 5 phases
 
     Rules in this phase are run to control how the logging is done.
 
-
-
