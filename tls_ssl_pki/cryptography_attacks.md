@@ -34,8 +34,31 @@ Ways to attack
     Active network attack
       Attacker is actively modifying the traffic/influencing the conversation
 
-      CURRENTLY AT
-        https://www.feistyduck.com/library/bulletproof/online/ch-ssl-tls-crypto.html#mitm-active-attacks
+      Difficulties
+        Active attacks are more difficult than passive passive because
+          Passive attacks only need to make copies of observed packets (this is easy)
+            Active attacks require a lot more software/hardware/technique
+              Rerouting traffic,keeping track of individual connections, serving false certs
+                Rerouting large amounts of traffic is difficult to do undetected
+                False certs are difficult to use successfully for large-scale attacks because many organizations keep track of what certs are used by various websites.
+
+      Best chance of subversion relative to difficulties
+        
+
+
+      In its usual incarnation, MITM attacks target authentication
+        Alice thinks that she's talking to Bob
+          Instead of doing a key negotiation with Bob, Alice is fooled into doing a negotiation with Mallory
+          Although, Alice's messages are being intercepted by Mallory (and Mallory forwards the messages to Bob)
+        It doesn't matter if Alice's messages are encrypted
+          Mallory has the keys needed to decrypt
+
+      TLS MITM
+        The ideal case for Mallory
+          She can present a cert that Alice will accept as valid
+          If this occurs, the attack is seamless
+        Unideal case for Mallory
+          Present an invalid cert to ALice and hope that Alice accepts the cert warning
 
     Attack sequence
       In many cases, attacks require proximity to the

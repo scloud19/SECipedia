@@ -62,6 +62,13 @@ Apache
               Notable Functions
                 req, http
                   Get HTTP request header; header names may be added to the Vary header, see below  
+                  
+                  CURRENTLY AT
+                    Functions
+                      http://httpd.apache.org/docs/current/expr.html
+                      Understaing the vary header
+                        http://stackoverflow.com/questions/1975416/what-is-the-function-of-the-vary-accept-http-header
+
                 req_novary  Same as req, but header names will not be added to the Vary header  
                 resp  Get HTTP response header  
                 reqenv  Lookup request environment variable (as a shortcut, v can be used too to access variables). 
