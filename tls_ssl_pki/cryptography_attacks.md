@@ -41,9 +41,8 @@ Ways to attack
               Rerouting traffic,keeping track of individual connections, serving false certs
                 Rerouting large amounts of traffic is difficult to do undetected
                 False certs are difficult to use successfully for large-scale attacks because many organizations keep track of what certs are used by various websites.
-
-      Best chance of subversion relative to difficulties
-        
+          Due to difficulties, active attacks are likely to be leveraged against individual, high-value targets
+            
 
 
       In its usual incarnation, MITM attacks target authentication
