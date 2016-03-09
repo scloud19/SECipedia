@@ -1,5 +1,7 @@
 Look over my WAHH notes and make sure that the site is secure.
 
+Search for @@ in all zsheets notes. these are important items to consider in deployment or for this project.
+
 Make sure to read core_defenses.md
 
 Before doing my own configs, search the internet for secure Configuration guides on a given piece of software

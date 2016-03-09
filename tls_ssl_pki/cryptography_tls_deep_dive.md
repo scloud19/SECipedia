@@ -9,7 +9,10 @@ TLS 1.2
     Key features
       Message transport
         Transports data submitted to it by other protocol layers
-        
+        CURRENTLY AT
+          Message Transport
+            https://www.feistyduck.com/library/bulletproof/online/ch-protocol.html
+            EVERYING COPIED TO TUTORIAL
 
     TLS record composition
       Header
