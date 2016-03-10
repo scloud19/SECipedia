@@ -22,16 +22,43 @@
 									as seen in ls -l
 
 									The number of total directory entries (across all directories) that point to an inode
-										$ ln file1 file2
-											Both of these files would point to the same inode
-												So usually both of their link count is 1 more than you'd expect
+									
+										hard links in relation to inodes
+											A hard link is just a manually created entry in a directory to an inode that already exists
 
+											Ex: $ ln file1 file2
+												Both of these files would point to the same inode
+													So usually both of their link count is 1 more than you'd expect
+
+									link count for directories
+										+1 for the directory linking to itself (. entry)
+										+1 for the parent directory
+											For root, the parent directory is in the filesystems superblock
+												The superblock tells you where to find the root inode.
+										+1 for any child directories (.. entry in child)
+
+
+												
 								Viewing Inode details
 									To view the inode numbers for any directory
 										ls -i
 										stat
 											more detailed view
 
+								Removing a file
+									Is sometimes called unlinking
+									Ex: rm dir/file
+										Assume
+											dir ==== inode 3
+											file === inode 4
+										1) The kernel searches for an entry named FILE in inode 3's directory entries
+										2) The kernel finds that FILE corresponds to inode 4, and removes the directory entry and then subtracts 1 from inode 4's link count
+											If the kernel sees that the link count is now at 0
+												The kernel will delete the inode and the data that's associated with it.
+
+
+
+										The kernel will search for an entry named file i
 				Ex in understanding:
 					In "How Linux Works: What every superuser should know"
 						Read the example in "4.5 Inside a Traditional Filesystem"
