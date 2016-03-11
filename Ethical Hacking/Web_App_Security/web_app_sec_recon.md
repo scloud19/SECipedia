@@ -344,6 +344,8 @@ Mapping the surface for Attack
       Leverage registration forms to see which users exist/dont exist
       Any time a user can make their own username, there's an enumeration risk.
 
+      core_defences/Randomly varying question/"For multistage logins, it's recommended to let a user proceed through the entire sequence (even for invalid input)"
+
       If one is testing an email service provider, are the user IDs simply emails addresses? If so, simply search for google for @domain.com
 
       Are the userIDs enumerable by design?
@@ -369,6 +371,16 @@ Mapping the surface for Attack
           a) Before doing this, see if there is any account lockout mechanisms.
             Ex: If there is, you just "wasted" one attempt by trying to find the username (if found.) Thus, try all usernames with a common password, (ex: password1 or the username itself)
               BURP: To make the login/password the same, leverage the "battering ram" attack mode.
+
+      Lockouts
+        Sometimes, even if an account is suspended, the app will still try to validate the password and return nuances in the response
+          Thus brute force attacks can continue at a regular speed
+          
+        Try to lock out a given username and an invalid username
+        
+        Does a valid username ONLY lockout?
+          If so, there's an enumeration risk
+
 
     weak passwords, brute forcing
     Brute Forcing

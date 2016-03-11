@@ -144,5 +144,57 @@ Securing Authentication
             Thus, you can store the question in a serverside object to make sure that the user is presented with the SAME question until they answer it successfully.
               If not, one could easily cycle through the questions on subsequent logins
 
+
+              For multistage logins, it's recommended to let a user proceed through the entire sequence (even for invalid input)
+                However, as the question isn't directly attached to a specific user, an attacker could infer if a user is valid or not (the question will vary)
+                  This can be leveraged for username enumeration.
+
           Store the question that has been asked on the server.
             If it was on the client, the user could simply submit the question/answer combo that they want.
+
+        Preventing Information Leakage
+          Should not expose any info about auth params
+            The attacker should have no means of determining which piece of the items submitted caused a problem
+          A single code component should be responsible to responding to all failed login attempts  
+            Otherwise, subtle changes in the response patterns can tip off an attacker 
+            It should have a generic message
+
+          Don't display definitively whether a username has been locked out.
+            This could lead to an enumeration risk
+            Keep a generic message on the ubiquitous error page that states, "An account can be locked out if a user attempts many valided login attempts, if you feel that this has occurred, please try to login later"
+
+          Mitigating username enumeration on self-registration forms
+            Use email addresses as usernames
+              Ex: Registration Process
+                1) Prompt for an email address and instruct the user to wait for an email to arrive containing instructions
+                  Instructions for email
+                    If the email is already registered, the email that is sent will specify this
+                    If the email is unique, give a random URL to visit to continue the registration process
+
+          Preventing Brute Force Attacks
+            Common areas that need to be protected
+              login form, forgotten password, etc.
+            Disable an account for 30 mins upon 3 unsuccessful logins in succession
+              This mitigates DOS attacks
+              When an account is in an disabled form, a login should be rejected without even checking the password
+
+            Add CAPTCHA to every page that could be brute forceable
+
+          Misuse of the Password change function
+            There should ALWAYS be a password change function
+            Should only be accessible inside of an authenticated session
+            Should be client-side way to feed a username into the function
+            Users should be forced to reenter their existing password before the change occurs
+            The new password should be entered twice
+
+            Error handling
+              1 single generic error message
+
+            The function should temporarily suspend following a small number of failed attempts
+
+            Users should be notified via an alternative means (email,etc.) that their password has been changed.
+
+
+          Preventing Misuse of the Account Recovery Function
+            Security Critical Apps
+              Account recovery
