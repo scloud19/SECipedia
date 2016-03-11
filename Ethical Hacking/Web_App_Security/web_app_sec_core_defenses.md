@@ -1,3 +1,6 @@
+UX
+  Some of these defenses might come at a cost of UX.  Have a tooltip next to error messages or other items that explains WHY we are being so generic with an error, or WHY we are implementing a feature that might make it more difficult for users to navigate the site.
+
 Trust boundary
   There can't be a complete trust boundary between the internet's input into the server and the servers input into the application.  It is impossible to effectively sanitize everything at one layer (given the complexity of attacks).
 
@@ -196,5 +199,33 @@ Securing Authentication
 
 
           Preventing Misuse of the Account Recovery Function
+            Never use password hints
+              Allow an attacker to enumerate accounts and find ones with obvious hints (these are set by the user)
+
+              Best Account Recovery Function solution
+                Before a user is allowed to recover their information, give a challenge process
+                  Set these questions upon registration
+                    Dont allow a user to make their own questions
+                      These probably wont be very secure
+                    Make sure the answers can't be easily guessed or come from a small pool of potential answers
+
+                  Prevent brute force attacks on the challenge by temporarily locking an account (see previous notes in this doc for best practices)
+
+                  If the challenge/s didn't succeed, have a generic error message.
+                    Don't disclose which challenge failed.
+                    Or if the account is suspended, etc.
+
+                If the challenge succeeds, email the user a random, time-limited, single-use recovery URL
+                  At this URL, the user can set a new password
+
+
+                  Once the password has been reset, send a second email to the user to notify her of this.
+
+                A users CURRENT creds should remain valid until they are changed
+                  This mitigates a DOS situation from an attacker.
+
+
             Security Critical Apps
-              Account recovery
+              Account recovery is handled out-of-band
+                A user must answer security questions and then an account reactivation code is sent via email, text, etc.
+            Non-security-critical apps
