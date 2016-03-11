@@ -1,12 +1,47 @@
 Handshake Protocol
   subprotocol of the record protocol
+  The most elaborate part of the TLS protocol
+  
+  Performs the SSL handshake
+    the sides negotiate connection parameters and perform authentication
 
   requires 6-10 messages (depending on features leveraged)
 
-  Performs the handshake
+  Highly variable
+    Contingent on
+      configurations 
+      supported protocol extension
 
-  Handshake
-    The most elaborate part of the TLS protocol
+  Message format
+    Header
+      Message type
+        1 byte
+      Length
+        3 bytes
+    The rest the message depends on the message type
 
-    Key takeaways
+  3 common use cases
+    full handshake with server auth
+    abbreviated handshake that resume an earlier session
+    handshake with client and server auth
+
+  Full handshake
+    Every TLS connection begins with a handshake
+
+    When is this used?
+      If the client hasn't previously established a session with the server, the two sides execute a full handshake
+        This is utilized to negotiate a TLS session
+
+    Full handshake process
+      The client and server will perform 4 main activities
+
+      1) Exchange capabilities and agree on desired connection parameters
+      2) Perform key exchange
+        a) Validate the presented certificate(s) or authenticate using other means
+        b) Agree on a master secret that will be used to protect the session
+      3) Verify that the handshake messages haven't been tampered with.
+
+      CURRENTLY AT
+        NOTE
+          In practice, steps 2 and 3
 

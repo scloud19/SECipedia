@@ -54,6 +54,3 @@ TLS 1.2
           To keep track of the number of records sent by the other side
           Is part of the defense against replay attacks
 
-  CURRENTLY AT
-    SUBPROTOCOLS
-      ADD IN ALL HANDSHAKE NOTES, ONCE FINISHED
