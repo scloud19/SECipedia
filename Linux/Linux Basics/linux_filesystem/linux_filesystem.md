@@ -3,6 +3,17 @@
 		2 Components in a traditional Unix FS
 				Pool of data blocks
 						Where you store information
+
+						When allocating data pool blocks for a new file, how does the FS know which blocks are available?
+							This is accomplished through a block bitmap
+							
+							Block bitmap
+								The filesystem reserves a series of bytes
+									Each bit corresponds to one block in the datapool
+									A value of
+										0 - The block is free
+										1 - It's in use
+
 				Database system
 						This manages the data pool
 						Centered around an inode data structure
@@ -404,7 +415,11 @@
 				/boot - Contains kernel boot loader files.  These files pertain only to the first stage of the linux startup procedure.  This directory doesn't include information pertaining to service startups.
 
 				/media - Some distros mount removable media here.  This can be a base attachment point for removable media such as flash drives. 
-				/lost+found - Ex: fsck can place files here if they have lost a name
+				/lost+found -
+					Ex: fsck walks through the inode table and directory structure to generate new link counts and a new block allocation map (ex: block bitmap)
+						After this, it compares the newly generated data with the FS on the disk
+						If there are mismatches, fsck must fix the link counts and determine what to do with any inodes and/or data that was "lost in translation" when it went through the directory structure
+							Usually, fsck placed these "orphans" in the lost+Found
 				/mnt - Used to mount external file systems
 				/proc - Provides system statistics through a       browsable directory-and-file interface.
 						 Provides info about running processes and kernel parameters

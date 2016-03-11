@@ -1,0 +1,12 @@
+Handshake Protocol
+  subprotocol of the record protocol
+
+  requires 6-10 messages (depending on features leveraged)
+
+  Performs the handshake
+
+  Handshake
+    The most elaborate part of the TLS protocol
+
+    Key takeaways
+
