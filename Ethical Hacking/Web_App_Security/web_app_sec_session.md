@@ -1,5 +1,14 @@
 Core use
-  Enables the app to ID 
+  Implemented after a login
+    Enables the app to auth/ID a given user across a number of different requests into the future
+    Handles state of that user's interaction with the app
+
+Juicy Target
+  Can bypass very secure auth mechanisms (i.e. smartcards, etc.)
+    
+
+Simplest bypass
+  Increment the value of a token issued to a valid user to take on the ID of another
 
 Ways that sessions are implemented
   Hidden form fields
