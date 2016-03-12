@@ -1,3 +1,6 @@
+Core use
+  Enables the app to ID 
+
 Ways that sessions are implemented
   Hidden form fields
   URL query strings

@@ -228,4 +228,21 @@ Securing Authentication
             Security Critical Apps
               Account recovery is handled out-of-band
                 A user must answer security questions and then an account reactivation code is sent via email, text, etc.
-            Non-security-critical apps
+
+
+          Logging/Notification
+            App should log all auth events
+              login, logout, password change/reset, account suspension, acct recovery
+            Logs should contain
+              username/IP
+            Logs shouldn't contain
+              passwords
+            Should broadcast events for
+              Brute forcing
+
+            Users should be given the following in-band data
+              After successful login
+                The time source IP/domain of the last successful login
+                Number of invalid login attempts made
+                since then
+                  This will motivate the user to set strong passwords
