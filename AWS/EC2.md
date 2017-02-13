@@ -1628,5 +1628,390 @@ EC2
 
 		
 
+-----------------------------------------------------------
+    EC2
+-----------------------------------------------------------
+	Elastic Cloud Computing
+	Virtual Machines in the cloud
+	Webservice that provides resizable compute in the cloud. 
+	Pay only for the capacity used.
+
+	Types of EC2
+	1. OnDemand: Low cost and Fixed. Only when needed. 
+	2. Reserved: Base line capacity. Steady state or predictable usage. 1000 active users. If you know what you will need.  
+	3. Spot: Supply and Demand. Like stock market. 
+				When spot price goes higher it will be deleted. 
+				Spot and bid price are same then it will be bought. Flexible start and end. 
+				Urgent computing needs. 
+				If spot instances are terminated by amazon, amazon pays for hour. 
+				You bought for 1 and price goes to 1.5 then amazon can terminate it. 
+				You terminate, you pay for the hour.
+	4. DedicatedHost: Pay by the hour. Only hourly rate.
+				Regulatory requirements. Seperate region. Great for licensing. 
+				!It does not support multi tenancy or cloud deployments.  
+
+	EC2 Family. 
+	!DR MC GIFT PX# (pic->EC2Family.png)
+	Dynamic, Memory Optimized, General purpose, CPU optimized
+	Graphic intensive, IO optimized, Field Array, Low cost, Graphics, Memory optimized. 
+-----------------------------------------------------------
+    IOPS
+-----------------------------------------------------------
+	Input Output operations per second. 
+	It is a performance measurement used to characterize the computer storage 
+	devices like HDD, SSD, SAN(Storage Area Networks)
+	IOPS are analogus to "Revolutions Per Minute" of an automoblie engine. 
+	https://en.wikipedia.org/wiki/IOPS
+	# IOPS * Transfer size in Bytes = Bytes per sec(MBps)#
+-----------------------------------------------------------
+    EBS
+-----------------------------------------------------------
+	Elastic Block Store
+	Storage Volumes that you can attach to Virtual Machines. 
+	Block based storage. You can install operating system, databases etc.
+	(pic:blockstorage1.png, 2.png)
+	Replicated in an Availability Zone. 
+	Not replicated to different availablity zone.
+
+	Volume Types:
+	1. General Purpose SSD (GP2)
+		 Ratio of 3 IOPS (pic:iops.png) per GB with up to 10,000 IOPS and the 
+		 ability to burst up to 3000 IOPS for extended periods of time
+		 for volumes up to 1Gib.
+	2. Provisioned IOPS SSD (I01)
+		Designed for I/O intensive applications such as large relational or non
+		relational NoSQL databases. 
+		Use only if you need more than 10000 IOPS. 
+		Can provision up to 20000 IOPS. 
+	3. Throughtput Optimized HDD (ST1)
+		Magnetic Storage
+		Big Data, Data ware houses, Log processing. 
+		*Cannot* be boot volume. 
+	4. Cold HDD (SC1)
+		Low cost storage *Notbootable*
+	5. Magnetic (Standard)
+		Low cost and *bootable*
+
+	!You cannot mount 1 EBS volume to multiple EC2 instances, instead use EFS
+
+	EBS root volumes of your DEFAULT AMIs cannot be encrypted. 
+	You can use third party tool such as bit locker etc to encrypt root volume. 
+	Or this can be done when creating AMIs in the AWS console or using the API.
+	Additional volumes can be encrypted.
+	reference: 
+	http://www.slideshare.net/AmazonWebServices/ebs-webinarfinal
+-----------------------------------------------------------
+    Security Groups
+-----------------------------------------------------------
+	Virtual Firewall 
+	First line of defence
+	!Any changes to security group, reflects immediately. 
+	!Security Groups are stateful. If you add inbound rule, they apply to outbound rule also. 
+	!Even if you delete outbound all option, based on inbound rules like http 80, it works. 
+
+	!Important
+	1. All Inbound traffic is blocked by default. 
+	2. All Outbound traffic is allowed. 
+	3. Changes to security group take effect immediately. 
+	4. You can have any number of EC2 instances within a security group. 
+	5. You can have multiple security groups attached to EC2 instances. 
+	6. Security groups are stateful. 
+		If you create an inbound rule allowing traffic in, that traffic is automatically 
+		allowed back out again.
+	7. You cannot block specific IP addresses using Security Groups, instead use 
+		Network Access Control Lists. 
+	8. You can specify allow rules, but not deny rules. 
+-----------------------------------------------------------
+    Volumes and Snapshots
+-----------------------------------------------------------
+	Volumes exist on EBS.
+	Snapshots exist on S3. 
+	!Snapshots are incremental, this means that only the blocks that have 
+	!changed since your last snapshot are moved to S3. 
+	If Snapshot is first time, it may take some time to create. 
+	Volume Types:
+	General Purpose (GP2), Provisioned IOPS (IO1), Cold HDD(sc1),
+	Throughput Optimized HDD(st1), Magnetic
+	!Root volume is volume where operating system is installed.
+	Steps to create volume and attach volume
+	[bash]
+		#ssh in to EC2 instance. 
+		ssh ec2-user@EC2 -i publikey.pem
+			yes
+		sudo su
+		lsblk
+			xvda->xvda1
+			xvdf->not attached
+		cd /
+		mkdir myfileserver
+		file -s /dev/xvdf
+			data(no data)
+		mkfs -t ext4 /dev/xvdf #make file system
+		mount /dev/xvdf /myfileserver
+		cd /myfileserver/
+		ls
+			lost+found
+		nano index.html
+			<html><h1>Hello</h1></html>
+			press Ctrl+x and save
+		ls
+			index.html
+		echo "hello" > hello.txt
+		ls
+			hello.txt index.html lost+found
+		lsblk
+			xvda
+			xvdf /myfileserver
+		umount /dev/xvdf
+
+		#Actions detach volume (if you dont unmout you will get error)
+	[end]
+
+		Create Snaphsot
+		Snapshots are point in time photo graphs of virtual hard disks
+		Everytime you take a snapshot, it saves only incremental updates.
+		Once Snapshot is created, you can create volume from it. 
+		Now when volume is being created, you can change the volume type to a new type.
+		It can be gp2 or io1 or sc1 or st1 or magnetic
+-----------------------------------------------------------
+    RAID, Volumes & Snapshots
+-----------------------------------------------------------
+	RAID = Redundant Array of Independent Disks. 
+		RAID 0 - Striped, No Redundancy, Good Performance. 
+		RAID 1 - Mirrored, Redundancy. 
+		RAID 5 - Good for reads, bad for writes, AWS does not 
+			recommend RAID 5 on EBS. 
+		RAID 10 - Striped & Mirrored, Good redundancy, Good performance. 
+		(pic:raid.jpg,raid10.jpg)
+	!Either RAID 0 or RAID 10
+	How can i take snapshot of RAID Array?
+		1. Stop the application from writing to disk.
+		2. Flush all caches to the disk. 
+		3. Freeze the file system. 
+		4. Unmount the RAID Array. 
+		5. Shutdown the associated EC2 instance. 
+	Snapshots of encrypted volumes are encrypted automatically. 
+	Volumes restored from encrypted snapshots are encrypted automatically. 
+	You can share snapshots, but only if they are unecrypted. 
+	These snapshots can be shared with other AWS accounts or made public. 
+	
+	AMI can be selected based on:
+	1. Region and Availability Zone. 
+	2. Operating System. 
+	3. Architecture (32 bit or 64 bit).
+	4. Launch permissions. 
+	5. Storage for Root Device. 
+
+	Different AMI Storage Types (Root Device Volumes)
+	1. EBS Backed Volume. 
+	2. Instance Store (Ephemeral storage)
+
+	!With Instance Store, you cannot stop the EC2 instance. 
+	With EBS Backed Volume, you can stop the EC2 instance.
+
+	#EBS vs Instance Store#
+	All AMIs are categorized as either backed by Amazon EBS or backed by
+	Instance Store.
+	(pic:EBSvsEphemeral.png)
+	https://www.youtube.com/watch?v=J2cPYF6tkPE
+-----------------------------------------------------------
+    Elastic Load Balancer
+-----------------------------------------------------------
+	How to create Load Balancer. 
+	>Login in to EC2
+	[bash]
+	sudo su
+	ls
+		index.html
+	nano healthecheck.html
+		Hello, this instance is healthy. 
+	ls
+	[end]
+	!You can assign multiple secrity groups to load balancer.
+	Elastic Load Balancer do not have public IP address. 
+	ELB state can be In Service or Out of Service. 
+	Health checks are performed to see it is working or not. 
+	Have their own DNS name. You are never given an IP address. 
+-----------------------------------------------------------
+    CloudWatch
+-----------------------------------------------------------
+	Standard monitoring is turned on by default. *five* minutes.
+	Detailed monitoring you have to subscribe to. *one* ninute. 
+	Can create Dashboards.
+	Can create alarms and take actions. 
+	Events - allows you to respond to state changes. Trigger a lambda function.
+	Logs - Cloudwatch logs helps you to aggregate, monitor and store logs.  
+-----------------------------------------------------------
+    AWS Command Line
+-----------------------------------------------------------
+	!IAM role can not be assigned after EC2 instance is started. 
+	(pic:IAM-role-after-ec2.png)
+
+	[bash]
+	ssh ec2-user@EC2 -i KeyPair.pem
+	sudo su
+	clear
+	#use command line. s3 buckets
+	aws s3 ls
+	aws configure
+		AWS Access Key ID: .
+		AWS Secret Key: .
+		Default Region: us-west-1
+	clear
+	aws s3 ls
+		all buckets: global
+	aws s3 help
+	#exit out of help using Ctrl+c
+	#check where credentials are stored
+	cd ~
+	ls
+	cd .aws
+	ls
+		config credentials
+	nano credentials
+		aws_access_key_id = .
+		aws_secret_access_key = .
+	#storing credentials on the machine is not a good thing. 
+	#thats where roles come in to picture. 
+	[end]
+-----------------------------------------------------------
+    Identity Access Management Roles 
+-----------------------------------------------------------
+	
+	This time, we will create a role s3-full-access and assign the role
+	to new EC2 instance while it is being provisioned. 
+	(pic:IAM-role-created-and-assigned-before-ec2.png)
+
+	# Command line testing with role created before hand. 
+	[bash]
+	ssh ec2-user@EC2IP KeyPair.pem
+		yes
+	sudo su
+	clear
+	aws ls s3
+		all buckets
+	cd ~ #home directory
+	ls -a #show hidden files
+		. .. .bash_history .ssh ...
+	[end]
+
+	!Roles are more secure than storing the access key and secret access key
+	Roles are easy manage and also update policies. 
+	Roles can only be assigned while EC2 is being provisioned.
+	!Roles are universal, you can use them in any region. 
+-----------------------------------------------------------
+    Bash Scripting
+-----------------------------------------------------------
+	todo:
+	Install apache
+	run updates
+	move files from s3 to folder and run web server
+	steps:
+	create a s3 bucket and upload an html file in to it. 
+	create ec2 machine in the same region
+
+	[bash]
+	#!/bin/bash (pronounced as sha-bang)
+	#interpreter takes all these commands and runs them in root level
+	yum install httpd -y
+	yum update -y
+	aws s3 cp s3://(get name of bucket)/index.html /var/www/html/
+	service httpd start
+	chkconfig httpd on
+	[end]
+-----------------------------------------------------------
+    EC2 Instance Metadata
+-----------------------------------------------------------
+	Access the metadata from command line
+	tasks:
+	Create new EC2 instance. 
+	!Instance meta data url: http://169.254.169.254/latest/meta-data
+
+	[bash]
+	ssh ec2-user@EC2IP KeyPair.pem
+		yes
+	sudo su
+	yum update -y
+	clear
+	#get metadata from url
+	curl http://169.254.169.254/latest/meta-data
+		ami-id
+		ami_launch_index...
+	#get public ip v4 address
+	curl http://169.254.169.254/latest/meta-data/public-ipv4
+		IP address
+	[end]
+-----------------------------------------------------------
+    Auto Scaling Groups and Launch Configurations
+-----------------------------------------------------------
+	tasks:
+	create a healthcheck.html > I am healthy
+	create launch configurations
+	before creating auto scaling group, you need to create launch configuration.
+	[bash]
+	#!/bin/bash (sha-bang) initialize the bootstrap scripts
+	yum install httpd -y #installing apache
+	yum update -y #updating the os
+	aws s3 cp s3://BUCKETNAME/ /var/www/html/ --recursive #copy all contents
+	service httpd start #starting the apache
+	chkconfig httpd on #keep the apache service running if server restarts
+	[end]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
